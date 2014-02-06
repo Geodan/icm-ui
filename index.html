@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="nl" ng-app="eagle">
+<head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="lib/bootstrap.3.1/css/bootstrap.min.css">
+   <link rel="stylesheet" href="css/app.css">
+
+</head>
+<body>
+    <header class="header navbar-fixed-top navbar-default navbar">User-rol</header>
+    <header class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"  ng-click="isCollapsed = !isCollapsed" >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#" role="button" class="navbar-brand">
+                ICM
+            </a>
+        </div>
+        <nav class="hidden-xs" role="navigation">
+            <ul class="nav navbar-nav">
+                <li><a ui-sref="berichten">berichten</a></li>
+                <li><a ui-sref="kaart">kaart</a></li>
+                <li><a ui-sref="uitloggen">uitloggen</a></li>
+                <li><a ui-sref="help">help</a></li>
+            </ul>
+        </nav>
+        <nav class="navbar-collapse collapse visible-xs" collapse="!isCollapsed" role="navigation">
+          <ul class="nav navbar-nav ">
+            <li><a ui-sref="berichten" ng-click="isCollapsed = !isCollapsed">berichten</a></li>
+            <li><a ui-sref="kaart" ng-click="isCollapsed = !isCollapsed">kaart</a></li>
+            <li><a ui-sref="uitloggen" ng-click="isCollapsed = !isCollapsed">uitloggen</a></li>
+            <li><a ui-sref="help" ng-click="isCollapsed = !isCollapsed">help</a></li>
+          </ul>         
+        </nav>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+             <li><a ui-sref="berichten">berichten</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ui-view>
+        </div>
+      </div>
+    </div>
+
+<script type="text/javascript" src="lib/angular.min.js"></script>
+<script type="text/javascript" src="lib/angular-ui-router.min.js"></script>
+<script type="text/javascript" src="lib/ui-bootstrap-0.10.0.min.js"></script>
+<script type="text/javascript" src="src/app.js"></script>
+</body>
+</html>
