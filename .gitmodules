@@ -1,0 +1,3 @@
+[submodule "lib/cow"]
+	path = lib/cow
+	url = https://github.com/Geodan/cow.git

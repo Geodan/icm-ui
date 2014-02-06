@@ -10,6 +10,13 @@ Vervolgens als de gebruiker is ingelogd maar niet een incident heeft gekozen: re
       </ul>
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        berichten
+        <div class="row" ng-controller="BerichtCtrl">
+       <table class="table table-striped">
+        <tr ng-repeat="item in items" >
+            <td>{{item.data('created') || 'geen idee' }} </td><td> {{item.timestamp() | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+        </tr>
+
+       </table>
+   </div>
     </div>
-</div>
+</div>   

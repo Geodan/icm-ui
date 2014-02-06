@@ -5,6 +5,13 @@
       </ul>
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        incidenten
+        <div class="row" ng-controller="IncidentCtrl">
+       <table class="table table-striped">
+        <tr ng-repeat="project in projects" ng-click="setProject(project)">
+            <td ui-sref='berichten'>{{project.data('name') || project.id()}} </td><td> {{project.timestamp() | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+        </tr>
+
+       </table>
+   </div>
     </div>
 </div>   
