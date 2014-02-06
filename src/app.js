@@ -3,7 +3,7 @@ var eagle = angular.module('eagle', ["ui.router",'ui.bootstrap'])
 eagle.config(function($stateProvider, $urlRouterProvider){
   
   // For any unmatched url, send to /route1
-  $urlRouterProvider.otherwise("/")
+  $urlRouterProvider.otherwise("/berichten")
   
   $stateProvider
     .state('incidenten', {
