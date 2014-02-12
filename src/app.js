@@ -1,19 +1,21 @@
-var eagle = angular.module('eagle', ["ui.router",'ui.bootstrap'])
+var icm = angular.module('icm', ["ui.router",'ui.bootstrap']);
 
-eagle.config(function($stateProvider, $urlRouterProvider){
+icm.config(function($stateProvider, $urlRouterProvider){
   
   // For any unmatched url, send to /route1
-  $urlRouterProvider.otherwise("/")
+  $urlRouterProvider.otherwise("/berichten")
   
   $stateProvider
     .state('incidenten', {
         url: "/incidenten",
-        templateUrl: "templates/incidenten.html"
+        templateUrl: "templates/incidenten.html",
+        controller: 'IncidentCtrl'
     })
                 
     .state('berichten', {
         url: "/berichten",
-        templateUrl: "templates/berichten.html"
+        templateUrl: "templates/berichten.html",
+        controller: 'BerichtCtrl'
     })
 
     .state('kaart', {
@@ -32,3 +34,67 @@ eagle.config(function($stateProvider, $urlRouterProvider){
     })
       
 })
+
+/*
+ * Project stuff
+ */
+
+icm.factory('ProjectStore',function($rootScope) {
+    var projectStore = core.projectStore();
+
+    return {
+        on: function(eventName, fn) {
+            projectStore.on(eventName, function(data) {
+                $rootScope.$apply(function() {
+                    fn(data);
+                });
+            });
+        }
+    };
+});
+icm.controller('IncidentCtrl' , function($scope,ProjectStore){
+    ProjectStore.on('datachange',function(data) {
+          $scope.projects = icm.projects();
+    })
+
+    $scope.projects = icm.projects();    
+
+    $scope.setProject = function(project) {
+        core.project(project.id());   
+        
+    }
+
+});
+
+/*
+ * Item stuff
+ */
+
+icm.factory('ItemStore',function($rootScope) {
+    var itemStore;
+    if(core.project()) { 
+        itemStore = core.project().itemStore();
+
+        return {
+            on: function(eventName, fn) {
+                itemStore.on(eventName, function(data) {
+                    $rootScope.$apply(function() {
+                        fn(data);
+                    });
+                });
+            }
+        };
+    }
+    else {
+        return {on: function(eventName, fn){}}
+    }
+});
+icm.controller('BerichtCtrl' , function($scope,ItemStore){
+
+    ItemStore.on('datachange',function(data) {
+          $scope.items = icm.messages();
+    })
+    $scope.items = icm.messages();
+       
+   
+});

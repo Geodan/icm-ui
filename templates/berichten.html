@@ -1,1 +1,22 @@
-berichten.html
+<!--
+Voeg hier logica toe om een login te tonen als de gebruiker niet is ingelogd
+
+Vervolgens als de gebruiker is ingelogd maar niet een incident heeft gekozen: redirect naar incident
+-->
+<div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+         <li><a ui-sref="berichten">berichten</a></li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="row" ng-controller="BerichtCtrl">
+       <table class="table table-striped">
+        <tr ng-repeat="item in items" >
+            <td>{{item.data('created') || 'geen idee' }} </td><td> {{item.timestamp() | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+        </tr>
+
+       </table>
+   </div>
+    </div>
+</div>   
