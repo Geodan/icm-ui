@@ -47,7 +47,11 @@ icm.messages = function(permtype){
         var returnarr =  _(messages).sortBy(function(message) {
             return message.timestamp();
         });
-        return returnarr.reverse();
+        var arr = [];
+        _.each(returnarr,function(item){
+            arr.push(item.deflate())
+        })
+        return arr.reverse();
     }
     else {
         return [];
