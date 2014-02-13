@@ -17,7 +17,7 @@ icm.factory('ItemStore',['$rootScope',function($rootScope) {
         };
     }
     else {
-        return {on: function(eventName, fn){}}
+        return {on: function(eventName, fn){}};
     }
 }]);
 
@@ -30,25 +30,21 @@ icm.controller('BerichtCtrl' , ['$scope','ItemStore',function($scope,ItemStore){
 
     ItemStore.on('datachange',function(data) {
           $scope.itemStore.items = icm.messages();
-    })
+    });
     $scope.itemStore.items = icm.messages();
        
-   $scope.types = [{filter:'',label:'Alles'},{filter:'feature',label:'feature'}]
-
-   $stateParams = {}
+   //$scope.types = [{filter:'',label:'Alles'},{filter:'feature',label:'feature'}];
 }]);
 
 icm.filter('type',function(){
     return function(input,filter) {
-        var out = [];
         if(filter) {
-            _.each(input,function(item) {
-                if(item.data&&item.data.type == filter) {
-                    out.push(item);
-                }
-            })
-            return out;
+            return _(input).filter(function(d){
+                   return d.data('type') == filter; 
+            });
         }
-        else return input;
-    }
+        else {
+            return input;
+        }
+    };
 });
