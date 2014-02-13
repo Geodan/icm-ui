@@ -49,8 +49,9 @@ icm.messages = function(permtype){
         });
         var arr = [];
         _.each(returnarr,function(item){
-            arr.push(item.deflate())
-        })
+            //arr.push(item.deflate())
+            arr.push(item);
+        });
         return arr.reverse();
     }
     else {

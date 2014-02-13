@@ -41,7 +41,7 @@ icm.filter('type',function(){
         var out = [];
         if(filter) {
             _.each(input,function(item) {
-                if(item.data&&item.data.type == filter) {
+                if(item.data('type') == filter) {
                     out.push(item);
                 }
             })
