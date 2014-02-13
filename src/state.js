@@ -101,7 +101,7 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap'])
                 templateUrl: "templates/kaart.html"
                 },
                'sidebar@': {
-                templateUrl: "templates/sidebar/beeld.html"
+                templateUrl: "templates/sidebar/kaart.html"
                 }
             }
         })
