@@ -36,11 +36,11 @@ icm.controller('BerichtCtrl' , ['$scope','ItemStore',function($scope,ItemStore){
    //$scope.types = [{filter:'',label:'Alles'},{filter:'feature',label:'feature'}];
 }]);
 
-icm.filter('type',function(){
+icm.filter('beeldType',function(){
     return function(input,filter) {
         if(filter) {
             return _(input).filter(function(d){
-                   return d.data('type') == filter; 
+                   return d.data('beeldType') == filter; 
             });
         }
         else {
