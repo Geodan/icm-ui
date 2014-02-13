@@ -53,7 +53,8 @@ icm.factory('ProjectStore',function($rootScope) {
     };
 });
 icm.controller('IncidentCtrl' , function($scope,ProjectStore){
-    ProjectStore.on('datachange',function(data) {
+    //ProjectStore.on('datachange',function(data) {
+    core.projectStore().on('datachange',function(data) {
           $scope.projects = icm.projects();
     })
 
