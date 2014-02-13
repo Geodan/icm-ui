@@ -34,6 +34,8 @@ icm.controller('BerichtCtrl' , ['$scope','ItemStore',function($scope,ItemStore){
     $scope.itemStore.items = icm.messages();
        
    $scope.types = [{filter:'',label:'Alles'},{filter:'feature',label:'feature'}]
+
+   $stateParams = {}
 }]);
 
 icm.filter('type',function(){
