@@ -1,4 +1,4 @@
-var icm = angular.module('icm', ["ui.router",'ui.bootstrap'])
+var icm = angular.module('icm', ["ui.router",'ui.bootstrap','leaflet-directive'])
     .run(
       [        '$rootScope', '$state', '$stateParams',
       function ($rootScope,   $state,   $stateParams) {
@@ -19,7 +19,7 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap'])
         .when("/incidenten/","/incidenten")
 
       //bij foute url stuur naar het begin
-        .otherwise("/")
+        .otherwise("/");
       
       $stateProvider
 
