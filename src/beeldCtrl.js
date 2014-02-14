@@ -45,10 +45,11 @@ currentBeeld =
     */
     items = ItemStore.filter(icms.messages(),$scope.currentBeeld.beeld);
      _($scope.currentBeeld.beeldonderdeel).each(function(d){
-            d.content = _(items).findWhere(function(b){
-                b.data('beeldonderdeel') == d.id;
-                return b.beeldcontent;
+            var item = _(items).filter(function(b){
+                return b.data('beeldonderdeel') == d.id
             })
+            if(item.length > 0)
+            d.content = item[0].data('beeldcontent');
           })
 var i =0;
 
