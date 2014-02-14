@@ -106,7 +106,24 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap','leaflet-directive']
             }
         })
 
-       
+          ///////////////////
+          // Beeld > Text //
+          ///////////////////
+        
+
+        .state('incidenten.incident.beeld.text', {
+            url: "/text",
+            views: {
+
+              // So this one is targeting the unnamed view within the parent state's template.
+              'main@': {
+                templateUrl: "templates/text.html"
+                },
+               'sidebar@': {
+                templateUrl: "templates/sidebar/text.html"
+                }
+            }
+        })       
     }]);
 
 

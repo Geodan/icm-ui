@@ -1,25 +1,4 @@
-/*
-Deze functie wrapped de websocket trigger naar angular
-*/
-icm.factory('ItemStore',['$rootScope',function($rootScope) {
-    var itemStore;
-    if(core.project()) { 
-        itemStore = core.project().itemStore();
 
-        return {
-            on: function(eventName, fn) {
-                itemStore.on(eventName, function(data) {
-                    $rootScope.$apply(function() {
-                        fn(data);
-                    });
-                });
-            }
-        };
-    }
-    else {
-        return {on: function(eventName, fn){}};
-    }
-}]);
 
 
 /*
