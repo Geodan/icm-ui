@@ -28,6 +28,8 @@ icm.controller('IncidentenCtrl' ,['$scope','ProjectStore', function($scope,Proje
 
     $scope.projectStore.projects = icm.projects();    
 
+    //TODO: momenteel wordt de core.project alleen hier gezet, als je rechtstreeks via een link binennkomt
+    //gaat het mis
     $scope.setProject = function(project) {
        ProjectStore.incident = project.data('name')||project.id();
         core.project(project.id());   
