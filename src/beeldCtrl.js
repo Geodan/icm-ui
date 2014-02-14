@@ -27,33 +27,28 @@ currentBeeld =
     //functies om de complete itemstore aan deze control te hangen.
     $scope.itemStore = {};
     ItemStore.on('datachange',function(data) {
-          items = ItemStore.filter(icms.messages(),$scope.currentBeeld.beeld);
-          
-           _($scope.currentBeeld.beeldonderdeel).each(function(d){
-            d.content = _(items).findWhere(function(b){
-                b.data('beeldonderdeel') == d.id;
-                return b.beeldcontent;
+        console.warn('change');
+        items = ItemStore.filter(icms.messages(),$scope.currentBeeld.beeld);
+        _($scope.currentBeeld.beeldonderdeel).each(function(d){
+            var item = _(items).filter(function(b){
+                return b.data('beeldonderdeel') == d.id
             })
-          })
-
-
-          console.log('angular change');
+            if(item.length > 0)
+                d.content = item[0].data('beeldcontent');
+        })
     });
 
     /*
         items: cow.item.data('beeldonderdeel').data('beeldcontent')
     */
     items = ItemStore.filter(icms.messages(),$scope.currentBeeld.beeld);
-     _($scope.currentBeeld.beeldonderdeel).each(function(d){
-            var item = _(items).filter(function(b){
-                return b.data('beeldonderdeel') == d.id
-            })
-            if(item.length > 0)
+    _($scope.currentBeeld.beeldonderdeel).each(function(d){
+        var item = _(items).filter(function(b){
+            return b.data('beeldonderdeel') == d.id
+        })
+        if(item.length > 0)
             d.content = item[0].data('beeldcontent');
-          })
-var i =0;
-
-
+    })
 }])
 
 icm.controller('BeeldSideCtrl', ['$scope', 'Beelden', function  ($scope, Beelden) {
