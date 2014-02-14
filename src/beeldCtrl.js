@@ -11,13 +11,11 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'ItemStore', f
     //functies om de complete itemstore aan deze control te hangen.
     $scope.itemStore = {};
     ItemStore.on('datachange',function(data) {
-          $scope.itemStore.items = icm.messages();
-
-          
+          $scope.itemStore.items = ItemStore.filter(icm.messages(),$scope.currentBeeld.beeld);
     });
     $scope.itemStore.items = ItemStore.filter(icm.messages(),$scope.currentBeeld.beeld);
 
-var i =0;
+
 
 }])
 
