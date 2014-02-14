@@ -23,10 +23,10 @@ icm.factory('ProjectStore',['$rootScope',function($rootScope) {
 icm.controller('IncidentenCtrl' ,['$scope','ProjectStore', function($scope,ProjectStore){
     $scope.projectStore = {};
     ProjectStore.on('datachange',function(data) {
-          $scope.projectStore.projects = icm.projects();
+          $scope.projectStore.projects = icms.projects();
     })
 
-    $scope.projectStore.projects = icm.projects();    
+    $scope.projectStore.projects = icms.projects();    
 
     $scope.setProject = function(project) {
        ProjectStore.incident = project.data('name')||project.id();

@@ -50,7 +50,7 @@ icm.controller('LeafletCtrl' ,[ "$scope", "$http", function($scope, $http) {
 
     // Get the countries data from a JSON
     var collection = {type: 'FeatureCollection', features: []};
-    _(icm.features()).each(function(d){
+    _(icms.features()).each(function(d){
             collection.features.push(d.data('feature'));
     });
     angular.extend($scope, {

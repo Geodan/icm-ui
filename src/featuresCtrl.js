@@ -30,9 +30,9 @@ icm.controller('FeatureCtrl' , ['$scope','ItemStore',function($scope,ItemStore){
     $scope.itemStore = {};
 
     ItemStore.on('datachange',function(data) {
-          $scope.itemStore.items = icm.features();
+          $scope.itemStore.items = icms.features();
     });
-    $scope.itemStore.items = icm.features();
+    $scope.itemStore.items = icms.features();
        
    //$scope.types = [{filter:'',label:'Alles'},{filter:'feature',label:'feature'}];
 }]);
