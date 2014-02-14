@@ -26,7 +26,6 @@ icm.controller('LeafletCtrl' ,[ "$scope", "$http", function($scope, $http) {
     }
 
     function style(d) {
-        
         return {
             //fillColor: getColor($scope.countries[feature.id]),
             fillColor: 'red',
