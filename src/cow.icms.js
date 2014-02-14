@@ -1,4 +1,4 @@
-var icms = {};
+var icms = icms || {};
 /**
     peers() - return only non-deleted (active) peers
 **/
