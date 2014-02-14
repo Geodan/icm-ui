@@ -1,8 +1,8 @@
-var icm = {};
+var icms = {};
 /**
     peers() - return only non-deleted (active) peers
 **/
-icm.peers = function(){
+icms.peers = function(){
     return _(core.peers()).filter(function(d){
         return (!d.deleted());
     });
@@ -10,7 +10,7 @@ icm.peers = function(){
 /**
     features(permtype) - return non-deleted features with permission type permtype or that belong to user
 **/
-icm.features = function(permtype){
+icms.features = function(permtype){
     return _(core.project().items()).filter(function(d){
         if (permtype){
             //return (!d.deleted() && d.hasPermission(permtype) && d.data('type')=='feature') || (!d.deleted() && d.data('creator') == core.user().id() && d.data('type')=='feature');
@@ -24,7 +24,7 @@ icm.features = function(permtype){
 /**
     featureCollections() - return non-deleted features with permission type permtype or that belong to user
 **/
-icm.featureCollections = function(){
+icms.featureCollections = function(){
     return _(core.project().items()).filter(function(d){
         return (d.data('type') == 'featureCollection' && (!d.deleted() || (!d.deleted() && d.data('creator') == core.user().id() ) ) ); 
     });
@@ -34,7 +34,7 @@ icm.featureCollections = function(){
 /**
     messages(permtype) - return non-deleted items that have a 'msg' data object with permission type permtype or that belong to user 
 **/
-icm.messages = function(permtype){
+icms.messages = function(permtype){
     if (core.project()){
         var messages =  _(core.project().items()).filter(function(d){
             if (permtype){
@@ -56,13 +56,13 @@ icm.messages = function(permtype){
 /**
     groups() - return non-deleted groups in project
 **/
-icm.groups = function(){
+icms.groups = function(){
     return _(core.project().groups()).filter(function(d){return !d.deleted();});
 };
 /**
     users() - return non-deleted users that are in current project
 **/
-icm.users = function(){
+icms.users = function(){
     //first get peers
     var peers = _(core.peers()).filter(function(d){return d.data('activeproject') == core.project().id();});
     var users = [];
@@ -76,21 +76,21 @@ icm.users = function(){
 /**
     activeusers() - return users that are currently active
 **/
-icm.activeusers = function(){
+icms.activeusers = function(){
     return _(core.users()).filter(function(d){return d.isActive();});
 };
 /**
     projects() - return non-deleted projects
 **/
-icm.projects = function(){
+icms.projects = function(){
     return _(core.projects()).filter(function(d){return !d.deleted();});
 };
 /**
     usernames() - return array of non-deleted usernames
 **/
-icm.usernames = function(){
+icms.usernames = function(){
     var returnArr = [];
-    var users = icm.users();
+    var users = icms.users();
     for (var i = 0;i<users.length;i++){
         if (users[i].data('name')){
             returnArr.push(users[i].data('name'));
@@ -101,7 +101,7 @@ icm.usernames = function(){
 /**
     tags() - return array of used names in items
 **/
-icm.tags = function(){
+icms.tags = function(){
     var returnArr = [];
     var items = core.project().items();
     for (var i = 0;i<items.length;i++){
@@ -115,7 +115,7 @@ icm.tags = function(){
 /**
     layers() - return leaflet layers from project
 **/
-icm.layers = function(){
+icms.layers = function(){
     if (core.project()){
         return core.project().data('layers') || [];
     }
@@ -127,7 +127,7 @@ icm.layers = function(){
 /**
     baseLayers() - return leaflet baseLayers from project
 **/
-icm.baselayers = function(){
+icms.baselayers = function(){
     if (core.project()){
         return core.project().data('tilelayers') || [];
     }
@@ -140,7 +140,7 @@ icm.baselayers = function(){
     msg(item) - create a messagebox based on the item
         purpose is to edit the properties of the item, including permisions
 **/
-icm.msg = function(msgbox,item){
+icms.msg = function(msgbox,item){
     
     //var msgbox = d3.select(this).style('display','block');
     //msgbox.html(''); //clear contents
@@ -152,7 +152,7 @@ icm.msg = function(msgbox,item){
     //msgbox.append('button').attr('id','nwmsgsubmit').html('Send');
     /*
     var formbox = msgbox.append('div').classed('individueel',true).attr('id','permlist');
-    var allgroups = icm.groups();
+    var allgroups = icms.groups();
     var permissions = d3.select('#permlist').selectAll('.permission').data(allgroups);
     //Add on/off button for every group
     var pdiv = permissions.enter().append('div')
@@ -185,8 +185,8 @@ icm.msg = function(msgbox,item){
             .html(function(d){return d.data('name');});
     */
     // textcomplete from: http://yuku-t.com/jquery-textcomplete/
-    var names = icm.usernames();
-    var tags = icm.tags();
+    var names = icms.usernames();
+    var tags = icms.tags();
     $('#nwmsg'+item.id()).textcomplete([
     {
         match: /(^|\s)@(\w*)$/,
@@ -215,11 +215,11 @@ icm.msg = function(msgbox,item){
 
 /**
 **/
-icm.tracker = function(status){
+icms.tracker = function(status){
     this.running = false;
     var self = this;
 };
-icm.tracker.prototype = {
+icms.tracker.prototype = {
      _point2position: function(point) {
         var _position = null;
         if (core.user()){

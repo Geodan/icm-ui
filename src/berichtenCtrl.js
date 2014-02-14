@@ -8,9 +8,9 @@ icm.controller('BerichtCtrl' , ['$scope','ItemStore',function($scope,ItemStore){
     $scope.itemStore = {};
 
     ItemStore.on('datachange',function(data) {
-          $scope.itemStore.items = icm.messages();
+          $scope.itemStore.items = icms.messages();
     });
-    $scope.itemStore.items = icm.messages();
+    $scope.itemStore.items = icms.messages();
        
    //$scope.types = [{filter:'',label:'Alles'},{filter:'feature',label:'feature'}];
 }]);
