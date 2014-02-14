@@ -27,7 +27,7 @@ currentBeeld =
     //functies om de complete itemstore aan deze control te hangen.
     $scope.itemStore = {};
     ItemStore.on('datachange',function(data) {
-          items = ItemStore.filter(icm.messages(),$scope.currentBeeld.beeld);
+          items = ItemStore.filter(icms.messages(),$scope.currentBeeld.beeld);
           
            _($scope.currentBeeld.beeldonderdeel).each(function(d){
             d.content = _(items).findWhere(function(b){
@@ -43,7 +43,7 @@ currentBeeld =
     /*
         items: cow.item.data('beeldonderdeel').data('beeldcontent')
     */
-    items = ItemStore.filter(icm.messages(),$scope.currentBeeld.beeld);
+    items = ItemStore.filter(icms.messages(),$scope.currentBeeld.beeld);
      _($scope.currentBeeld.beeldonderdeel).each(function(d){
             d.content = _(items).findWhere(function(b){
                 b.data('beeldonderdeel') == d.id;
