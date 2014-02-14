@@ -53,9 +53,9 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap'])
             controller: 'IncidentenCtrl'
         })
 
-          /////////////////////////
-          // Incidenten > Detail //
-          /////////////////////////
+          ///////////////////////////
+          // Incidenten > Incident //
+          ///////////////////////////
         
         .state('incidenten.incident', {
             // With abstract set to true, that means this state can not be explicitly activated.
@@ -85,6 +85,25 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap'])
 
 
        
+        })
+
+          ///////////////////
+          // Beeld > Kaart //
+          ///////////////////
+        
+
+        .state('incidenten.incident.beeld.kaart', {
+            url: "/kaart",
+            views: {
+
+              // So this one is targeting the unnamed view within the parent state's template.
+              'main@': {
+                templateUrl: "templates/kaart.html"
+                },
+               'sidebar@': {
+                templateUrl: "templates/sidebar/kaart.html"
+                }
+            }
         })
 
        

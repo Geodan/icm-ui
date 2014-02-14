@@ -24,6 +24,9 @@ body {
   padding-top: 80px;
 }
 
+.kaart {
+  height: 100%;
+}
 
 /*
  * Global add-ons
