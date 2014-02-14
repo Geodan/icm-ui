@@ -1,8 +1,8 @@
 <div class="row" ng-controller='BeeldCtrl'>
   <div class="col-sm-4 col-md-5">
-    <div  ng-repeat="txt in currentBeeld.content">
-        <h4>{{txt.textType}}</h4>
-        {{txt.text}}
+    <div  ng-repeat="txt in currentBeeld.beeldonderdeel">
+        <h4>{{txt}}</h4>
+<div class="well"></div>
        </div> 
   </div>
   <div class="col-sm-4  col-md-5 kaart"><a ui-sref="incidenten.incident.beeld.kaart">kaart</a></div>
