@@ -3,6 +3,7 @@ Deze functie wrapped de websocket trigger naar angular
 */
 icm.factory('ItemStore',['$rootScope',function($rootScope) {
     var itemStore;
+
     if(core.project()) { 
         itemStore = core.project().itemStore();
 
@@ -13,12 +14,26 @@ icm.factory('ItemStore',['$rootScope',function($rootScope) {
                         fn(data);
                     });
                 });
-            }
-        };
-    }
+            },
+            filter: function (items,beeld) {
+    		return _(items).filter(function(d){
+                   return d.data('beeld') == beeld; 
+	            });
+
+	        }
+	    }
+	}
     else {
-        return {on: function(eventName, fn){}};
+        return {
+        	on: function(eventName, fn){},
+            filter: function (items,beeld) {
+    			return _(items).filter(function(d){
+                   return d.data('beeld') == beeld; 
+            	});
+    		}
+    	}
     }
+    
 }]);
 
 /*

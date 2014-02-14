@@ -1,23 +1,7 @@
-<ul class="list-group">
-  <li class="list-group-item list-group-item-danger">
-    <span class="badge">1</span>
-     <a ui-sref="incidenten.incident.beeld({beeldType:'situatie'})">Situatie</a>
-  </li>
-  <li class="list-group-item">
-    
-     <a ui-sref="incidenten.incident.beeld({beeldType:'meldingen'})">Meldingen</a>
-  </li>
-  <li class="list-group-item">
-    
-     <a ui-sref="incidenten.incident.beeld({beeldType:'wat'})">Operationeel (WAT)</a>
-  </li>
-  <li class="list-group-item">
-    
-     <a ui-sref="incidenten.incident.beeld({beeldType:'wot'})">Tactisch (WOT)</a>
-  </li>
-  <li class="list-group-item list-group-item-danger">
-    <span class="badge">5</span>
-     <a ui-sref="incidenten.incident.beeld({beeldType:'wbt'})">Strategisch (WBT)</a>
+<ul class="list-group" ng-controller='BeeldSideCtrl'>
+  <li  class="list-group-item" ng-repeat="beeld in beelden">
+    <!--span class="badge">1</span-->
+     <a  ui-sref-active="text-success" ui-sref="incidenten.incident.beeld({beeldType:beeld.beeld})">{{beeld.title}}</a>
   </li>
    
 </ul>

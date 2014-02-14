@@ -1,6 +1,6 @@
 <div class="row" ng-controller="IncidentenCtrl">
   <table class="table table-striped">
-    <tr ng-repeat="project in projectStore.projects" ng-click="setProject(project)">
+    <tr  ng-repeat="project in projectStore.projects" ng-click="setProject(project)">
       <td ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType:"situatie"})'>{{project.data('name') || project.id()}} </td>
       <td> {{project.timestamp() | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
     </tr>

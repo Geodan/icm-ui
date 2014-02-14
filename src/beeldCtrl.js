@@ -1,10 +1,28 @@
 
-icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', function  ($scope, $stateParams, Beelden) {
+icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'ItemStore', function  ($scope, $stateParams, Beelden, ItemStore) {
     $scope.beeldType = $stateParams.beeldType;
 
+
+    //functie om het huidige beeld op te halen
     $scope.currentBeeld = _(Beelden.beelden).filter(function(d){
         return d.beeld == $scope.beeldType;
     })[0]
+
+    //functies om de complete itemstore aan deze control te hangen.
+    $scope.itemStore = {};
+    ItemStore.on('datachange',function(data) {
+          $scope.itemStore.items = icm.messages();
+
+          
+    });
+    $scope.itemStore.items = ItemStore.filter(icm.messages(),$scope.currentBeeld.beeld);
+
+var i =0;
+
+}])
+
+icm.controller('BeeldSideCtrl', ['$scope', 'Beelden', function  ($scope, Beelden) {
+    $scope.beelden = Beelden.beelden;
 
 
 }])
