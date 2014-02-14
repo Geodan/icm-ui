@@ -1,3 +1,43 @@
+/*
+Deze functie wrapped de websocket trigger naar angular
+*/
+icm.factory('ItemStore',['$rootScope',function($rootScope) {
+    var itemStore;
+    if(core.project()) { 
+        itemStore = core.project().itemStore();
+
+        return {
+            on: function(eventName, fn) {
+                itemStore.on(eventName, function(data) {
+                    $rootScope.$apply(function() {
+                        fn(data);
+                    });
+                });
+            }
+        };
+    }
+    else {
+        return {on: function(eventName, fn){}};
+    }
+}]);
+
+/*
+Deze functie wrapped de websocket trigger naar angular
+*/
+icm.factory('ProjectStore',['$rootScope',function($rootScope) {
+    var projectStore = core.projectStore();
+
+    return {
+        on: function(eventName, fn) {
+            projectStore.on(eventName, function(data) {
+                $rootScope.$apply(function() {
+                    fn(data);
+                });
+            });
+        }
+    };
+}]);
+
 // De definities van de verschillende beelden inclusief hun onderdelen
 icm.factory('Beelden', ['$rootScope',function($rootScope) {
     var data = {};
@@ -12,19 +52,3 @@ icm.factory('Beelden', ['$rootScope',function($rootScope) {
     ];
     return data;
 }])
-
-icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', function  ($scope, $stateParams, Beelden) {
-    $scope.beeldType = $stateParams.beeldType;
-
-    $scope.currentBeeld = _(Beelden.beelden).filter(function(d){
-        return d.beeld == $scope.beeldType;
-    })[0]
-
-
-}])
-/*
-
-item.data.beeld
-item.data.beeldonderdeel
-item.data.beeldcontent
-*/
