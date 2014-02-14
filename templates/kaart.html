@@ -1,1 +1,11 @@
-<a ui-sref="incidenten.incident.beeld">tekst</a>
+<!--<a ui-sref="incidenten.incident.beeld">tekst</a>-->
+<div id='kaart' class="row" ng-controller="LeafletCtrl">
+
+    <div class="info country f32">
+        <div ng-show="geojson.selected" class="flag" ng-class="countries[geojson.selected.id]['alpha-2']|lowercase"></div>
+        {{ geojson.selected.properties.key || 'No country'}}
+    </div>
+    
+    <div class="info box">Map center: [ lat: {{ center.lat | number:4 }}, lng: {{ center.lng | number:4 }} ]</div>
+    <leaflet center="center" events="events" legend="legend" geojson="geojson"></leaflet>
+</div>
