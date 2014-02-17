@@ -43,10 +43,59 @@ icm.controller('LeafletController', [ '$scope','ItemStore', function($scope, Ite
             lng: 5.111,
             zoom: 9
         },
-        d3layer: {
-            data: $scope.collection,
-            style: style,
-            resetStyleOnMouseout: true
+        layers: {
+            baselayers: {
+                osm: {
+                    name: 'OpenStreetMap',
+                    type: 'xyz',
+                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    layerOptions: {
+                        subdomains: ['a', 'b', 'c'],
+                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        continuousWorld: true
+                    }
+                }
+            },
+            overlays: {
+                hillshade: {
+                    name: 'Hillshade Europa',
+                    type: 'wms',
+                    url: 'http://129.206.228.72/cached/hillshade',
+                    visible: true,
+                    layerOptions: {
+                        layers: 'europe_wms:hs_srtm_europa',
+                        format: 'image/png',
+                        opacity: 0.25,
+                        attribution: 'Hillshade layer by GIScience http://www.osm-wms.de',
+                        crs: L.CRS.EPSG900913
+                    }
+                },
+                editlayer: {
+                    name: 'editlayer',
+                    type: 'd3layer',
+                    visible: true,
+                    layerOptions: {
+                        data: $scope.collection,
+                        options: {
+                            core: core, //TODO
+                            labels: true,
+                            labelconfig: {
+                                field: "name",
+                                style: {
+                                    stroke: "#000033"
+                                    //stroke: "steelBlue"
+                                }
+                            },
+                            style: {
+                                fill: "none",
+                                stroke: "steelBlue",
+                                'stroke-width': 2,
+                                opacity: 0.5
+                            }
+                        }
+                    }
+                }
+            }
         }
     });
 }]);
