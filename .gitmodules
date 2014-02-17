@@ -1,3 +1,6 @@
 [submodule "lib/cow"]
 	path = lib/cow
 	url = https://github.com/Geodan/cow.git
+[submodule "lib/angular-leaflet-directive"]
+	path = lib/angular-leaflet-directive
+	url = https://github.com/tomvantilburg/angular-leaflet-directive.git
