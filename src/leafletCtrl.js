@@ -37,6 +37,12 @@ icm.controller('LeafletController', [ '$scope','ItemStore', function($scope, Ite
     function pointToLayer(feature, latlng){
         return L.circleMarker(latlng, geojsonMarkerOptions);
     }
+    var editmenu = function(feature, layer){
+        Cow.utils.menu(feature, {
+            layer: layer,
+            menuconfig: Cow.utils.menuconfig
+        });
+    };
     angular.extend($scope, {
         utrecht: {
             lat: 52.083,
@@ -78,6 +84,7 @@ icm.controller('LeafletController', [ '$scope','ItemStore', function($scope, Ite
                         data: $scope.collection,
                         options: {
                             core: core, //TODO
+                            onClick: editmenu,
                             labels: true,
                             labelconfig: {
                                 field: "name",
