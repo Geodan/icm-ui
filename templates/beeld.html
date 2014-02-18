@@ -1,4 +1,4 @@
-<div class="row" ng-controller='BeeldCtrl'>
+<div class="row" >
   <div class="col-sm-6 col-md-6 col-lg-4">
   	<a ui-sref="incidenten.incident.beeld.text">text</a>
    <!-- <dl>
@@ -17,8 +17,12 @@
 	</div>
 
   </div>
-  <div class="col-sm-6  col-md-6 col-lg-8 kaart" ng-controller="LeafletController">
+  
+</div>
+<div class="row"  ng-controller="LeafletController">
+  <div class="col-sm-6  col-md-6 col-lg-8 kaart">
     <a ui-sref="incidenten.incident.beeld.kaart">kaart</a><br>
-    <leaflet center="utrecht" height="480px" width="640px" layers="layers"></leaflet>
-    </div>
+    <leaflet center="utrecht" height="480px" width="640px" controls="controls" layers="layers" event-broadcast="events"></leaflet>
+    <h4><strong ng-bind="eventDetected"></strong> caught in listener.</h4>
+  </div>
 </div>

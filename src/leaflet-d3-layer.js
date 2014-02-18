@@ -448,4 +448,4 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
   });
 }).call(this);
 //Adding some Backbone event binding functionality to the layer
-//_.extend(L.GeoJSON.d3.prototype, Events);
+_.extend(L.GeoJSON.d3.prototype, Events);

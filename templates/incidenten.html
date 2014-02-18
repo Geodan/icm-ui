@@ -1,4 +1,4 @@
-<div class="row" ng-controller="IncidentenCtrl">
+<div class="row">
   <table class="table table-striped">
     <tr  ng-repeat="project in projectStore.projects" ng-click="setProject(project)">
       <td ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType:"situatie"})'>{{project.data('name') || project.id()}} </td>

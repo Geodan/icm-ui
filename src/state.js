@@ -9,7 +9,7 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
         // 'contacts.list' or one of its decendents is active.
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-       if(core === 'undefined') alert('aargh');
+       if(core === 'undefined') {alert('aargh');}
       }])
     .config(
         [          '$stateProvider', '$urlRouterProvider',
@@ -17,7 +17,7 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
   
   
       $urlRouterProvider
-        .when("/incidenten/","/incidenten")
+        .when("/incidenten","/incidenten/")
 
       //bij foute url stuur naar het begin
         .otherwise("/");
@@ -30,7 +30,7 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
             url: "/",
             views: {
                 'all': {
-                    templateUrl: "templates/login.html",
+                    templateUrl: "templates/login.html"
                 }
             },
             controller: "LoginCtrl"
@@ -42,16 +42,15 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
 
         .state('incidenten', {
             // Dit is een lijst met alle beschikbare incidenten
-            url: "/incidenten",
+            url: "/incidenten/",
             views: {
               'main@': {
                 templateUrl: "templates/incidenten.html",
+                // zorg dat de scope, state en de incidenten door worden gegeven aan de
+                // controller
+                controller: 'IncidentenCtrl'
                 }
-            },
-
-            // zorg dat de scope, state en de incidenten door worden gegeven aan de
-            // controller
-            controller: 'IncidentenCtrl'
+            }
         })
 
           ///////////////////////////
@@ -71,21 +70,18 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
         
 
         .state('incidenten.incident.beeld', {
-            url: "/:beeldType",
+            url: "/:beeldType/",
             views: {
 
               // So this one is targeting the unnamed view within the parent state's template.
               'main@': {
-                templateUrl: "templates/beeld.html"
+                templateUrl: "templates/beeld.html",
+                controller: 'BeeldCtrl'
                 },
                'sidebar@': {
                 templateUrl: "templates/sidebar/beeld.html"
                 }
-            },
-            controller: 'BeeldCtrl'
-
-
-       
+            }
         })
 
           ///////////////////
@@ -124,7 +120,7 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
                 templateUrl: "templates/sidebar/text.html"
                 }
             }
-        })       
+        });       
     }]);
 
 
