@@ -1,5 +1,6 @@
 
 icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'ItemStore', function  ($scope, $stateParams, Beelden, ItemStore) {
+    console.log('Beelctrl'); //FIXME: controller is called twice
     $scope.beeldType = $stateParams.beeldType;
     var items;
 /*

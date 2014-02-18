@@ -1,7 +1,22 @@
-
-icm.controller('LeafletController', [ '$scope','ItemStore', function($scope, ItemStore) {
+var tmp; //DEBUG
+icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData", function($scope, ItemStore, leafletData) {
+    console.log('init controller'); //FIXME: controller is called twice... but why?
     $scope.collection = {"type":"FeatureCollection","features":[]};
     $scope.itemStore = {};
+    
+    $scope.eventDetected = "No events yet...";
+    $scope.$on('leafletDirectiveMap.zoomstart', function(event){
+        $scope.eventDetected = "ZoomStart";
+    });
+    $scope.$on('leafletDirectiveMap.drag', function(event){
+        $scope.eventDetected = "Drag";
+    });
+    $scope.$on('leafletDirectiveMap.click', function(event){
+        $scope.eventDetected = "Click";
+    });
+    $scope.$on('leafletDirectiveMap.mousemove', function(event){
+        $scope.eventDetected = "MouseMove";
+    });
     
     ItemStore.on('datachange',function(data) {
           $scope.collection.features = [];
@@ -19,35 +34,51 @@ icm.controller('LeafletController', [ '$scope','ItemStore', function($scope, Ite
         features.push(feature.data('feature'));
     }
     $scope.collection = {"type":"FeatureCollection","features":features};
-    function style(feature) {
-        var icon = L.icon({
-                iconUrl: feature.properties.icon,
-                iconSize: [40, 40]
-        });
-        return {
-            icon: icon,
-            fillColor: 'red',
-            weight: 2,
-            opacity: 1,
-            color: 'white',
-            dashArray: '3',
-            fillOpacity: 0.7
-        };
-    }
-    function pointToLayer(feature, latlng){
-        return L.circleMarker(latlng, geojsonMarkerOptions);
-    }
+    
     var editmenu = function(feature, layer){
         Cow.utils.menu(feature, {
             layer: layer,
             menuconfig: Cow.utils.menuconfig
         });
     };
+
+    $scope.map = leafletData.getMap().then(function(map) {
+        // Initialise the FeatureGroup to store editable layers
+        var drawnItems = new L.FeatureGroup();
+        map.addLayer(drawnItems);
+        var drawControl = new L.Control.Draw({
+            draw: true,
+            edit: {
+                featureGroup: drawnItems,
+                edit: true,
+                remove: true
+            }
+        });
+        map.addControl(drawControl);
+        map.on("draw:edited", function(e,x){}); //TODO
+        map.on('draw:created', function (e) {
+                console.log(e);
+        });//TODO
+        tmp = map;
+    });
     angular.extend($scope, {
         utrecht: {
-            lat: 52.083,
-            lng: 5.111,
+            lat: 52.752087,
+            lng: 4.896941,
             zoom: 9
+        },
+        controls: {
+            custom: []
+        },
+        events: {
+            map: {
+                /**
+                Listen options:
+                click, dblclick, mousedown, mouseup, mouseover, mouseout, mousemove, contextmenu, focus, blur, preclick, load, unload, viewreset, movestart, move, moveend, dragstart, drag, dragend, zoomstart, zoomend, zoomlevelschange, resize, autopanstart, layeradd, layerremove, baselayerchange, overlayadd, overlayremove, locationfound, locationerror, popupopen, popupclose
+                **/
+                enable: ['zoomstart', 'drag', 'click', 'mousemove'],
+                logic: 'emit'
+            }
         },
         layers: {
             baselayers: {
