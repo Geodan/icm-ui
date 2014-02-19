@@ -1,58 +1,3 @@
-/*
-Deze functie wrapped de websocket trigger naar angular
-*/
-icm.factory('ItemStore',['$rootScope',function($rootScope) {
-    var itemStore;
-
-    if(core.project()) { 
-        itemStore = core.project().itemStore();
-
-        return {
-            on: function(eventName, fn) {
-                itemStore.on(eventName, function(data) {
-                    $rootScope.$apply(function() {
-                        fn(data);
-                    });
-                });
-            },
-            filter: function (items,beeld) {
-    		return _(items).filter(function(d){
-                   return d.data('beeld') == beeld; 
-	            });
-
-	        }
-	    }
-	}
-    else {
-        return {
-        	on: function(eventName, fn){},
-            filter: function (items,beeld) {
-    			return _(items).filter(function(d){
-                   return d.data('beeld') == beeld; 
-            	});
-    		}
-    	}
-    }
-    
-}]);
-
-/*
-Deze functie wrapped de websocket trigger naar angular
-*/
-icm.factory('ProjectStore',['$rootScope',function($rootScope) {
-    var projectStore = core.projectStore();
-
-    return {
-        on: function(eventName, fn) {
-            projectStore.on(eventName, function(data) {
-                $rootScope.$apply(function() {
-                    fn(data);
-                });
-            });
-        }
-    };
-}]);
-
 // De definities van de verschillende beelden inclusief hun onderdelen
 icm.factory('Beelden', ['$rootScope',function($rootScope) {
     var data = {};
@@ -110,3 +55,11 @@ icm.factory('Beelden', ['$rootScope',function($rootScope) {
     return data;
 }])
 
+icm.factory('Core', ['$rootScope', function($rootScope) {
+  var cow = {};
+   cow.core = new Cow.core({
+          wsUrl: 'wss://websocket.geodan.nl:443/new'
+        });
+   
+   return cow.core;
+}])

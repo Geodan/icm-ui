@@ -17,7 +17,7 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
   
   
       $urlRouterProvider
-        .when("/incidenten","/incidenten/")
+       
 
       //bij foute url stuur naar het begin
         .otherwise("/");
@@ -29,11 +29,11 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
         .state("login", {
             url: "/",
             views: {
-                'all': {
-                    templateUrl: "templates/login.html"
+                'main': {
+                    templateUrl: "templates/login.html",
+                    controller: "LoginCtrl"
                 }
-            },
-            controller: "LoginCtrl"
+            }
         })
 
           ////////////////
@@ -42,7 +42,7 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
 
         .state('incidenten', {
             // Dit is een lijst met alle beschikbare incidenten
-            url: "/incidenten/",
+            url: "/incidenten",
             views: {
               'main@': {
                 templateUrl: "templates/incidenten.html",
@@ -70,7 +70,7 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
         
 
         .state('incidenten.incident.beeld', {
-            url: "/:beeldType/",
+            url: "/:beeldType",
             views: {
 
               // So this one is targeting the unnamed view within the parent state's template.
