@@ -26,8 +26,13 @@ icm.factory('ItemStore',['$rootScope',function($rootScope) {
 /*
  * Deze angular control gaat over de lijst met berichten in /berichten
  */
-icm.controller('FeatureCtrl' , ['$scope',function($scope){
-   
+icm.controller('FeatureCtrl' , ['$scope','ItemStore',function($scope,ItemStore){
+    $scope.itemStore = {};
+
+    ItemStore.on('datachange',function(data) {
+          $scope.itemStore.items = icms.features();
+    });
+    $scope.itemStore.items = icms.features();
        
    //$scope.types = [{filter:'',label:'Alles'},{filter:'feature',label:'feature'}];
 }]);
