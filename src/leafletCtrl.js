@@ -30,8 +30,9 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData", func
 
     var features = [];
     for (i=0;i<items.length;i++){
-        var feature = items[i];
-        features.push(feature.data('feature'));
+        var feature = items[i].data('feature');
+        feature.id = items[i].id();
+        features.push(feature);
     }
     $scope.collection = {"type":"FeatureCollection","features":features};
     
@@ -41,26 +42,90 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData", func
             menuconfig: Cow.utils.menuconfig
         });
     };
-
-    $scope.map = leafletData.getMap().then(function(map) {
+    
+    $scope.initmap = function(){
+      return leafletData.getMap().then(function(map) {
+        tmp = map;
         // Initialise the FeatureGroup to store editable layers
         var drawnItems = new L.FeatureGroup();
         map.addLayer(drawnItems);
-        var drawControl = new L.Control.Draw({
-            draw: true,
+        $scope.drawControl = new L.Control.Draw({
+            draw: false,
             edit: {
                 featureGroup: drawnItems,
-                edit: true,
-                remove: true
+                edit: false,
+                remove: false
             }
         });
-        map.addControl(drawControl);
+        map.addControl($scope.drawControl);
+        $scope.controls = {
+            pointcontrol: new L.Draw.Marker(map, $scope.drawControl.options.Marker),
+            linecontrol: new L.Draw.Polyline(map, $scope.drawControl.options.polyline),  
+            polycontrol:  new L.Draw.Polygon(map, $scope.drawControl.options.polygon),
+            editcontrol: new L.EditToolbar.Edit(map, {
+                featureGroup: $scope.drawControl.options.edit.featureGroup,
+                selectedPathOptions: $scope.drawControl.options.edit.selectedPathOptions
+            })
+        };
         map.on("draw:edited", function(e,x){}); //TODO
         map.on('draw:created', function (e) {
-                console.log(e);
+            var type = e.layerType,
+            layer = e.layer;
+			var feature = layer.toGeoJSON();
+		
+            var d = new Date();
+            var timestamp = d.getTime();
+            feature.properties.stroke = 'green';
+            feature.properties.fill = 'green';
+            feature.properties.key = core.peerid() + "_" + timestamp;
+            feature.properties.creator = core.user().data('name');
+            feature.properties.owner = core.user().data('name');
+
+            var id = core.peerid() + "_" + timestamp;
+            var mygroups = core.project().myGroups();
+            var item = core.project().items({_id:id})
+                .data('type','feature')
+                .data('feature', feature)
+                .permissions('view',mygroups)//Set default permissions to my groups
+                .permissions('edit',mygroups)//Set default permissions to my groups
+                .permissions('share',mygroups)//Set default permissions to my groups
+                .sync();
         });//TODO
-        tmp = map;
-    });
+        
+      });
+    };
+    
+    $scope.drawPoint = function(){
+        $scope.initmap().then(function(){
+            $scope.controls.pointcontrol.enable();
+            $scope.controls.polycontrol.disable();
+            $scope.controls.linecontrol.disable();
+        });
+    };
+    $scope.drawLine = function(){
+       $scope.initmap().then(function(){
+            $scope.controls.pointcontrol.disable();
+            $scope.controls.polycontrol.disable();
+            $scope.controls.linecontrol.enable();
+       });
+    };
+    $scope.drawPolygon = function(){
+        $scope.initmap().then(function(){
+            $scope.controls.pointcontrol.disable();
+            $scope.controls.polycontrol.enable();
+            $scope.controls.linecontrol.disable();
+        });
+    };
+    var editlayerBinds = {
+        'delete': function(d){
+            if (confirm('Verwijderen?')) {
+                var key = d.feature.id.toString();
+                core.project().items(key).deleted('true').sync();
+            } else {
+                // Do nothing!
+            }
+        }
+    };
     angular.extend($scope, {
         utrecht: {
             lat: 52.752087,
@@ -111,6 +176,7 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData", func
                     name: 'editlayer',
                     type: 'd3layer',
                     visible: true,
+                    //binds: binds,
                     layerOptions: {
                         data: $scope.collection,
                         options: {
@@ -123,12 +189,6 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData", func
                                     stroke: "#000033"
                                     //stroke: "steelBlue"
                                 }
-                            },
-                            style: {
-                                fill: "none",
-                                stroke: "steelBlue",
-                                'stroke-width': 2,
-                                opacity: 0.5
                             }
                         }
                     }
