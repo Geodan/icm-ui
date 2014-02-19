@@ -94,27 +94,28 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData", func
         
       });
     };
+    $scope.initmap();
     
     $scope.drawPoint = function(){
-        $scope.initmap().then(function(){
+        //$scope.initmap().then(function(){
             $scope.controls.pointcontrol.enable();
             $scope.controls.polycontrol.disable();
             $scope.controls.linecontrol.disable();
-        });
+        //});
     };
     $scope.drawLine = function(){
-       $scope.initmap().then(function(){
+       //$scope.initmap().then(function(){
             $scope.controls.pointcontrol.disable();
             $scope.controls.polycontrol.disable();
             $scope.controls.linecontrol.enable();
-       });
+       //});
     };
     $scope.drawPolygon = function(){
-        $scope.initmap().then(function(){
+        //$scope.initmap().then(function(){
             $scope.controls.pointcontrol.disable();
             $scope.controls.polycontrol.enable();
             $scope.controls.linecontrol.disable();
-        });
+        //});
     };
     var editlayerBinds = {
         'delete': function(d){
