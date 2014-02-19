@@ -8,15 +8,19 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
   root = this;
 
   L.GeoJSON.d3 = L.GeoJSON.extend({
+    
     initialize: function(geojson, options) {
       this.geojson = geojson;
       this.core = options.core;
       options = options || {};
       options.layerId = options.layerId || ("leaflet-d3-layer-" + (Math.floor(Math.random() * 101)));
       options.onEachFeature = function(geojson, layer) {};
+      
       L.setOptions(this, options);
-      return this._layers = {};
+      this._layers = {};
+      return this._layers;
     },
+    
     data: function(data){
         if (data){
             this.geojson = data;
@@ -164,13 +168,12 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 		var styling = function(d){
 		  var entity = d3.select(this);
 		  //Point/icon feature
-		  if (d.style && d.style.icon && d.geometry.type == 'Point'){ 
+		  if (d.properties['marker-url'] && d.geometry.type == 'Point'){ 
 		      var x = project(d.geometry.coordinates)[0];
               var y = project(d.geometry.coordinates)[1];
 		      var img = entity.select("image")
                     .attr("xlink:href", function(d){
-                            if (d.style.icon) {return d.style.icon;}
-                            else {return "./mapicons/stratego/stratego-flag.svg";} //TODO put normal icon
+                            return d.style['marker-url'];
                     })
                     .classed("nodeimg",true)
                     .attr("width", 32)
@@ -183,23 +186,25 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 		  //Path feature
 		  else{
 		    var path = entity.select("path");
-			for (var key in style) { //First check for generic layer style
+		    var defstyles = self.styledefaults; 
+			for (var key in defstyles) { //First check for generic layer style
 				path.style(key,function(d){
-					if (d.style && d.style[key]){
-				        return d.style[key]; //Override with features style if present
+					if (d.properties[key]){
+				        return d.properties[key]; //Override with features style if present
 					}
  					else{ //Style can be defined by function...
- 					    if (typeof(style[key]) == "function") {
-                            var f = style[key];
+ 					    if (typeof(defstyles[key]) == "function") {
+                            var f = defstyles[key];
                             return  f(d);
                         }
                         else {//..or by generic style string
-                            return style[key]; 
+                            return defstyles[key]; 
                         }
                     }
 				});
 			}
 			//Now apply remaining styles of feature (possible doing a bit double work from previous loop)
+			/* OBS since simplestyle implementation
 			if (d.style) { //If feature has style information
 				for (var key in d.style){ //run through the styles
 				    if (d.style[key] != null){
@@ -207,6 +212,7 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 				    }
 				}
 			}
+			*/
 		  }
 		};
 		//A per feature styling method
@@ -420,7 +426,18 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
       //this._svg = svg = d3.select('#map').select('svg');
       this._g = g = svg.append('g');
       g.attr('id',this.options.layerId);
-      
+      this.styledefaults = {
+            "marker-url": './images/mapicons/mapicons/emergencyphone.png', //TODO TT: not nice
+            "marker-size" : "medium",
+            "marker-symbol" : "bus",//TODO   
+            "marker-color" : "#fff",
+            "stroke" : "#555555",
+            "stroke-opacity" : 1.0,
+            "stroke-width" : 2,  
+            "fill" : "#555555",
+            "fill-opacity" : 0.5,
+            "opacity" : 0.5
+      };
       return this.updateData(map);
     },
     onRemove: function(map) {
