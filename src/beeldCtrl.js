@@ -1,5 +1,5 @@
 
-icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', function  ($scope, $stateParams, Beelden, Core) {
+icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils', function  ($scope, $stateParams, Beelden, Core, Utils) {
     console.log('Beelctrl'); //FIXME: controller is called twice
     $scope.beeldType = $stateParams.beeldType;
     
@@ -8,17 +8,32 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', functi
     //functie om het huidige beeld op te halen
     $scope.currentBeeld = _(Beelden.beelden).filter(function(d){
         return d.beeld == $scope.beeldType;
-    })[0]
+    })[0];
     
     var store = Core.project().itemStore();
         
-    $scope.items = Core.project().items();
+    $scope.items = Utils.filter(Core.project().items(), $scope.currentBeeld.beeld);
     store.bind('datachange', function () {
         $scope.$apply(function(){
-            $scope.items = Core.project().items();
-        })
-    })
+            $scope.items = Utils.filter(Core.project().items(),  $scope.currentBeeld.beeld);
+             _($scope.currentBeeld.beeldonderdeel).each(function(d){
+                var item = _($scope.items).filter(function(b){
+                    return b.data('beeldonderdeel') == d.id
+                })
+                if(item.length > 0)
+                    d.content = item[0].data('beeldcontent');
 
+            })
+        })
+    });
+    _($scope.currentBeeld.beeldonderdeel).each(function(d){
+                var item = _($scope.items).filter(function(b){
+                    return b.data('beeldonderdeel') == d.id
+                })
+                if(item.length > 0)
+                    d.content = item[0].data('beeldcontent');
+
+            })
 
   
 }])

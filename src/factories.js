@@ -64,3 +64,15 @@ icm.factory('Core', ['$rootScope', function($rootScope) {
    return cow;
 
 }])
+
+icm.factory('Utils', ['$rootScope', function ($rootScope) {
+  return {
+     filter: function (items,beeld) { 
+        return _(items).filter(function(d){
+           return d.data('beeld') == beeld; 
+        });
+
+      }
+    } 
+
+}])
