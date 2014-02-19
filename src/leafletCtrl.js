@@ -1,6 +1,9 @@
 var tmp; //DEBUG
 
-icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData",function($scope, ItemStore,  leafletData) {
+icm.controller('LeafletController', [ '$scope','Core', 'Utils', "leafletData",function($scope, core, Utils,  leafletData) {
+    if(!core.project()) {
+        //return false;
+    }
     $scope.collection = {"type":"FeatureCollection","features":[]};
     $scope.locations = {"type":"FeatureCollection","features":[]};
     $scope.extents = {"type":"FeatureCollection","features":[]};
@@ -11,7 +14,7 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData",funct
         });
     };
     angular.extend($scope, {
-        utrecht: {
+        center: {
             lat: 52.752087,
             lng: 4.896941,
             zoom: 9
@@ -120,7 +123,10 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData",funct
 
     
     function populateFeatures(){
-      var items = icms.features();
+      //var items = icms.features();
+      var items = _(core.project().items()).filter(function(d){
+            return (!d.deleted() && d.data('type')=='feature');
+      });
       var features = [];
       for (i=0;i<items.length;i++){
           var feature = items[i].data('feature');
@@ -132,7 +138,10 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData",funct
     
     function populatePeers(){
         //$scope.extents = {"type":"FeatureCollection","features":[]};
-        var peers = icms.peers();
+        var peers = _(core.peers())
+            .filter(function(d){
+                return (!d.deleted());
+            });
 	    for (i=0;i<peers.length;i++){
 	        var peer = peers[i];
 	        if (peer.data('extent') && peer.id() != core.peerid()){ //TODO: core
@@ -144,12 +153,17 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData",funct
 	        }
 	    }
     }
-    
-    ItemStore.on('datachange',function() {
-        populateFeatures();
+    var itemstore = core.project().itemStore();
+    var peerstore = core.peerStore();
+    itemstore.bind('datachange',function() {
+        $scope.$apply(function(){
+                populateFeatures();
+        });
     });
-    core.peerStore().on('datachange',function() {
-        populatePeers();
+    peerstore.bind('datachange',function() {
+        $scope.$apply(function(){
+                populatePeers();
+        });
     });
     
     populateFeatures();
@@ -232,6 +246,7 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData",funct
             $scope.controls.linecontrol.disable();
         //});
     };
+    //TODO: work in progress....
     var editlayerBinds = {
         'delete': function(d){
             if (confirm('Verwijderen?')) {
