@@ -75,9 +75,8 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData", func
 		
             var d = new Date();
             var timestamp = d.getTime();
-            feature.properties.icon = './images/mapicons/mapicons/emergencyphone.png'; //TODO TT: not nice
-            feature.properties.linecolor = "aliceBlue";
-            feature.properties.polycolor = "red";
+            feature.properties.stroke = 'green';
+            feature.properties.fill = 'green';
             feature.properties.key = core.peerid() + "_" + timestamp;
             feature.properties.creator = core.user().data('name');
             feature.properties.owner = core.user().data('name');
@@ -117,7 +116,16 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData", func
             $scope.controls.linecontrol.disable();
         });
     };
-    
+    var editlayerBinds = {
+        'delete': function(d){
+            if (confirm('Verwijderen?')) {
+                var key = d.feature.id.toString();
+                core.project().items(key).deleted('true').sync();
+            } else {
+                // Do nothing!
+            }
+        }
+    };
     angular.extend($scope, {
         utrecht: {
             lat: 52.752087,
@@ -168,6 +176,7 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData", func
                     name: 'editlayer',
                     type: 'd3layer',
                     visible: true,
+                    //binds: binds,
                     layerOptions: {
                         data: $scope.collection,
                         options: {
@@ -180,12 +189,6 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData", func
                                     stroke: "#000033"
                                     //stroke: "steelBlue"
                                 }
-                            },
-                            style: {
-                                fill: "none",
-                                stroke: "steelBlue",
-                                'stroke-width': 2,
-                                opacity: 0.5
                             }
                         }
                     }
