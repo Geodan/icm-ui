@@ -9,7 +9,7 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
         // 'contacts.list' or one of its decendents is active.
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-       if(core === 'undefined') {alert('aargh');}
+      
       }])
     .config(
         [          '$stateProvider', '$urlRouterProvider',

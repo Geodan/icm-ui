@@ -1,5 +1,5 @@
 var tmp; //DEBUG
-icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData", function($scope, ItemStore, leafletData) {
+icm.controller('LeafletController', [ '$scope',  "leafletData", function($scope, leafletData) {
     console.log('init controller'); //FIXME: controller is called twice... but why?
     $scope.collection = {"type":"FeatureCollection","features":[]};
     $scope.itemStore = {};
@@ -18,13 +18,7 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData", func
         $scope.eventDetected = "MouseMove";
     });
     
-    ItemStore.on('datachange',function(data) {
-          $scope.collection.features = [];
-          var items = icms.features();
-          for (i=0;i<items.length;i++){
-              $scope.collection.features.push(feature);
-          }
-    });
+    
     $scope.collection.features = [];
     var items = icms.features();
 

@@ -1,5 +1,5 @@
 
-icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'ItemStore', function  ($scope, $stateParams, Beelden, ItemStore) {
+icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', function  ($scope, $stateParams, Beelden) {
     console.log('Beelctrl'); //FIXME: controller is called twice
     $scope.beeldType = $stateParams.beeldType;
     var items;
@@ -25,31 +25,7 @@ currentBeeld =
         return d.beeld == $scope.beeldType;
     })[0]
 
-    //functies om de complete itemstore aan deze control te hangen.
-    $scope.itemStore = {};
-    ItemStore.on('datachange',function(data) {
-        console.warn('change');
-        items = ItemStore.filter(icms.messages(),$scope.currentBeeld.beeld);
-        _($scope.currentBeeld.beeldonderdeel).each(function(d){
-            var item = _(items).filter(function(b){
-                return b.data('beeldonderdeel') == d.id
-            })
-            if(item.length > 0)
-                d.content = item[0].data('beeldcontent');
-        })
-    });
-
-    /*
-        items: cow.item.data('beeldonderdeel').data('beeldcontent')
-    */
-    items = ItemStore.filter(icms.messages(),$scope.currentBeeld.beeld);
-    _($scope.currentBeeld.beeldonderdeel).each(function(d){
-        var item = _(items).filter(function(b){
-            return b.data('beeldonderdeel') == d.id
-        })
-        if(item.length > 0)
-            d.content = item[0].data('beeldcontent');
-    })
+  
 }])
 
 icm.controller('BeeldSideCtrl', ['$scope', 'Beelden', function  ($scope, Beelden) {
