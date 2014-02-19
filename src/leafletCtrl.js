@@ -20,7 +20,8 @@ icm.controller('LeafletController', [ '$scope',  "leafletData", function($scope,
     
     
     $scope.collection.features = [];
-    var items = icms.features();
+    var items = [];
+  //  var items = icms.features();
 
     var features = [];
     for (i=0;i<items.length;i++){

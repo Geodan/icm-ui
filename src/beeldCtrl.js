@@ -1,29 +1,24 @@
 
-icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', function  ($scope, $stateParams, Beelden) {
+icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', function  ($scope, $stateParams, Beelden, Core) {
     console.log('Beelctrl'); //FIXME: controller is called twice
     $scope.beeldType = $stateParams.beeldType;
-    var items;
-/*
-
-currentBeeld = 
-{
-    { beeld: 'wot', title: 'Tactisch (WOT)', beeldonderdeel:
-            [   {title:'Tijdlijn',id:'tijdlijn'},
-                {title:'Beeldvorming',id:'beeldvorming'},
-                {title:'Oordeelsvorming',id:'oordeelsvorming'},
-                {title:'Besluitsvorming',id:'besluitsvorming'},
-                {title:'Knelpunten',id:'knelpunten'},
-                {title:'Acties/maatregelen',id:'maatregelen'},              
-                {title:'Prognose (verwachting)',id:'prognose'}
-            ]}
-
-}
-*/
+    
+    if(!Core.project()) return false;
 
     //functie om het huidige beeld op te halen
     $scope.currentBeeld = _(Beelden.beelden).filter(function(d){
         return d.beeld == $scope.beeldType;
     })[0]
+    
+    var store = Core.project().itemStore();
+        
+    $scope.items = Core.project().items();
+    store.bind('datachange', function () {
+        $scope.$apply(function(){
+            $scope.items = Core.project().items();
+        })
+    })
+
 
   
 }])

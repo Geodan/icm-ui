@@ -56,10 +56,11 @@ icm.factory('Beelden', ['$rootScope',function($rootScope) {
 }])
 
 icm.factory('Core', ['$rootScope', function($rootScope) {
-  var cow = {};
-   cow.core = new Cow.core({
-          wsUrl: 'wss://websocket.geodan.nl:443/new'
-        });
    
-   return cow.core;
+   var cow = new Cow.core({
+          wsUrl: 'wss://websocket.geodan.nl:443/new'
+        });   
+
+   return cow;
+
 }])

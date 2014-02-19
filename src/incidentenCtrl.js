@@ -17,5 +17,11 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', function($scope, Core){
         })
     })
 
+    $scope.setProject = function(project) {
+        $scope.incident = project.data('name')||project.id();
+        Core.project(project.id());   
+        
+    };
+
 }]);
 
