@@ -1,6 +1,6 @@
 var tmp; //DEBUG
 
-icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData",function($scope, ItemStore,  leafletData) {
+icm.controller('LeafletController', [ '$scope',  "leafletData",function($scope,  leafletData) {
     $scope.collection = {"type":"FeatureCollection","features":[]};
     $scope.locations = {"type":"FeatureCollection","features":[]};
     $scope.extents = {"type":"FeatureCollection","features":[]};
@@ -51,7 +51,7 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData",funct
                     layerOptions: {
                         data: $scope.collection,
                         options: {
-                            core: core, //TODO
+                           
                             onClick: editmenu,
                             labels: true,
                             labelconfig: {
@@ -71,7 +71,7 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData",funct
                     layerOptions: {
                         data: $scope.extents,
                         options: {
-                            core: core //TODO
+                         
                         }
                     }
                 }
@@ -95,8 +95,8 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData",funct
             top: bounds.getNorth()
         };
         var b = [bbox.left,bbox.bottom,bbox.right,bbox.top];
-        var peerid = core.peerid(); //TODO: core
-        var username = core.user().data('name'); //TODO: core 
+        var peerid =''// core.peerid(); //TODO: core
+        var username = ''//core.user().data('name'); //TODO: core 
         var feature = { "id": peerid,
                         "type": "Feature",
                         "geometry": {
@@ -112,15 +112,15 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData",funct
                         "label":""
                     }
                 };
-        if (core.peerid()){
+        /*if (core.peerid()){
             var peer = core.peers(core.peerid());
             peer.data('extent',feature).sync();
-        }
+        }*/
     };
 
     
     function populateFeatures(){
-      var items = icms.features();
+      var items = []// icms.features();
       var features = [];
       for (i=0;i<items.length;i++){
           var feature = items[i].data('feature');
@@ -132,7 +132,7 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData",funct
     
     function populatePeers(){
         //$scope.extents = {"type":"FeatureCollection","features":[]};
-        var peers = icms.peers();
+        var peers = []//icms.peers();
 	    for (i=0;i<peers.length;i++){
 	        var peer = peers[i];
 	        if (peer.data('extent') && peer.id() != core.peerid()){ //TODO: core
@@ -145,12 +145,8 @@ icm.controller('LeafletController', [ '$scope','ItemStore',  "leafletData",funct
 	    }
     }
     
-    ItemStore.on('datachange',function() {
-        populateFeatures();
-    });
-    core.peerStore().on('datachange',function() {
-        populatePeers();
-    });
+
+
     
     populateFeatures();
     populatePeers();
