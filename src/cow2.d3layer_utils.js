@@ -1,8 +1,8 @@
 //Replacing editpopup:
 var Cow = window.Cow || {};
-Cow.utils = {};
+Cow_utils = {};
 
-Cow.utils.menuconfig = {
+Cow_utils.menuconfig = {
      "name": "root",
      "children": [{
           "name": "model.population",
@@ -37,12 +37,13 @@ Cow.utils.menuconfig = {
      }]
 };
 
-Cow.utils.menu = function(feature, params){
+Cow_utils.menu = function(event, config){
+    var self = this;
+    var fid = event.target.options.id;
     d3.selectAll('.popup').remove(); //Remove any old menu's
-    
-    var layer = params.layer;
-    var menuconfig = params.menuconfig;
-    var map = layer._map;
+    var feature = event.target.toGeoJSON();
+    var menuconfig = config.menuconfig;
+    var map = event.target._map;
     //var core = layer.core;
     //var g = layer._svg.append('g');
     var d3Selector, g, overlayPane, svg;
@@ -51,7 +52,7 @@ Cow.utils.menu = function(feature, params){
     this._svg = svg = d3Selector.select('svg');
     g = svg.append('g');
     //var g = d3.select('#map').select('svg').append('g');
-    var center = map.mouseEventToLayerPoint(d3.event);
+    var center = map.latLngToLayerPoint(event.latlng);
     
     g.attr('class','popup')
         .attr("transform", function(z){
@@ -108,7 +109,7 @@ Cow.utils.menu = function(feature, params){
              entity.remove();
              d3.event.stopPropagation();//Prevent the map from firing click event as well
              var name = d.name;
-             layer.trigger(name, {feature: feature});
+             self.trigger(name, {fid: fid});
         })
         .on('mouseover', function(d){ //Mouseover menulabel
             d3.select(this)
@@ -176,8 +177,10 @@ Cow.utils.menu = function(feature, params){
     //  });
    }
 };
+//Adding some Backbone event binding functionality to the store
+_.extend(Cow_utils.menu.prototype, Events);
 
-Cow.utils.populator = function(feature){
+Cow_utils.populator = function(feature){
  var populatorcallback = function(d){ 
     
     var population = "Populatie: \n" ;
@@ -255,7 +258,7 @@ if (item.permissions('view')){
     
 };
 
-Cow.utils.editText = function(feature,self){
+Cow_utils.editText = function(feature,self){
     //icm.msg(item);
     /*
     name = feature.properties.name || "";
@@ -352,7 +355,7 @@ Cow.utils.editText = function(feature,self){
      */
 };
 
-Cow.utils.share = function(feature, self){
+Cow_utils.share = function(feature, self){
     var mygroups = self.core.project().myGroups();
     groupnames = "";
     for (var i = 0;i<mygroups.length;i++){
@@ -427,7 +430,7 @@ Cow.utils.share = function(feature, self){
     //formbox.html(form);
 };
 
-Cow.utils.textbox = function(feature,obj, svg){
+Cow_utils.textbox = function(feature,obj, svg){
     var _this = this;
     var self = this.map;
     //d3.selectAll('.popup').remove(); //Remove any old menu's
@@ -489,7 +492,7 @@ Cow.utils.textbox = function(feature,obj, svg){
         
 };
 
-Cow.utils.ripple = function(feature, object, context){
+Cow_utils.ripple = function(feature, object, context){
     console.log(context._map);
     
     var map = context._map;
