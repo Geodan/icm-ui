@@ -1,13 +1,12 @@
 var tmp; //DEBUG
 
-icm.controller('LeafletController', [ '$scope','Core', 'Utils', "leafletData",function($scope, Core, Utils,  leafletData) {
+icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leafletData",function($scope, $timeout, Core, Utils,  leafletData) {
     if(!Core.project()) {
         //return false;
     }
     $scope.markers = [];
     $scope.paths = [];
     function populateFeatures(){
-      //var items = icms.features();
       var items = _(Core.project().items()).filter(function(d){
             return (!d.deleted() && d.data('type')=='feature');
       });
@@ -25,18 +24,17 @@ icm.controller('LeafletController', [ '$scope','Core', 'Utils', "leafletData",fu
                     lng: coords[0],
                     message: item.id(),
                     icon:{
-                        iconUrl: feature.properties['marker-url'],
+                        iconUrl: feature.properties['marker-url'] || './images/mapicons/imoov/s0620_B12---g.png',
                         //shadowUrl: 'img/leaf-shadow.png',
-                        //iconSize:     [35, 35], // size of the icon
-                        //shadowSize:   [50, 64], // size of the shadow
-                        iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
+                        iconSize:     [35, 35], // size of the icon
+                        shadowSize:   [0, 0], // size of the shadow
+                        iconAnchor:   [17, 17], // point of the icon which will correspond to marker's location
                         //shadowAnchor: [4, 62],  // the same for the shadow
                         //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
                     }
                 });
           }
           else {
-              var coords = feature.geometry.coordinates;
               var f = L.GeoJSON.geometryToLayer(feature.geometry);
               var type, fill;
               //TODO: check this for completeness
@@ -59,15 +57,17 @@ icm.controller('LeafletController', [ '$scope','Core', 'Utils', "leafletData",fu
                       break;
               }
               $scope.paths.push({
+                  //TODO: check this for completeness
+                  id: item.id(),
                   type: type,
                   latlngs: f.getLatLngs(),
                   message: item.id(),
                   fill: fill,
                   color: props['stroke'] || "#555555",
-                  "opacity" : props['stroke-opacity'] || 1.0,
-                  "weight" : props['stroke-width'] || 2,  
-                  "fillColor" : props['fill'] || "#555555",
-                  "fillOpacity" : props['fill-opacity'] ||0.5
+                  opacity: props['stroke-opacity'] || 1.0,
+                  weight: props['stroke-width'] || 2,  
+                  fillColor: props['fill'] || "#555555",
+                  fillOpacity: props['fill-opacity'] ||0.5
                   //"opacity" : props['opacity'] || 0.5
               });
           }
@@ -75,6 +75,15 @@ icm.controller('LeafletController', [ '$scope','Core', 'Utils', "leafletData",fu
     }
     
     function populatePeers(){
+        //Throw out old extents
+        var arrayOfObjects = $scope.paths;
+        for(var i = 0; i < arrayOfObjects.length; i++) {
+            var obj = arrayOfObjects[i];
+            if(obj.source == 'peer') {
+                arrayOfObjects.splice(i, 1);
+                i--;
+            }
+        }
         var extents = [];
         var locations = [];
         var peers = _(Core.peers())
@@ -83,16 +92,26 @@ icm.controller('LeafletController', [ '$scope','Core', 'Utils', "leafletData",fu
             });
 	    for (i=0;i<peers.length;i++){
 	        var peer = peers[i];
-	        if (peer.data('extent') && peer.id() != Core.peerid()){ //TODO: Core
-	            extents.push(peer.data('extent'));
+	        if (peer.data('extent') && peer.id() != Core.peerid()){ 
+	            var feature = peer.data('extent');
+	            var f = L.GeoJSON.geometryToLayer(feature.geometry);
+	            var path = {
+	                id: peer.id(),
+	                source: 'peer',
+	                type: 'polygon',
+	                latlngs: f.getLatLngs(),
+	                fill: false,
+	                color: 'steelBlue',
+	                weight: 2,
+	                opacity: 0.5
+	            };
+	            $scope.paths.push(path);
 	        }
-	        if (peer.data('location') && peer.id() != Core.peerid()){ //TODO: Core
+	        if (peer.data('location') && peer.id() != Core.peerid()){
 	            //Own location is handled somewhere else
 	            locations.push(peer.data('location'));
 	        }
 	    }
-	    $scope.extents = {"type":"FeatureCollection","features":extents};
-	    $scope.locations = {"type":"FeatureCollection","features":locations};
     }
     populateFeatures();
     populatePeers();
@@ -224,11 +243,11 @@ icm.controller('LeafletController', [ '$scope','Core', 'Utils', "leafletData",fu
     });
     peerstore.bind('datachange',function() {
         //FIXME $timeout not defined
-        //$timeout(function() {
-        //    $scope.$apply(function(){
-        //            populatePeers();
-        //    });
-        //});
+        $timeout(function() {
+            $scope.$apply(function(){
+                    populatePeers();
+            });
+        });
     });
     tmp = $scope;
     $scope.initmap = function(){
@@ -266,6 +285,7 @@ icm.controller('LeafletController', [ '$scope','Core', 'Utils', "leafletData",fu
             var timestamp = d.getTime();
             feature.properties.stroke = 'green';
             feature.properties.fill = 'green';
+            feature.properties['marker-url'] = './images/mapicons/imoov/s0620_B12---g.png';
             feature.properties.key = Core.peerid() + "_" + timestamp;
             feature.properties.creator = Core.user().data('name');
             feature.properties.owner = Core.user().data('name');
@@ -286,25 +306,19 @@ icm.controller('LeafletController', [ '$scope','Core', 'Utils', "leafletData",fu
     
     
     $scope.drawPoint = function(){
-        //$scope.initmap().then(function(){
             $scope.controls.pointcontrol.enable();
             $scope.controls.polycontrol.disable();
             $scope.controls.linecontrol.disable();
-        //});
     };
     $scope.drawLine = function(){
-       //$scope.initmap().then(function(){
             $scope.controls.pointcontrol.disable();
             $scope.controls.polycontrol.disable();
             $scope.controls.linecontrol.enable();
-       //});
     };
     $scope.drawPolygon = function(){
-        //$scope.initmap().then(function(){
             $scope.controls.pointcontrol.disable();
             $scope.controls.polycontrol.enable();
             $scope.controls.linecontrol.disable();
-        //});
     };
     //TODO: work in progress....
     var editlayerBinds = {
