@@ -1,8 +1,8 @@
 //Replacing editpopup:
 var Cow = window.Cow || {};
-Cow.utils = {};
+Cow_utils = {};
 
-Cow.utils.menuconfig = {
+Cow_utils.menuconfig = {
      "name": "root",
      "children": [{
           "name": "model.population",
@@ -37,7 +37,9 @@ Cow.utils.menuconfig = {
      }]
 };
 
-Cow.utils.menu = function(event, config){
+Cow_utils.menu = function(event, config){
+    var self = this;
+    var fid = event.target.options.id;
     d3.selectAll('.popup').remove(); //Remove any old menu's
     var feature = event.target.toGeoJSON();
     var menuconfig = config.menuconfig;
@@ -107,7 +109,7 @@ Cow.utils.menu = function(event, config){
              entity.remove();
              d3.event.stopPropagation();//Prevent the map from firing click event as well
              var name = d.name;
-             self.trigger(name, {feature: feature});
+             self.trigger(name, {fid: fid});
         })
         .on('mouseover', function(d){ //Mouseover menulabel
             d3.select(this)
@@ -175,8 +177,10 @@ Cow.utils.menu = function(event, config){
     //  });
    }
 };
+//Adding some Backbone event binding functionality to the store
+_.extend(Cow_utils.menu.prototype, Events);
 
-Cow.utils.populator = function(feature){
+Cow_utils.populator = function(feature){
  var populatorcallback = function(d){ 
     
     var population = "Populatie: \n" ;
@@ -254,7 +258,7 @@ if (item.permissions('view')){
     
 };
 
-Cow.utils.editText = function(feature,self){
+Cow_utils.editText = function(feature,self){
     //icm.msg(item);
     /*
     name = feature.properties.name || "";
@@ -351,7 +355,7 @@ Cow.utils.editText = function(feature,self){
      */
 };
 
-Cow.utils.share = function(feature, self){
+Cow_utils.share = function(feature, self){
     var mygroups = self.core.project().myGroups();
     groupnames = "";
     for (var i = 0;i<mygroups.length;i++){
@@ -426,7 +430,7 @@ Cow.utils.share = function(feature, self){
     //formbox.html(form);
 };
 
-Cow.utils.textbox = function(feature,obj, svg){
+Cow_utils.textbox = function(feature,obj, svg){
     var _this = this;
     var self = this.map;
     //d3.selectAll('.popup').remove(); //Remove any old menu's
@@ -488,7 +492,7 @@ Cow.utils.textbox = function(feature,obj, svg){
         
 };
 
-Cow.utils.ripple = function(feature, object, context){
+Cow_utils.ripple = function(feature, object, context){
     console.log(context._map);
     
     var map = context._map;
