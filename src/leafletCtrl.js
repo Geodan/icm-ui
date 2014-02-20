@@ -1,17 +1,62 @@
 var tmp; //DEBUG
 
-icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leafletData",function($scope, $timeout, Core, Utils,  leafletData) {
+icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leafletData",'leafletEvents',function($scope, $timeout, Core, Utils,  leafletData, leafletEvents) {
     if(!Core.project()) {
         //return false;
     }
+    
+    var editmenu = function(event){
+        Cow.utils.menu(event, {
+            menuconfig: Cow.utils.menuconfig
+        });
+    };
+    
+    $scope.events = {
+        markers: {
+            enable: leafletEvents.getAvailableMarkerEvents(),
+        },
+        paths: {
+            enable: leafletEvents.getAvailablePathEvents(),
+        }
+    };
+
+    $scope.eventDetected = "No events yet...";
+    $scope.$on('leafletDirectiveMarker.click', function(event, args){
+        var event = args.leafletEvent;
+        editmenu(event); 
+        //$scope.eventDetected = event.name;
+    });
+    $scope.$on('leafletDirectivePath.click', function(event, args){
+        var event = args.leafletEvent;
+        editmenu(event); 
+        //$scope.eventDetected = event.name;
+    });
+    
     $scope.markers = [];
     $scope.paths = [];
     function populateFeatures(){
       var items = _(Core.project().items()).filter(function(d){
             return (!d.deleted() && d.data('type')=='feature');
       });
-      var markers = [];
-      var paths = [];
+      
+      //Throw out old extents
+      var arrayOfObjects = $scope.paths;
+      for(var i = 0; i < arrayOfObjects.length; i++) {
+          var obj = arrayOfObjects[i];
+          if(obj.source == 'items') {
+              arrayOfObjects.splice(i, 1);
+              i--;
+          }
+      }
+      //Throw out old locations
+      var arrayOfObjects = $scope.markers;
+      for(var i = 0; i < arrayOfObjects.length; i++) {
+          var obj = arrayOfObjects[i];
+          if(obj.source == 'items') {
+              arrayOfObjects.splice(i, 1);
+              i--;
+          }
+      }
       for (i=0;i<items.length;i++){
           var item = items[i];
           var feature = item.data('feature');
@@ -25,12 +70,9 @@ icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leaf
                     message: item.id(),
                     icon:{
                         iconUrl: feature.properties['marker-url'] || './images/mapicons/imoov/s0620_B12---g.png',
-                        //shadowUrl: 'img/leaf-shadow.png',
-                        iconSize:     [35, 35], // size of the icon
-                        shadowSize:   [0, 0], // size of the shadow
-                        iconAnchor:   [17, 17], // point of the icon which will correspond to marker's location
-                        //shadowAnchor: [4, 62],  // the same for the shadow
-                        //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                        iconSize:     [35, 35],
+                        shadowSize:   [0, 0],
+                        iconAnchor:   [17, 17]
                     }
                 });
           }
@@ -60,6 +102,7 @@ icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leaf
                   //TODO: check this for completeness
                   id: item.id(),
                   type: type,
+                  source: 'items',
                   latlngs: f.getLatLngs(),
                   message: item.id(),
                   fill: fill,
@@ -79,37 +122,65 @@ icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leaf
         var arrayOfObjects = $scope.paths;
         for(var i = 0; i < arrayOfObjects.length; i++) {
             var obj = arrayOfObjects[i];
-            if(obj.source == 'peer') {
+            if(obj.source == 'peers') {
+                arrayOfObjects.splice(i, 1);
+                i--;
+            }
+        }
+        //Throw out old locations
+        var arrayOfObjects = $scope.markers;
+        for(var i = 0; i < arrayOfObjects.length; i++) {
+            var obj = arrayOfObjects[i];
+            if(obj.source == 'peers') {
                 arrayOfObjects.splice(i, 1);
                 i--;
             }
         }
         var extents = [];
         var locations = [];
+        //Get active peers
         var peers = _(Core.peers())
             .filter(function(d){
                 return (!d.deleted());
             });
+        
 	    for (i=0;i<peers.length;i++){
 	        var peer = peers[i];
+	        //Add extents
 	        if (peer.data('extent') && peer.id() != Core.peerid()){ 
 	            var feature = peer.data('extent');
 	            var f = L.GeoJSON.geometryToLayer(feature.geometry);
 	            var path = {
 	                id: peer.id(),
-	                source: 'peer',
+	                source: 'peers',
 	                type: 'polygon',
 	                latlngs: f.getLatLngs(),
 	                fill: false,
 	                color: 'steelBlue',
 	                weight: 2,
-	                opacity: 0.5
+	                opacity: 0.5,
+	                fillOpacity: 0
 	            };
 	            $scope.paths.push(path);
 	        }
+	        //Add locations
 	        if (peer.data('location') && peer.id() != Core.peerid()){
 	            //Own location is handled somewhere else
-	            locations.push(peer.data('location'));
+	            var feature = peer.data('location');
+	            var f = L.GeoJSON.geometryToLayer(feature.geometry);
+	            var coords = feature.geometry.coordinates;
+                $scope.markers.push({
+                    lat: coords[1],
+                    lng: coords[0],
+                    source: 'peers',
+                    message: peer.id(),
+                    icon:{
+                        iconUrl: './images/mapicons/imoov/s0140--k.png',
+                        iconSize:     [12, 12], // size of the icon
+                        shadowSize:   [0, 0], // size of the shadow
+                        iconAnchor:   [6, 6], // point of the icon which will correspond to marker's location
+                    }
+                });
 	        }
 	    }
     }
@@ -198,6 +269,13 @@ icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leaf
     });
     $scope.$on('leafletDirectiveMap.load', function (event, args) {
         $scope.initmap();
+    });
+    $scope.$on("leafletDirectiveMap.markerMouseover", function(ev, leafletEvent) {
+        console.log(leafletEvent);
+    });
+
+    $scope.$on("leafletDirectiveMap.markerClick", function(ev, featureSelected, leafletEvent) {
+        console.log(featureSelected);
     });
     
     $scope.handleNewExtent = function(e){

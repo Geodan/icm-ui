@@ -37,12 +37,11 @@ Cow.utils.menuconfig = {
      }]
 };
 
-Cow.utils.menu = function(feature, params){
+Cow.utils.menu = function(event, config){
     d3.selectAll('.popup').remove(); //Remove any old menu's
-    
-    var layer = params.layer;
-    var menuconfig = params.menuconfig;
-    var map = layer._map;
+    var feature = event.target.toGeoJSON();
+    var menuconfig = config.menuconfig;
+    var map = event.target._map;
     //var core = layer.core;
     //var g = layer._svg.append('g');
     var d3Selector, g, overlayPane, svg;
@@ -51,7 +50,7 @@ Cow.utils.menu = function(feature, params){
     this._svg = svg = d3Selector.select('svg');
     g = svg.append('g');
     //var g = d3.select('#map').select('svg').append('g');
-    var center = map.mouseEventToLayerPoint(d3.event);
+    var center = map.latLngToLayerPoint(event.latlng);
     
     g.attr('class','popup')
         .attr("transform", function(z){
@@ -108,7 +107,7 @@ Cow.utils.menu = function(feature, params){
              entity.remove();
              d3.event.stopPropagation();//Prevent the map from firing click event as well
              var name = d.name;
-             layer.trigger(name, {feature: feature});
+             self.trigger(name, {feature: feature});
         })
         .on('mouseover', function(d){ //Mouseover menulabel
             d3.select(this)
