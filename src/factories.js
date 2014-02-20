@@ -40,7 +40,7 @@ icm.factory('Beelden', ['$rootScope',function($rootScope) {
        			{title:'Acties/maatregelen',id:'maatregelen'},       		
        			{title:'Prognose (verwachting)',id:'prognose'}
    			]}
-        ,{ beeld: 'scenarios', title: 'Scenario\'s / maatregelen', beeldonderdeel: 
+        ,{ beeld: 'scenarios', title: 'Scenario\'s', beeldonderdeel: 
         	[	{title:'Meest waarschijnlijk',id:'meest'},
         		{title:'Minder waarschijnlijk',id:'minder'},
         		{title:'Minst waarschijnlijk',id:'minst'}

@@ -7,6 +7,7 @@
 	    <dd class="well"></dd>
  	  </beeld>
   	</dl> -->
+    <!--
   	<div class="panel panel-default"  ng-repeat="onderdeel in currentBeeld.beeldonderdeel">
 	  <div class="panel-heading">
     	<h3 class="panel-title">{{onderdeel.title}}<span class="pull-right btn  text-success "><span class="glyphicon glyphicon-ok"></span></span><span class="pull-right btn  text-danger "><span class="glyphicon glyphicon-remove"></span></span><span class="pull-right btn btn-link"><span class="glyphicon glyphicon-pencil"></span></span></h3>
@@ -14,8 +15,16 @@
 	  <div class="panel-body" contenteditable="true">
 	    {{onderdeel.content}}
 	  </div>
-	</div>
-
+	</div>-->
+<div class="list-group">
+    <a class="list-group-item " ng-repeat="onderdeel in currentBeeld.beeldonderdeel" is-edit="isedit">
+     <h4 class="list-group-item-heading"> {{onderdeel.title}} <i class="pull-right glyphicon" ng-class="{'glyphicon-pencil': !isedit, 'glyphicon-chevron-right': isedit}"></i></h4><hr class="small"/>
+      <p class="list-group-item-text" contenteditable="isedit" ng-class="{'well': isedit}">{{onderdeel.content}}</p>
+    </a>
+        
+    
+</div>
+ 
   </div>
   
   <div class="col-sm-6  col-md-6 col-lg-8 kaart"   ng-controller="LeafletController">
