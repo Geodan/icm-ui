@@ -109,7 +109,7 @@ Cow_utils.menu = function(event, config){
              entity.remove();
              d3.event.stopPropagation();//Prevent the map from firing click event as well
              var name = d.name;
-             self.trigger(name, {fid: fid});
+             self.trigger(name, {fid: fid, layer: event.target});
         })
         .on('mouseover', function(d){ //Mouseover menulabel
             d3.select(this)
