@@ -5,11 +5,16 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     if(!Core.project()) {
         //return false;
     }
+    var core = Core;
     tmp = $scope;
     var controls= {};
     var drawControl;
     $scope.icontypes = {};
-    $http({method: 'POST', url: './images/mapicons/imoov_list.js'}).
+    $scope.leafletService = LeafletService;
+    
+    
+    /* Initiate the marker icons */
+    $http({method: 'POST', url: './images/mapicons/imoov_list_subset.js'}).
         success(function(data, status, headers, config) {
             _(data.icons).each(function(d){
                 $scope.icontypes[d.url] = d;
@@ -19,13 +24,31 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         error(function(data, status, headers, config) {
             console.log(status);
         });
+    /* Initiate the line icons */
+    $scope.linestyles = [
+        {stroke: '#000'},
+        {stroke: '#f57900'},
+        {stroke: '#204a87'},
+        {stroke: '#cc0000'},
+        {stroke: '#5c3566'},
+        {stroke: '#4e9a06'}];
+    $scope.polygonstyles = [
+        {stroke: '#000'  ,fill: '#000'  },
+        {stroke: '#f57900',fill: '#f57900'},
+        {stroke: '#204a87',fill: '#204a87'},
+        {stroke: '#cc0000',fill: '#cc0000'},
+        {stroke: '#5c3566',fill: '#5c3566'},
+        {stroke: '#4e9a06',fill: '#4e9a06'}];
     
-    
-    $scope.currentstyle = {icon: {url: 'imoov/s0110_A10---g.png'}};
+    $scope.currentstyle = {
+        icon: {url: 'imoov/s0110_A10---g.png'},
+        line: {stroke: '#000'},
+        polygon: {stroke: '#000',fill: '#000'}
+    };
     
     $scope.markers = {};
     $scope.paths = {};
-    $scope.service = LeafletService;
+    
     $scope.events = {
         markers: {
             enable: leafletEvents.getAvailableMarkerEvents()
@@ -64,7 +87,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     });
     $scope.$on('leafletDirectivePath.click', function(event, args){
         var event = args.leafletEvent;
-        editmenu(event); 
+        editmenu(event);
     });
     $scope.$on('leafletDirectiveMap.moveend', function(event,e){
         handleNewExtent(e.leafletEvent);
@@ -212,7 +235,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     
 
     angular.extend($scope, {
-        utrecht: {
+        center: {
             lat: 52.752087,
             lng: 4.896941,
             zoom: 9
@@ -281,6 +304,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     });
     
     var handleNewExtent = function(e){
+        var center = e.target.getCenter();
+        var zoom = e.target.getZoom();
+        $scope.leafletService.center({lat: center.lat, lng:center.lng, zoom: zoom}); 
         var bounds = e.target.getBounds();
         var bbox = {
             left: bounds.getWest(),
@@ -333,7 +359,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     });
     
     var initmap = function(){
+      $scope.center = $scope.leafletService.center() || $scope.center;
       return leafletData.getMap().then(function(map) {
+        
         // Use a geoJson object for the drawnItems instead of featureGroup
         var drawnItems = new L.geoJson();
         map.addLayer(drawnItems);
@@ -379,12 +407,19 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
 		
             var d = new Date();
             var timestamp = d.getTime();
-            feature.properties.stroke = 'green';
-            feature.properties.fill = 'green';
             feature.properties.key = core.peerid() + "_" + timestamp;
             feature.properties.creator = core.user().data('name');
             feature.properties.owner = core.user().data('name');
-
+            feature.properties['marker-url'] = $scope.currentstyle.icon.url;
+            //Stroke depends on what kind of geom we're drawing
+            if (controls.polycontrol.enabled()){
+                feature.properties.stroke = $scope.currentstyle.polygon.stroke;
+            }
+            else {
+                feature.properties.stroke = $scope.currentstyle.line.stroke;
+            }
+            feature.properties.fill = $scope.currentstyle.polygon.fill;
+            
             var id = core.peerid() + "_" + timestamp;
             var mygroups = core.project().myGroups();
             var item = core.project().items({_id:id})
@@ -400,20 +435,23 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     };
     
    
-    drawPoint = function(style){
-            controls.pointcontrol.enable();
-            controls.polycontrol.disable();
-            controls.linecontrol.disable();
+    $scope.drawPoint = function(style){
+        $scope.currentstyle.icon = style;
+        controls.pointcontrol.enable();
+        controls.polycontrol.disable();
+        controls.linecontrol.disable();
     };
-    drawLine = function(style){
-            controls.pointcontrol.disable();
-            controls.polycontrol.disable();
-            controls.linecontrol.enable();
+    $scope.drawLine = function(style){
+        $scope.currentstyle.line = style;
+        controls.pointcontrol.disable();
+        controls.polycontrol.disable();
+        controls.linecontrol.enable();
     };
-    drawPolygon = function(style){
-            controls.pointcontrol.disable();
-            controls.polycontrol.enable();
-            controls.linecontrol.disable();
+    $scope.drawPolygon = function(style){
+        $scope.currentstyle.polygon = style;
+        controls.pointcontrol.disable();
+        controls.polycontrol.enable();
+        controls.linecontrol.disable();
     };
     
 }]);
