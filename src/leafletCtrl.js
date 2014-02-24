@@ -1,195 +1,17 @@
 var tmp; //DEBUG
 
-icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leafletData",'leafletEvents',function($scope, $timeout, Core, Utils,  leafletData, leafletEvents) {
-    if(!Core.project()) {
-        //return false;
-    }
-    
-    $scope.events = {
-        markers: {
-            enable: leafletEvents.getAvailableMarkerEvents()
-        },
-        paths: {
-            enable: leafletEvents.getAvailablePathEvents()
-        }
-    };
-    var editmenu = function(event){
-        var menu = new Cow_utils.menu(event, {
-            menuconfig: Cow_utils.menuconfig
+icm.controller('LeafletController', [ '$scope',  "leafletData",function($scope,  leafletData) {
+    $scope.collection = {"type":"FeatureCollection","features":[]};
+    $scope.locations = {"type":"FeatureCollection","features":[]};
+    $scope.extents = {"type":"FeatureCollection","features":[]};
+    var editmenu = function(feature, layer){
+        Cow.utils.menu(feature, {
+            layer: layer,
+            menuconfig: Cow.utils.menuconfig
         });
-        menu.on('delete', function(d){
-            if (confirm('Verwijderen?')) {
-                var key = d.fid;
-                Core.project().items(key).deleted('true').sync();
-            } else {
-                // Do nothing!
-            }
-        });
-        menu.on('edit.geom', function(d){
-            var feat = d.layer.toGeoJSON();
-            feat.properties.id = d.layer.options.id;
-            //Cheap ass cloning of the feature
-            $scope.drawControl.options.edit.featureGroup.addData(feat);
-            $scope.controls.editcontrol.enable();
-         });
     };
-    
-    $scope.$on('leafletDirectiveMarker.click', function(event, args){
-        var event = args.leafletEvent;
-        editmenu(event); 
-    });
-    $scope.$on('leafletDirectivePath.click', function(event, args){
-        var event = args.leafletEvent;
-        editmenu(event); 
-    });
-    $scope.$on('leafletDirectiveMap.moveend', function(event,e){
-        $scope.handleNewExtent(e.leafletEvent);
-    });
-    $scope.$on('leafletDirectiveMap.click', function(event,e){
-        d3.selectAll('.popup').remove();//Remove all popups on map
-        $scope.controls.editcontrol.save();
-        $scope.controls.editcontrol.disable();
-    });
-
-    $scope.$on('leafletDirectiveMap.load', function (event, args) {
-        $scope.initmap();
-    });
-    $scope.$on("leafletDirectiveMap.markerMouseover", function(ev, leafletEvent) {
-        console.log(leafletEvent);
-    });
-
-    $scope.$on("leafletDirectiveMap.markerClick", function(ev, featureSelected, leafletEvent) {
-        console.log(featureSelected);
-    });
-    
-    $scope.markers = {};
-    $scope.paths = {};
-    
-    $scope.populateFeatures = function(){
-      var items = _(Core.project().items()).filter(function(d){
-            return (!d.deleted() && d.data('type')=='feature');
-      });
-      
-      for (i=0;i<items.length;i++){
-          var item = items[i];
-          var feature = item.data('feature');
-          feature.id = item.id();
-          var props = feature.properties;
-          if (feature.geometry.type == 'Point'){
-              var coords = feature.geometry.coordinates;
-              $scope.markers[item.id().toString()] = {
-                    options: {
-                        id: item.id().toString()
-                    },
-                    id: item.id().toString(),
-                    lat: coords[1],
-                    lng: coords[0],
-                    message: item.id(),
-                    icon:{
-                        iconUrl: feature.properties['marker-url'] || './images/mapicons/imoov/s0620_B12---g.png',
-                        iconSize:     [35, 35],
-                        shadowSize:   [0, 0],
-                        iconAnchor:   [17, 17]
-                    }
-                };
-          }
-          else {
-              var f = L.GeoJSON.geometryToLayer(feature.geometry);
-              var type, fill;
-              //TODO: check this for completeness
-              switch (feature.geometry.type) {
-                  case 'LineString':
-                      type = 'polyline';
-                      fill = false;
-                      break;
-                  case 'Polygon':
-                      type = 'polygon';
-                      fill = true;
-                      break;
-                  case 'MultiLineString':
-                      fill = false;
-                      type = 'multiPolyline'
-                      break;
-                  case "MultiPolygon":
-                      fill = true;
-                      type = 'multiPolygon';
-                      break;
-              }
-              
-              $scope.paths[item.id().toString()] ={
-                  //TODO: check this for completeness
-                  id: item.id(),
-                  type: type,
-                  source: 'items',
-                  latlngs: f.getLatLngs(),
-                  message: item.id(),
-                  fill: fill,
-                  color: props['stroke'] || "#555555",
-                  opacity: props['stroke-opacity'] || 1.0,
-                  weight: props['stroke-width'] || 2,  
-                  fillColor: props['fill'] || "#555555",
-                  fillOpacity: props['fill-opacity'] ||0.5
-                  //"opacity" : props['opacity'] || 0.5
-              };
-          }
-      }
-    }
-    
-    function populatePeers(){
-        
-        var extents = [];
-        var locations = [];
-        //Get active peers
-        var peers = _(Core.peers())
-            .filter(function(d){
-                return (!d.deleted());
-            });
-        
-	    for (i=0;i<peers.length;i++){
-	        var peer = peers[i];
-	        //Add extents
-	        if (peer.data('extent') && peer.id() != Core.peerid()){ 
-	            var feature = peer.data('extent');
-	            var f = L.GeoJSON.geometryToLayer(feature.geometry);
-	            var path = {
-	                id: peer.id(),
-	                source: 'peers',
-	                type: 'polygon',
-	                latlngs: f.getLatLngs(),
-	                fill: false,
-	                color: 'steelBlue',
-	                weight: 2,
-	                opacity: 0.5,
-	                fillOpacity: 0
-	            };
-	            $scope.paths[peer.id().toString()] = path;
-	        }
-	        //Add locations
-	        if (peer.data('location') && peer.id() != Core.peerid()){
-	            //Own location is handled somewhere else
-	            var feature = peer.data('location');
-	            var f = L.GeoJSON.geometryToLayer(feature.geometry);
-	            var coords = feature.geometry.coordinates;
-                $scope.markers[peer.id().toString()] ={
-                    lat: coords[1],
-                    lng: coords[0],
-                    source: 'peers',
-                    message: peer.id(),
-                    icon:{
-                        iconUrl: './images/mapicons/imoov/s0140--k.png',
-                        iconSize:     [12, 12], // size of the icon
-                        shadowSize:   [0, 0], // size of the shadow
-                        iconAnchor:   [6, 6], // point of the icon which will correspond to marker's location
-                    }
-                };
-	        }
-	    }
-    }
-    $scope.populateFeatures();
-    populatePeers();
-    
     angular.extend($scope, {
-        center: {
+        utrecht: {
             lat: 52.752087,
             lng: 4.896941,
             zoom: 9
@@ -220,12 +42,49 @@ icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leaf
                         attribution: 'Hillshade layer by GIScience http://www.osm-wms.de',
                         crs: L.CRS.EPSG900913
                     }
+                },
+                editlayer: {
+                    name: 'editlayer',
+                    type: 'd3layer',
+                    visible: true,
+                    //binds: binds,
+                    layerOptions: {
+                        data: $scope.collection,
+                        options: {
+                           
+                            onClick: editmenu,
+                            labels: true,
+                            labelconfig: {
+                                field: "name",
+                                style: {
+                                    stroke: "#000033"
+                                    //stroke: "steelBlue"
+                                }
+                            }
+                        }
+                    }
+                },
+                extentlayer: {
+                    name: 'extents',
+                    type: 'd3layer',
+                    visible: true,
+                    layerOptions: {
+                        data: $scope.extents,
+                        options: {
+                         
+                        }
+                    }
                 }
             }
         }
     });
     
-    
+    $scope.$on('leafletDirectiveMap.moveend', function(event,e){
+        $scope.handleNewExtent(e.leafletEvent);
+    });
+    $scope.$on('leafletDirectiveMap.load', function (event, args) {
+        $scope.initmap();
+    });
     
     $scope.handleNewExtent = function(e){
         var bounds = e.target.getBounds();
@@ -236,8 +95,8 @@ icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leaf
             top: bounds.getNorth()
         };
         var b = [bbox.left,bbox.bottom,bbox.right,bbox.top];
-        var peerid = Core.peerid(); //TODO: Core
-        var username = Core.user().data('name'); //TODO: Core 
+        var peerid =''// core.peerid(); //TODO: core
+        var username = ''//core.user().data('name'); //TODO: core 
         var feature = { "id": peerid,
                         "type": "Feature",
                         "geometry": {
@@ -253,42 +112,59 @@ icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leaf
                         "label":""
                     }
                 };
-        if (Core.peerid()){
-            var peer = Core.peers(Core.peerid());
+        /*if (core.peerid()){
+            var peer = core.peers(core.peerid());
             peer.data('extent',feature).sync();
-        }
+        }*/
     };
 
     
+    function populateFeatures(){
+      var items = []// icms.features();
+      var features = [];
+      for (i=0;i<items.length;i++){
+          var feature = items[i].data('feature');
+          feature.id = items[i].id();
+          features.push(feature);
+      }
+      $scope.collection.features = features;
+    }
     
-    var itemstore = Core.project().itemStore();
-    var peerstore = Core.peerStore();
-    itemstore.bind('datachange',function() {
-        $scope.$apply(function(){
-                $scope.populateFeatures();
-        });
-    });
-    peerstore.bind('datachange',function() {
-        $timeout(function() {
-            $scope.$apply(function(){
-                    populatePeers();
-            });
-        });
-    });
-    tmp = $scope;
+    function populatePeers(){
+        //$scope.extents = {"type":"FeatureCollection","features":[]};
+        var peers = []//icms.peers();
+	    for (i=0;i<peers.length;i++){
+	        var peer = peers[i];
+	        if (peer.data('extent') && peer.id() != core.peerid()){ //TODO: core
+	            $scope.extents.features.push(peer.data('extent'));
+	        }
+	        if (peer.data('location') && peer.id() != core.peerid()){ //TODO: core
+	            //Own location is handled somewhere else
+	            $scope.locations.features.push(peer.data('location'));
+	        }
+	    }
+    }
+    
+
+
+    
+    populateFeatures();
+    populatePeers();
+    
+    
+    
     $scope.initmap = function(){
       return leafletData.getMap().then(function(map) {
+        tmp = map;
         
-        $scope.map = map;
         // Initialise the FeatureGroup to store editable layers
-        //var drawnItems = new L.FeatureGroup();
-        var drawnItems = new L.geoJson();
+        var drawnItems = new L.FeatureGroup();
         map.addLayer(drawnItems);
         $scope.drawControl = new L.Control.Draw({
             draw: false,
             edit: {
                 featureGroup: drawnItems,
-                edit: true,
+                edit: false,
                 remove: false
             }
         });
@@ -302,21 +178,7 @@ icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leaf
                 selectedPathOptions: $scope.drawControl.options.edit.selectedPathOptions
             })
         };
-        map.on("draw:edited", function(e,x){
-            var layers = e.layers;
-            layers.eachLayer(function (layer) {
-                var geojson = layer.toGeoJSON();
-                var fid = layer.feature.properties.id;
-                delete $scope.paths[fid];
-                var feature = Core.project().items(fid).data('feature');
-                feature.geometry = geojson.geometry;
-                //First transform into featurestore item
-                var item = Core.project().items(feature.properties.key) //TODO
-                    .data('feature',feature)
-                    .sync();
-            });
-            $scope.drawControl.options.edit.featureGroup.clearLayers(); 
-        }); //TODO
+        map.on("draw:edited", function(e,x){}); //TODO
         map.on('draw:created', function (e) {
             var type = e.layerType,
             layer = e.layer;
@@ -326,14 +188,13 @@ icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leaf
             var timestamp = d.getTime();
             feature.properties.stroke = 'green';
             feature.properties.fill = 'green';
-            feature.properties['marker-url'] = './images/mapicons/imoov/s0620_B12---g.png';
-            feature.properties.key = Core.peerid() + "_" + timestamp;
-            feature.properties.creator = Core.user().data('name');
-            feature.properties.owner = Core.user().data('name');
+            feature.properties.key = core.peerid() + "_" + timestamp;
+            feature.properties.creator = core.user().data('name');
+            feature.properties.owner = core.user().data('name');
 
-            var id = Core.peerid() + "_" + timestamp;
-            var mygroups = Core.project().myGroups();
-            var item = Core.project().items({_id:id})
+            var id = core.peerid() + "_" + timestamp;
+            var mygroups = core.project().myGroups();
+            var item = core.project().items({_id:id})
                 .data('type','feature')
                 .data('feature', feature)
                 .permissions('view',mygroups)//Set default permissions to my groups
@@ -347,21 +208,36 @@ icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leaf
     
     
     $scope.drawPoint = function(){
+        //$scope.initmap().then(function(){
             $scope.controls.pointcontrol.enable();
             $scope.controls.polycontrol.disable();
             $scope.controls.linecontrol.disable();
+        //});
     };
     $scope.drawLine = function(){
+       //$scope.initmap().then(function(){
             $scope.controls.pointcontrol.disable();
             $scope.controls.polycontrol.disable();
             $scope.controls.linecontrol.enable();
+       //});
     };
     $scope.drawPolygon = function(){
+        //$scope.initmap().then(function(){
             $scope.controls.pointcontrol.disable();
             $scope.controls.polycontrol.enable();
             $scope.controls.linecontrol.disable();
+        //});
     };
-    
+    var editlayerBinds = {
+        'delete': function(d){
+            if (confirm('Verwijderen?')) {
+                var key = d.feature.id.toString();
+                core.project().items(key).deleted('true').sync();
+            } else {
+                // Do nothing!
+            }
+        }
+    };
     
 }]);
 
