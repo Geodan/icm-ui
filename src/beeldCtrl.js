@@ -34,6 +34,10 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     });
     updateItems();
 
+    $scope.editItem = function(isedit) {
+        this.onderdeel.isedit = !isedit;
+    }
+
 }])
 
 icm.controller('BeeldSideCtrl', ['$scope', 'Beelden', function  ($scope, Beelden) {
