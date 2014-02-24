@@ -8,7 +8,7 @@
         <a class="pull-right glyphicon" ng-click="cancelEdit()" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a>
       </h5>
       <hr class="small"/>
-      <p class="list-group-item-text" contenteditable="{{onderdeel.isedit}}" ng-class="{'well': onderdeel.isedit}"  ng-bind-html="onderdeel.content"></p>
+      <p class="list-group-item-text" contenteditable="{{onderdeel.isedit}}" ng-model="onderdeel.contentold" ng-class="{'well': onderdeel.isedit}"  ng-bind-html="onderdeel.content"></p>
     </div>
         
     
