@@ -2,9 +2,13 @@
   <div class="col-sm-6 col-md-6 col-lg-5">
   	<a ui-sref="incidenten.incident.beeld.text">text</a>
     <div class="list-group">
-    <div class="list-group-item" ng-repeat="onderdeel in currentBeeld.beeldonderdeel" ng-init="onderdeel.isedit=false">
-     <h5 class="list-group-item-heading text-primary"> {{onderdeel.title}} <a class="pull-right glyphicon" ng-click="editItem(onderdeel.isedit)" ng-class="{'glyphicon-pencil': !onderdeel.isedit, 'glyphicon-ok': onderdeel.isedit}"></a><a class="pull-right glyphicon" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a></h5><hr class="small"/>
-      <p class="list-group-item-text" contenteditable="{{onderdeel.isedit}}" ng-class="{'well': onderdeel.isedit}">{{onderdeel.content}}</p>
+    <div class="list-group-item" ng-repeat="onderdeel in currentBeeld.beeldonderdeel" >
+      <h5 class="list-group-item-heading text-primary"> {{onderdeel.title}} 
+        <a class="pull-right glyphicon" ng-click="editItem(onderdeel.isedit)" ng-class="{'glyphicon-pencil': !onderdeel.isedit, 'glyphicon-ok': onderdeel.isedit}"></a>
+        <a class="pull-right glyphicon" ng-click="cancelEdit()" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a>
+      </h5>
+      <hr class="small"/>
+      <p class="list-group-item-text" contenteditable="{{onderdeel.isedit}}" ng-class="{'well': onderdeel.isedit}"  ng-bind-html="onderdeel.content"></p>
     </div>
         
     
