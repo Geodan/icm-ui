@@ -20,9 +20,7 @@
   
   <div class="col-sm-6  col-md-6 col-lg-8 kaart"   ng-controller="LeafletController">
     <a ui-sref="incidenten.incident.beeld.kaart">kaart</a><br>
-    <leaflet center="center" height="480px" width="640px" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
-    <h4><strong ng-bind="eventDetected"></strong> caught in listener.</h4>
-    <button  ng-click="initmap()">InitMap</button>
+    <leaflet center="center" height="400px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
     <button  ng-click="drawPoint()">Draw point</button>
     <button  ng-click="drawLine()">Draw line</button>
     <button  ng-click="drawPolygon()">Draw polygon</button>
