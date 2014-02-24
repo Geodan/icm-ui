@@ -33,6 +33,10 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
                     templateUrl: "templates/login.html",
                     controller: "LoginCtrl"
                 }
+
+            },
+            data: {
+              title: 'Home'
             }
         })
 
@@ -50,6 +54,9 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
                 // controller
                 controller: 'IncidentenCtrl'
                 }
+            },
+            data: {
+              title: 'Incidenten'
             }
         })
 
@@ -61,7 +68,10 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"]
             // With abstract set to true, that means this state can not be explicitly activated.
             // It can only be implicitly activated by activating one of it's children.
             abstract: true,
-            url: '/:incidentID'
+            url: '/:incidentID',
+            data: {
+              title: '/:incidentID'
+            }
         })
 
           //////////////////////

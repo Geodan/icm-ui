@@ -1,5 +1,5 @@
 <div class="row" >
-  <div class="col-sm-6 col-md-6 col-lg-4">
+  <div class="col-sm-6 col-md-6 col-lg-5">
   	<a ui-sref="incidenten.incident.beeld.text">text</a>
    <!-- <dl>
       <beeld  ng-repeat="txt in currentBeeld.beeldonderdeel">
@@ -17,17 +17,17 @@
 	  </div>
 	</div>-->
 <div class="list-group">
-    <a class="list-group-item " ng-repeat="onderdeel in currentBeeld.beeldonderdeel" is-edit="isedit">
-     <h4 class="list-group-item-heading"> {{onderdeel.title}} <i class="pull-right glyphicon" ng-class="{'glyphicon-pencil': !isedit, 'glyphicon-chevron-right': isedit}"></i></h4><hr class="small"/>
+    <div class="list-group-item" ng-repeat="onderdeel in currentBeeld.beeldonderdeel" is-edit="isedit">
+     <h5 class="list-group-item-heading text-primary"> {{onderdeel.title}} <a class="pull-right glyphicon" ng-class="{'glyphicon-pencil': !isedit, 'glyphicon-chevron-right': isedit}"></a></h5><hr class="small"/>
       <p class="list-group-item-text" contenteditable="isedit" ng-class="{'well': isedit}">{{onderdeel.content}}</p>
-    </a>
+    </div>
         
     
 </div>
  
   </div>
   
-  <div class="col-sm-6  col-md-6 col-lg-8 kaart"   ng-controller="LeafletController">
+  <div class="col-sm-6  col-md-6 col-lg-7 kaart"   ng-controller="LeafletController">
     <a ui-sref="incidenten.incident.beeld.kaart">kaart</a><br>
     <leaflet center="utrecht" height="480px" width="640px" layers="layers"></leaflet>
     <h4><strong ng-bind="eventDetected"></strong> caught in listener.</h4>

@@ -7,13 +7,20 @@ display: none!important;
 display: block!important;
 }
 .navbar.header {
-    min-height: 30px;
+    min-height: 0px;
     margin-bottom: 0px;
+    background: white;
+    border-bottom: solid 1px #e7e7e7;
 }
 
 .navbar-fixed-top.header {
     top: 50px;
 
+}
+ol.breadcrumb {
+  margin: 3px;
+  padding: 0px;
+  background: white;
 }
 /*
  * Base structure
