@@ -7,13 +7,20 @@ display: none!important;
 display: block!important;
 }
 .navbar.header {
-    min-height: 30px;
+    min-height: 0px;
     margin-bottom: 0px;
+    background: white;
+    border-bottom: solid 1px #e7e7e7;
 }
 
 .navbar-fixed-top.header {
     top: 50px;
 
+}
+ol.breadcrumb {
+  margin: 3px;
+  padding: 0px;
+  background: white;
 }
 /*
  * Base structure
@@ -37,6 +44,10 @@ body {
   border-bottom: 1px solid #eee;
 }
 
+hr.small {
+  margin: 1px;
+  margin-bottom:5px;
+}
 
 /*
  * Sidebar
@@ -54,7 +65,7 @@ body {
     bottom: 0;
     z-index: 1000;
     display: block;
-    padding: 80px 20px 20px;
+    padding: 80px 0px 0px;
     background-color: #f5f5f5;
     border-right: 1px solid #eee;
   }
@@ -75,6 +86,9 @@ body {
   background-color: #428bca;
 }
 
+.beelden p {
+padding: 5px;
+}
 
 /*
  * Main content

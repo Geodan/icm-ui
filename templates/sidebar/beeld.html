@@ -1,7 +1,17 @@
-<ul class="list-group" ng-controller='BeeldSideCtrl'>
-  <li  class="list-group-item" ng-repeat="beeld in beelden">
-    <!--span class="badge">1</span-->
-     <a  ui-sref-active="text-success" ui-sref="incidenten.incident.beeld({beeldType:beeld.beeld})">{{beeld.title}}</a>
-  </li>
+<!--
+<div class="beelden"  ng-controller='BeeldSideCtrl'>
+  <p  ui-sref-active="bg-info"  class="" ng-repeat="beeld in beelden">
+    <a   ui-sref="incidenten.incident.beeld({beeldType:beeld.beeld})">
+        <span class="badge pull-right">1</span>
+        {{beeld.title}}
+    </a>
+  </p>
    
-</ul>
+
+</div>-->
+
+<div class="list-group" ng-controller='BeeldSideCtrl'>
+    <a  ui-sref-active="active" class="list-group-item " ng-repeat="beeld in beelden"  ui-sref="incidenten.incident.beeld({beeldType:beeld.beeld})">{{beeld.title}}<span class="badge "><span class=" glyphicon glyphicon-bell"></spam></span></a>
+        
+    
+</div>

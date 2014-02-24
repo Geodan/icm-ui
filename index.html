@@ -27,11 +27,6 @@
 
 </head>
 <body>
-      <header class="header navbar-fixed-top navbar-default navbar">
-       <div class="container-fluid">
-        User-rol
-      </div>
-    </header>
     <header class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -45,25 +40,29 @@
                 ICM
             </a>
         </div>
-        <nav class="hidden-xs" role="navigation">
-            <ul class="nav navbar-nav"><!--TODO: dit dynamisch maken-->
-                <li><a ui-sref="login">login</a></li>
-                <li><a ui-sref="incidenten">incidenten</a></li>
-                
-                
-            </ul>
-            
-        </nav>
-        <!--<nav class="navbar-collapse collapse visible-xs" collapse="!isCollapsed" role="navigation">
-          <ul class="nav navbar-nav ">
-            <li><a ui-sref="berichten" ng-click="isCollapsed = !isCollapsed">berichten</a></li>
-            <li><a ui-sref="kaart" ng-click="isCollapsed = !isCollapsed">kaart</a></li>
-
-          </ul>         
-        </nav>-->
+        
       </div>
     </header>
+      <header class="header navbar-fixed-top navbar">
+       <ol class="breadcrumb">
+            <!--li ng-repeat="state in $state.$current.path">
+                <a href="#{{state.url.format($stateParams)}}">{{state.data.title}}</a>
+                <span ng-hide="$last" class="divider">/</span>
+            </li-->
+            <li >
+                <a ui-sref="login">Home</a>
+                <span ng-hide="$last" class="divider"></span>
+            </li>
+            <li >
+                <a ui-sref="incidenten">Incidenten</a>
+                <span ng-hide="$last" class="divider"></span>
+            </li>
+            
+        </ol>
 
+         
+      
+    </header>
 
     <div class="container-fluid">
       <div class="row">

@@ -1,5 +1,6 @@
 var tmp; //DEBUG
 
+
 icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils', "leafletData",'leafletEvents','LeafletService',function($scope, $http, $timeout, Core, Utils,  leafletData, leafletEvents, LeafletService) {
     if(!Core.project()) {
         //return false;
@@ -156,7 +157,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
       }
     };
     
-    function populatePeers(){
+    var populatePeers = function(){
         
         var extents = [];
         var locations = [];
@@ -209,8 +210,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     populateFeatures();
     populatePeers();
     
+
     angular.extend($scope, {
-        center: {
+        utrecht: {
             lat: 52.752087,
             lng: 4.896941,
             zoom: 9
@@ -241,12 +243,42 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                         attribution: 'Hillshade layer by GIScience http://www.osm-wms.de',
                         crs: L.CRS.EPSG900913
                     }
+                },
+                editlayer: {
+                    name: 'editlayer',
+                    type: 'd3layer',
+                    visible: true,
+                    //binds: binds,
+                    layerOptions: {
+                        data: $scope.collection,
+                        options: {
+                           
+                            onClick: editmenu,
+                            labels: true,
+                            labelconfig: {
+                                field: "name",
+                                style: {
+                                    stroke: "#000033"
+                                    //stroke: "steelBlue"
+                                }
+                            }
+                        }
+                    }
+                },
+                extentlayer: {
+                    name: 'extents',
+                    type: 'd3layer',
+                    visible: true,
+                    layerOptions: {
+                        data: $scope.extents,
+                        options: {
+                         
+                        }
+                    }
                 }
             }
         }
     });
-    
-    
     
     var handleNewExtent = function(e){
         var bounds = e.target.getBounds();
@@ -257,8 +289,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             top: bounds.getNorth()
         };
         var b = [bbox.left,bbox.bottom,bbox.right,bbox.top];
-        var peerid = Core.peerid(); //TODO: Core
-        var username = Core.user().data('name'); //TODO: Core 
+        var peerid =''// core.peerid(); //TODO: core
+        var username = ''//core.user().data('name'); //TODO: core 
         var feature = { "id": peerid,
                         "type": "Feature",
                         "geometry": {
@@ -274,14 +306,17 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                         "label":""
                     }
                 };
-        if (Core.peerid()){
-            var peer = Core.peers(Core.peerid());
+        /*if (core.peerid()){
+            var peer = core.peers(core.peerid());
             peer.data('extent',feature).sync();
-        }
+        }*/
     };
 
     
+    populateFeatures();
+    populatePeers();
     
+
     var itemstore = Core.project().itemStore();
     var peerstore = Core.peerStore();
     itemstore.bind('datachange',function() {
@@ -310,6 +345,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 remove: false
             }
         });
+
         map.addControl(drawControl);
         
         controls.pointcontrol = new L.Draw.Marker(map,  drawControl.options.Marker);
@@ -335,6 +371,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             });
             drawControl.options.edit.featureGroup.clearLayers(); 
         }); //TODO
+
         map.on('draw:created', function (e) {
             var type = e.layerType,
             layer = e.layer;
@@ -344,14 +381,13 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             var timestamp = d.getTime();
             feature.properties.stroke = 'green';
             feature.properties.fill = 'green';
-            feature.properties['marker-url'] = './images/mapicons/imoov/s0620_B12---g.png';
-            feature.properties.key = Core.peerid() + "_" + timestamp;
-            feature.properties.creator = Core.user().data('name');
-            feature.properties.owner = Core.user().data('name');
+            feature.properties.key = core.peerid() + "_" + timestamp;
+            feature.properties.creator = core.user().data('name');
+            feature.properties.owner = core.user().data('name');
 
-            var id = Core.peerid() + "_" + timestamp;
-            var mygroups = Core.project().myGroups();
-            var item = Core.project().items({_id:id})
+            var id = core.peerid() + "_" + timestamp;
+            var mygroups = core.project().myGroups();
+            var item = core.project().items({_id:id})
                 .data('type','feature')
                 .data('feature', feature)
                 .permissions('view',mygroups)//Set default permissions to my groups
@@ -363,23 +399,22 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
       });
     };
     
-    
-    $scope.drawPoint = function(style){
+   
+    drawPoint = function(style){
             controls.pointcontrol.enable();
             controls.polycontrol.disable();
             controls.linecontrol.disable();
     };
-    $scope.drawLine = function(style){
+    drawLine = function(style){
             controls.pointcontrol.disable();
             controls.polycontrol.disable();
             controls.linecontrol.enable();
     };
-    $scope.drawPolygon = function(style){
+    drawPolygon = function(style){
             controls.pointcontrol.disable();
             controls.polycontrol.enable();
             controls.linecontrol.disable();
     };
-    
     
 }]);
 
