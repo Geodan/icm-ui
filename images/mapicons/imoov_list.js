@@ -1,5 +1,6 @@
 {"icons":[
- "imoov/s0480_B01-C---g.png"
+ {"url": "imoov/s0480_B01-C---g.png",
+ "text": "flups"}
 ,"imoov/s0490_D01-B---g.png"
 ,"imoov/s0560_A05---g.png"
 ,"imoov/s0590_B03---g.png"

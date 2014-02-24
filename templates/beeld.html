@@ -23,6 +23,21 @@
     <leaflet center="center" height="400px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
     <button  ng-click="drawPoint()">Draw point</button>
     <button  ng-click="drawLine()">Draw line</button>
-    <button  ng-click="drawPolygon()">Draw polygon</button>
+    <button  ng-click="drawPolygon()">Draw polygon</button><br>
+    
+    <img class="media-object" alt="" width="25" ng-src="./images/mapicons/{{currentstyle.icon.url}}"/>
+    <span class="dropdown">
+      <a class="media-object dropdown-toggle">Dropdown</a>
+      <ul class="dropdown-menu media-list">
+        <li class="media" ng-repeat="(key, icon) in icontypes" ng-click="currentstyle.icon=icon">
+          <span class="pull-left">
+            <img class="media-object" alt="" width="25" ng-src="./images/mapicons/{{icon.url}}"/>
+          </span>
+          <div class="media-body">
+            <h4 class="media-heading">{{icon.text}}</h4>
+        </li>
+      </ul>
+    </span>
+    </div>
   </div>
 </div>

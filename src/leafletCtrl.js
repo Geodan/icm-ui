@@ -1,11 +1,27 @@
 var tmp; //DEBUG
 
-icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leafletData",'leafletEvents','LeafletService',function($scope, $timeout, Core, Utils,  leafletData, leafletEvents, LeafletService) {
+icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils', "leafletData",'leafletEvents','LeafletService',function($scope, $http, $timeout, Core, Utils,  leafletData, leafletEvents, LeafletService) {
     if(!Core.project()) {
         //return false;
     }
+    tmp = $scope;
     var controls= {};
     var drawControl;
+    $scope.icontypes = {};
+    $http({method: 'POST', url: './images/mapicons/imoov_list.js'}).
+        success(function(data, status, headers, config) {
+            _(data.icons).each(function(d){
+                $scope.icontypes[d.url] = d;
+            });
+                
+        }).
+        error(function(data, status, headers, config) {
+            console.log(status);
+        });
+    
+    
+    $scope.currentstyle = {icon: {url: 'imoov/s0110_A10---g.png'}};
+    
     $scope.markers = {};
     $scope.paths = {};
     $scope.service = LeafletService;
@@ -280,7 +296,7 @@ icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leaf
             });
         });
     });
-    tmp = $scope;
+    
     var initmap = function(){
       return leafletData.getMap().then(function(map) {
         // Use a geoJson object for the drawnItems instead of featureGroup
@@ -348,17 +364,17 @@ icm.controller('LeafletController', [ '$scope','$timeout','Core', 'Utils', "leaf
     };
     
     
-    $scope.drawPoint = function(){
+    $scope.drawPoint = function(style){
             controls.pointcontrol.enable();
             controls.polycontrol.disable();
             controls.linecontrol.disable();
     };
-    $scope.drawLine = function(){
+    $scope.drawLine = function(style){
             controls.pointcontrol.disable();
             controls.polycontrol.disable();
             controls.linecontrol.enable();
     };
-    $scope.drawPolygon = function(){
+    $scope.drawPolygon = function(style){
             controls.pointcontrol.disable();
             controls.polycontrol.enable();
             controls.linecontrol.disable();
