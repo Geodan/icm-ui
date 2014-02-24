@@ -60,7 +60,10 @@ icm.factory('Core', ['$rootScope', function($rootScope) {
    var cow = new Cow.core({
           wsUrl: 'wss://websocket.geodan.nl:443/new'
         });   
-
+    cow.userStore().loaded.then(function(){
+        cow.users({_id:'1'}).data('name','Anonymous').sync();
+        cow.user('1');
+    });
    return cow;
 
 }])

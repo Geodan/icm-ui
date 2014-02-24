@@ -29,7 +29,7 @@
   
   <div class="col-sm-6  col-md-6 col-lg-7 kaart"   ng-controller="LeafletController">
     <a ui-sref="incidenten.incident.beeld.kaart">kaart</a><br>
-    <leaflet center="utrecht" height="480px" width="640px" layers="layers"></leaflet>
+    <leaflet center="center" height="480px" width="640px" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
     <h4><strong ng-bind="eventDetected"></strong> caught in listener.</h4>
     <button  ng-click="initmap()">InitMap</button>
     <button  ng-click="drawPoint()">Draw point</button>
