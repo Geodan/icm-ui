@@ -1,4 +1,4 @@
-var icm = angular.module('icm', ["ui.router",'ui.bootstrap'])
+var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive"])
     .run(
       [        '$rootScope', '$state', '$stateParams',
       function ($rootScope,   $state,   $stateParams) {
@@ -9,6 +9,7 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap'])
         // 'contacts.list' or one of its decendents is active.
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+      
       }])
     .config(
         [          '$stateProvider', '$urlRouterProvider',
@@ -16,10 +17,10 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap'])
   
   
       $urlRouterProvider
-        .when("/incidenten/","/incidenten")
+       
 
       //bij foute url stuur naar het begin
-        .otherwise("/")
+        .otherwise("/");
       
       $stateProvider
 
@@ -28,11 +29,15 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap'])
         .state("login", {
             url: "/",
             views: {
-                'all': {
+                'main': {
                     templateUrl: "templates/login.html",
+                    controller: "LoginCtrl"
                 }
+
             },
-            controller: "LoginCtrl"
+            data: {
+              title: 'Home'
+            }
         })
 
           ////////////////
@@ -45,12 +50,14 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap'])
             views: {
               'main@': {
                 templateUrl: "templates/incidenten.html",
+                // zorg dat de scope, state en de incidenten door worden gegeven aan de
+                // controller
+                controller: 'IncidentenCtrl'
                 }
             },
-
-            // zorg dat de scope, state en de incidenten door worden gegeven aan de
-            // controller
-            controller: 'IncidentenCtrl'
+            data: {
+              title: 'Incidenten'
+            }
         })
 
           ///////////////////////////
@@ -61,7 +68,10 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap'])
             // With abstract set to true, that means this state can not be explicitly activated.
             // It can only be implicitly activated by activating one of it's children.
             abstract: true,
-            url: '/:incidentID'
+            url: '/:incidentID',
+            data: {
+              title: '/:incidentID'
+            }
         })
 
           //////////////////////
@@ -75,16 +85,13 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap'])
 
               // So this one is targeting the unnamed view within the parent state's template.
               'main@': {
-                templateUrl: "templates/beeld.html"
+                templateUrl: "templates/beeld.html",
+                controller: 'BeeldCtrl'
                 },
                'sidebar@': {
                 templateUrl: "templates/sidebar/beeld.html"
                 }
-            },
-            controller: 'BeeldCtrl'
-
-
-       
+            }
         })
 
           ///////////////////
@@ -106,7 +113,24 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap'])
             }
         })
 
-       
+          ///////////////////
+          // Beeld > Text //
+          ///////////////////
+        
+
+        .state('incidenten.incident.beeld.text', {
+            url: "/text",
+            views: {
+
+              // So this one is targeting the unnamed view within the parent state's template.
+              'main@': {
+                templateUrl: "templates/text.html"
+                },
+               'sidebar@': {
+                templateUrl: "templates/sidebar/text.html"
+                }
+            }
+        });       
     }]);
 
 

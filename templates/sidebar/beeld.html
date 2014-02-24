@@ -1,23 +1,17 @@
-<ul class="list-group">
-  <li class="list-group-item list-group-item-danger">
-    <span class="badge">1</span>
-     <a ui-sref="incidenten.incident.beeld({beeldType:'situatie'})">Situatie</a>
-  </li>
-  <li class="list-group-item">
-    
-     <a ui-sref="incidenten.incident.beeld({beeldType:'meldingen'})">Meldingen</a>
-  </li>
-  <li class="list-group-item">
-    
-     <a ui-sref="incidenten.incident.beeld({beeldType:'wat'})">Operationeel (WAT)</a>
-  </li>
-  <li class="list-group-item">
-    
-     <a ui-sref="incidenten.incident.beeld({beeldType:'wot'})">Tactisch (WOT)</a>
-  </li>
-  <li class="list-group-item list-group-item-danger">
-    <span class="badge">5</span>
-     <a ui-sref="incidenten.incident.beeld({beeldType:'wbt'})">Strategisch (WBT)</a>
-  </li>
+<!--
+<div class="beelden"  ng-controller='BeeldSideCtrl'>
+  <p  ui-sref-active="bg-info"  class="" ng-repeat="beeld in beelden">
+    <a   ui-sref="incidenten.incident.beeld({beeldType:beeld.beeld})">
+        <span class="badge pull-right">1</span>
+        {{beeld.title}}
+    </a>
+  </p>
    
-</ul>
+
+</div>-->
+
+<div class="list-group" ng-controller='BeeldSideCtrl'>
+    <a  ui-sref-active="active" class="list-group-item " ng-repeat="beeld in beelden"  ui-sref="incidenten.incident.beeld({beeldType:beeld.beeld})">{{beeld.title}}<span class="badge "><span class=" glyphicon glyphicon-bell"></spam></span></a>
+        
+    
+</div>
