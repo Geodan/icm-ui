@@ -18,6 +18,7 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     function updateItems() {
          $scope.items = Utils.filter(Core.project().items(), $scope.currentBeeld.beeld);
          _($scope.currentBeeld.beeldonderdeel).each(function(d){
+            if(d.isedit === undefined) d.isedit = false;
             var item = _($scope.items).filter(function(b){
                 return b.data('beeldonderdeel') == d.id
             })
@@ -33,6 +34,37 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
         })
     });
     updateItems();
+
+    $scope.editItem = function(isedit) {
+        var onderdeel = this.onderdeel;
+
+
+        if(isedit) {
+            //Er is geedit, we moeten de wijzigingen aan de cow.item() doorgeven en syncen
+            var beeldonderdeelItem =  _($scope.items).filter(function(b){
+                return b.data('beeldonderdeel') == onderdeel.id;
+            })
+            if(beeldonderdeelItem.length > 0) {
+                //er is al een item, we gaan hem aanpassen
+                beeldonderdeelItem[0].data('beeldcontent',onderdeel.content).sync();
+            }
+            else {
+                //er is nog geen item, we gaan een nieuwe maken
+                var id = $scope.beeldType + '_' + onderdeel.id;
+                var item = Core.project().items({_id:id}).data('beeld',$scope.beeldType).data('beeldonderdeel',onderdeel.id).data('beeldcontent',onderdeel.content).sync();
+            }
+            
+        }
+        else {
+            //we gaan editen, zorg dat de huidige versie opgeslagen is in de scope zodat cancel makkelijk is.
+           this.onderdeel.oldVersion = this.onderdeel.content;
+        }
+        this.onderdeel.isedit = !isedit;
+    }
+    $scope.cancelEdit = function() {
+        this.onderdeel.isedit = false;
+        this.onderdeel.content = this.onderdeel.oldVersion;
+    }
 
 }])
 
