@@ -8,6 +8,11 @@
         <a class="pull-right glyphicon text-danger" ng-click="cancelEdit()" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a>
       </h5>
       <hr class="small"/>
+      <div class="alert alert-warning alert-dismissable" ng-class="{'hidden':onderdeel.zeker}">
+  <button type="button" class="close" ng-click="onderdeel.zeker = true" >&times;</button>
+  Klik nogmaals op annuleren om de wijzigingen ongedaan te maken
+</div>
+
       <p class="list-group-item-text" ng-class="{'hidden': onderdeel.isedit}"  ng-bind-html="onderdeel.content" ></p>
       <p class="list-group-item-text well" contenteditable ng-class="{'hidden': !onderdeel.isedit}"  ng-model="onderdeel.contentedit" ></p>
     </div>
