@@ -18,10 +18,13 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
         $scope.items = Utils.filter(Core.project().items(), $scope.currentBeeld.beeld);
         _($scope.currentBeeld.beeldonderdeel).each(function(d){
             if(d.isedit === undefined) d.isedit = false;
+
             if(d.zeker === undefined) d.zeker = true;
+
             var item = _($scope.items).filter(function(b){
                 return b.data('beeldonderdeel') == d.id
-            })
+            });
+
             if(item.length > 0)
             {
                 var deltas = item[0].deltas();
@@ -34,8 +37,8 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
                         break;
                     }
                 }
-                var diff =  TextDifference(oldValue, item[0].data('beeldcontent')) ;
-                d.content = diff;
+                d.cleancontent = item[0].data('beeldcontent'); //content without diff information for editing purposes
+                d.content = TextDifference(oldValue, item[0].data('beeldcontent')) ;
             }
         })
     }
@@ -43,21 +46,19 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     //Update de items na een datachange van de itemStore
     store.bind('datachange', function () {
         $scope.$apply(function(){
-            updateItems()
+            updateItems();
         })
     });
     updateItems();
 
     $scope.editItem = function(isedit) {
         var onderdeel = this.onderdeel;
-
-
-        
+        console.log('isEdit' + isedit);
         if(isedit) {
             //Er is geedit, we moeten de wijzigingen aan de cow.item() doorgeven en syncen
             var beeldonderdeelItem =  _($scope.items).filter(function(b){
                 return b.data('beeldonderdeel') == onderdeel.id;
-            })
+            });
             if(beeldonderdeelItem.length > 0) {
                 //er is al een item, we gaan hem aanpassen
                 beeldonderdeelItem[0]
@@ -68,7 +69,7 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
                 //er is nog geen item, we gaan een nieuwe maken
                 if(!onderdeel.contentedit) {
                     this.onderdeel.isedit = !isedit;
-                    return false //er is geen content dus ook niet gaan syncen
+                    return false; //er is geen content dus ook niet gaan syncen
                 }
                 var id = $scope.beeldType + '_' + onderdeel.id;
                 var item = Core.project().items({_id:id})
@@ -77,16 +78,16 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
                     .data('beeldcontent',onderdeel.contentedit)
                     .sync();
             }
-
-
         }
         else {
             //we gaan editen, zorg dat de huidige versie opgeslagen is in de scope zodat cancel makkelijk is.
-            this.onderdeel.contentedit = this.onderdeel.content;
+            //hierbij moet de nieuwe string zonder de diff gebruikt worden.
+            this.onderdeel.contentedit = this.onderdeel.cleancontent;
             this.onderdeel.oldVersion = this.onderdeel.content;
         }
         this.onderdeel.isedit = !isedit;
-    }
+    };
+
     $scope.cancelEdit = function() {
         if(this.onderdeel.zeker) {
             this.onderdeel.zeker = false;
@@ -98,10 +99,10 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
         }
     }
 
-}])
+}]);
 
 icm.controller('BeeldSideCtrl', ['$scope', 'Beelden', function  ($scope, Beelden) {
     $scope.beelden = Beelden.beelden;
 
 
-}])
+}]);
