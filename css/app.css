@@ -50,6 +50,12 @@ hr.small {
 }
 
 /*
+Text Diff
+*/
+del { background-color: #ffaaaa; }
+ins { background-color: #aaffaa; text-decoration:none}
+
+/*
  * Sidebar
  */
 

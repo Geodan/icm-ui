@@ -16,14 +16,43 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     var store = Core.project().itemStore();
         
     function updateItems() {
-         $scope.items = Utils.filter(Core.project().items(), $scope.currentBeeld.beeld);
-         _($scope.currentBeeld.beeldonderdeel).each(function(d){
+        $scope.items = Utils.filter(Core.project().items(), $scope.currentBeeld.beeld);
+        _($scope.currentBeeld.beeldonderdeel).each(function(d){
             var item = _($scope.items).filter(function(b){
                 return b.data('beeldonderdeel') == d.id
-            })
-            if(item.length > 0)
-                d.content = item[0].data('beeldcontent');
-        })
+            });
+
+            if(item.length > 0) {
+                var deltas = item[0].deltas();
+                var deltaCount =  deltas.length;
+                console.log(deltas);
+                var oldValue = item[0].data('beeldcontent');
+                if (deltaCount > 1) {
+                    for (var i = deltaCount - 2; i >= 0; i--)
+                    {
+                        if (deltas[i].data.beeldcontent != undefined)
+                        {
+                            oldValue = deltas[i].data.beeldcontent;
+                            break;
+                        }
+                    }
+                    //oldValue = deltas[deltaCount - 2].data.beeldcontent;
+                }
+                console.log('XXX    XXX   DIff');
+                console.log(oldValue);
+                console.log(item[0].data('beeldcontent'));
+                var diff =  TextDifference(oldValue, item[0].data('beeldcontent')) ;
+
+                //diff op basis van oude waarde in scherm, wordt snel aangepast!!!!
+                /*
+                var newValue = item[0].data('beeldcontent');
+                var diff = d.contentOld == null ? newValue : TextDifference(d.contentOld, newValue);
+                d.contentOld = item[0].data('beeldcontent');
+                */
+
+                d.content = diff;
+            }
+        });
     }
     
     //Update de items na een datachange van de itemStore
@@ -34,10 +63,10 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     });
     updateItems();
 
-}])
+}]);
 
 icm.controller('BeeldSideCtrl', ['$scope', 'Beelden', function  ($scope, Beelden) {
     $scope.beelden = Beelden.beelden;
 
 
-}])
+}]);

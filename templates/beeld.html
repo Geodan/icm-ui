@@ -18,11 +18,10 @@
 	</div>-->
 <div class="list-group">
     <div class="list-group-item" ng-repeat="onderdeel in currentBeeld.beeldonderdeel" is-edit="isedit">
-     <h5 class="list-group-item-heading text-primary"> {{onderdeel.title}} <a class="pull-right glyphicon" ng-class="{'glyphicon-pencil': !isedit, 'glyphicon-chevron-right': isedit}"></a></h5><hr class="small"/>
-      <p class="list-group-item-text" contenteditable="isedit" ng-class="{'well': isedit}">{{onderdeel.content}}</p>
+        <h5 class="list-group-item-heading text-primary"> {{onderdeel.title}} <a class="pull-right glyphicon" ng-class="{'glyphicon-pencil': !isedit, 'glyphicon-chevron-right': isedit}"></a></h5><hr class="small"/>
+        <!--p class="list-group-item-text" contenteditable="isedit" ng-class="{'well': isedit}">{{onderdeel.content}}</p-->
+        <p class="list-group-item-text" contenteditable="isedit" ng-class="{'well': isedit}" ng-bind-html="onderdeel.content"></p>
     </div>
-        
-    
 </div>
  
   </div>
