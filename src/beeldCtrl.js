@@ -14,7 +14,7 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
    
     var store = Core.project().itemStore();
 
-    function updateItems(a) {
+    function updateItems() {
         $scope.items = Utils.filter(Core.project().items(), $scope.currentBeeld.beeld);
         _($scope.currentBeeld.beeldonderdeel).each(function(d){
             if(d.isedit === undefined) d.isedit = false;
@@ -41,7 +41,7 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     }
 
     //Update de items na een datachange van de itemStore
-    store.bind('datachange', function (a) {
+    store.bind('datachange', function () {
         $scope.$apply(function(){
             updateItems()
         })

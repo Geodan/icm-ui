@@ -1,6 +1,8 @@
+<div class="row" class="col-sm-12 col-md-12 col-lg-12">  
+    <a ui-sref="incidenten.incident.beeld" class="pull-right">< beeld</a>
+</div>
 <div class="row" >
-  <div class="col-sm-12 col-md-12 col-lg-12">
-    <a ui-sref="incidenten.incident.beeld.text">text</a>
+  <div class="col-sm-12 col-md-12 col-lg-12">    
     <div class="list-group">
     <div class="list-group-item" ng-repeat="onderdeel in currentBeeld.beeldonderdeel" >
       <h5 class="list-group-item-heading text-primary"><span  ng-click="editItem(onderdeel.isedit,true)">{{onderdeel.title}}</span>
