@@ -24,60 +24,65 @@
   
   <div class="col-sm-6  col-md-6 col-lg-7 kaart"   ng-controller="LeafletController">
     <a ui-sref="incidenten.incident.beeld.kaart">kaart</a><br>
+    <div class="btn-group" ng-repeat="(key, val) in definedLayers.baselayers" data-toggle="buttons">
+        <button type="button" class="btn btn-default active" ng-click="toggleLayer(key)">{{key}}</button>
+    </div>
+    <p>Layer definition:</p>
+    <pre ng-bind="layers.baselayers | json"></pre>
     <leaflet center="center" height="400px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
     
-    <button  ng-click="drawLine()">Draw line</button>
-    <button  ng-click="drawPolygon()">Draw polygon</button><br>
-    
-    
-    
-    <div class="dropdown">
-    <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-        <img alt="" width="29" ng-src="./images/mapicons/{{currentstyle.icon.url}}"/>
+    <span class="dropdown">
+    <button class="btn btn-primary" type="button">
+        <img alt="" width="29" ng-src="./images/mapicons/{{currentstyle.icon.url}}" ng-click="drawPoint(currentstyle.icon)"/>
+    </button>
+    <button class="btn dropdown-toggle btn-primary" type="button" id="dropdownMenu1" data-toggle="dropdown">
         <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
         <li role="presentation">
-        <div class="col-xs-6 col-md-3">
+        <div>
           <span ng-repeat="(key, icon) in icontypes" ng-click="drawPoint(icon)">
             <img alt="{{icon.text}}" width="29" ng-src="./images/mapicons/{{icon.url}}"/>
           </span>
         </div>
         </li>
     </ul>
-    </div>
-    <div class="dropdown">
-    <button class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown">
+    </span>
+    <span class="dropdown">
+    <button class="btn btn-primary" type="button">
         <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1" width="29" height="29"><g  transform="translate(-27.086869,-417.52882)"><path   transform="translate(27.086869,429.63625)" d="M 7.3188002,12.071144 23.749999,2.4282866 10.267857,-1.9467135 20.401786,-5.8306419" style="stroke:{{currentstyle.line.stroke}};stroke-width:2;fill:none;" /></g></svg>
+    </button>
+    <button class="btn dropdown-toggle btn-primary" type="button" id="dropdownMenu2" data-toggle="dropdown">
         <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
         <li role="presentation">
-        <div class="col-xs-6 col-md-3">
+        <div>
           <span ng-repeat="(key, line) in linestyles" ng-click="drawLine(line)">
             <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1" width="29" height="29"><g  transform="translate(-27.086869,-417.52882)"><path   transform="translate(27.086869,429.63625)" d="M 7.3188002,12.071144 23.749999,2.4282866 10.267857,-1.9467135 20.401786,-5.8306419" style="stroke:{{line.stroke}};stroke-width:2;fill:none;" /></g></svg>
           </span>
         </div>
         </li>
     </ul>
-    
-  </div>
-  <div class="dropdown">
-    <button class="btn dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown">
+  </span>
+  
+  <span class="dropdown">
+    <button class="btn btn-primary" type="button">
         <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1" width="29" height="29"><g  transform="translate(-27.086869,-417.52882)"><path d="M 2.7731138,5.3788833 14.252526,11.064017 26.527918,3.1859009 20.874459,-6.2398619 7.3960719,-3.9366059 z" transform="translate(27.086869,429.63625)"      style="fill:{{currentstyle.polygon.fill}};fill-opacity:0.7;stroke:{{currentstyle.polygon.stroke}};stroke-width:1;" /></g></svg>
+    </button>
+    <button class="btn dropdown-toggle btn-primary" type="button" id="dropdownMenu3" data-toggle="dropdown">
         <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3">
         <li role="presentation">
-        <div class="col-xs-6 col-md-3">
+        <div>
           <span ng-repeat="(key, poly) in polygonstyles" ng-click="drawPolygon(poly)">
             <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1" width="29" height="29"><g  transform="translate(-27.086869,-417.52882)"><path d="M 2.7731138,5.3788833 14.252526,11.064017 26.527918,3.1859009 20.874459,-6.2398619 7.3960719,-3.9366059 z" transform="translate(27.086869,429.63625)"      style="fill:{{poly.fill}};fill-opacity:0.7;stroke:{{poly.stroke}};stroke-width:1;" /></g></svg>
           </span>
         </div>
         </li>
     </ul>
-    
-  </div>
+  </span>
   
   </div>
 </div>
