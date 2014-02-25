@@ -89,7 +89,8 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
                 controller: 'BeeldCtrl'
                 },
                'sidebar@': {
-                templateUrl: "templates/sidebar/beeld.html"
+                templateUrl: "templates/sidebar/beeld.html",
+                controller: 'BeeldSideCtrl'
                 }
             }
         })

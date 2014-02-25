@@ -12,10 +12,10 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     $scope.currentBeeld = _(Beelden.beelden).filter(function(d){
         return d.beeld == $scope.beeldType;
     })[0];
-
+   
     var store = Core.project().itemStore();
         
-    function updateItems() {
+    function updateItems(a) {
          $scope.items = Utils.filter(Core.project().items(), $scope.currentBeeld.beeld);
          _($scope.currentBeeld.beeldonderdeel).each(function(d){
             if(d.isedit === undefined) d.isedit = false;
@@ -29,7 +29,7 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     }
     
     //Update de items na een datachange van de itemStore
-    store.bind('datachange', function () {
+    store.bind('datachange', function (a) {
         $scope.$apply(function(){
             updateItems()
         })
@@ -87,8 +87,3 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
 
 }])
 
-icm.controller('BeeldSideCtrl', ['$scope', 'Beelden', function  ($scope, Beelden) {
-    $scope.beelden = Beelden.beelden;
-
-
-}])
