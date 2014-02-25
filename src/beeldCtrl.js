@@ -84,9 +84,6 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
             this.onderdeel.content = this.onderdeel.oldVersion;
         }
     }
-    $scope.onzeker = function() {
-        this.onderdeel.zeker = true;
-    }
 
 }])
 
