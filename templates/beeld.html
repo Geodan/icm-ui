@@ -28,9 +28,9 @@
   </div>
   
   <div class="col-sm-6  col-md-6 col-lg-7 kaart"   ng-controller="LeafletController">
-    <div class="btn-group" ng-repeat="(key, val) in definedLayers.baselayers" data-toggle="buttons">
+    <div class="btn-group" ng-repeat="(key, val) in leafletService.layers.baselayers" data-toggle="buttons">
         <button type="button" class="btn btn-default active" ng-click="toggleLayer(key)">{{key}}</button>
-    </div>
+    </div><br>
     <div class="btn-group" ng-repeat="(key, val) in leafletService.layers.overlays" data-toggle="buttons">
         <button type="button" class="btn btn-default active" ng-click="toggleOverlay(key)">{{val.name}}</button>
     </div>
