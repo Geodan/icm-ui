@@ -233,6 +233,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     }
     populateFeatures();
     populatePeers();
+    
+    /** Default baselayer **/
     $scope.definedLayers = {
         baselayers: {
             cloudmade: {
@@ -246,21 +248,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             }
         }
     };
-    //var overlays = {
-    //    hillshade:{
-    //        name: 'Hillshade Europa',
-    //        type:'wms',
-    //        url:'http://129.206.228.72/cached/hillshade',
-    //        visible:true,
-    //        layerOptions:{
-    //            layers:'europe_wms:hs_srtm_europa',
-    //            format:'image/png',
-    //            opacity:0.25,
-    //            crs: {"Simple":{"projection":{},"transformation":{"_a":1,"_b":0,"_c":-1,"_d":0}},"code":"EPSG:900913","projection":{"MAX_LATITUDE":85.0511287798},"transformation":{"_a":0.15915494309189535,"_b":0.5,"_c":-0.15915494309189535,"_d":0.5}}
-    //}}};
-    
-     
-    angular.extend($scope.definedLayers.baselayers, $scope.leafletService.layers().baselayers);
+    $scope.extralayers = $scope.leafletService.layers();
+
     angular.extend($scope, {
         center: {
             lat: 52.752087,
@@ -269,12 +258,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         },
         layers: 
             $scope.definedLayers
-            //baselayers: {
-            //    cloudmade: $scope.definedLayers.cloudmade,
-            //    osm: $scope.definedLayers.osm
-            //},
-            //overlays: $scope.definedOverlays
-        
     });
     
     
@@ -283,7 +266,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         if (baselayers.hasOwnProperty(layerName)) {
             delete baselayers[layerName];
         } else {
-            baselayers[layerName] = $scope.definedLayers[layerName];
+            baselayers[layerName] = $scope.extralayers.baselayers[layerName];
         }
     };
     $scope.toggleOverlay = function(overlayName) {

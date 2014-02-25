@@ -14,6 +14,20 @@ icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
         return {};
     }
   }
+  instance.layernames = function(){
+    if (core.project()){
+        var keys = [];
+        _.each( core.project().data('layers').baselayers, function( val, key ) {
+          if ( val ) {
+            keys.push(key);
+          }
+        });
+        return keys || [];
+    }
+    else {
+        return [];
+    }
+  }
   
   return instance;
 }]);
