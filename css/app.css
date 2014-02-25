@@ -58,8 +58,7 @@ del {
     text-decoration:line-through;
 }
 ins {
-    #color: #dd0000;
-    color: #0000dd;
+    color: #dd0000;
     font-weight:bold;
     text-decoration: none;
 }
