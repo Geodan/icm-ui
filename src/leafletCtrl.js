@@ -6,6 +6,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         //return false;
     }
     var core = Core;
+    $scope.core = core;
     tmp = $scope;
     var controls= {};
     var drawControl;
@@ -33,7 +34,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         {stroke: '#5c3566'},
         {stroke: '#4e9a06'}];
     $scope.polygonstyles = [
-        {stroke: '#000'  ,fill: '#000'  },
+        {stroke: '#000'   ,fill: '#000'  },
         {stroke: '#f57900',fill: '#f57900'},
         {stroke: '#204a87',fill: '#204a87'},
         {stroke: '#cc0000',fill: '#cc0000'},
@@ -232,76 +233,67 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     }
     populateFeatures();
     populatePeers();
+    $scope.definedLayers = {
+        baselayers: {
+            cloudmade: {
+                name: 'Cloudmade Tourist',
+                type: 'xyz',
+                url: 'http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',
+                layerParams: {
+                    key: '007b9471b4c74da4a6ec7ff43552b16f',
+                    styleId: 7
+                }
+            }
+        }
+    };
+    //var overlays = {
+    //    hillshade:{
+    //        name: 'Hillshade Europa',
+    //        type:'wms',
+    //        url:'http://129.206.228.72/cached/hillshade',
+    //        visible:true,
+    //        layerOptions:{
+    //            layers:'europe_wms:hs_srtm_europa',
+    //            format:'image/png',
+    //            opacity:0.25,
+    //            crs: {"Simple":{"projection":{},"transformation":{"_a":1,"_b":0,"_c":-1,"_d":0}},"code":"EPSG:900913","projection":{"MAX_LATITUDE":85.0511287798},"transformation":{"_a":0.15915494309189535,"_b":0.5,"_c":-0.15915494309189535,"_d":0.5}}
+    //}}};
     
-
+     
+    angular.extend($scope.definedLayers.baselayers, $scope.leafletService.layers().baselayers);
     angular.extend($scope, {
         center: {
             lat: 52.752087,
             lng: 4.896941,
             zoom: 9
         },
-        layers: {
-            baselayers: {
-                osm: {
-                    name: 'OpenStreetMap',
-                    type: 'xyz',
-                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    layerOptions: {
-                        subdomains: ['a', 'b', 'c'],
-                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                        continuousWorld: true
-                    }
-                }
-            },
-            overlays: {
-                hillshade: {
-                    name: 'Hillshade Europa',
-                    type: 'wms',
-                    url: 'http://129.206.228.72/cached/hillshade',
-                    visible: true,
-                    layerOptions: {
-                        layers: 'europe_wms:hs_srtm_europa',
-                        format: 'image/png',
-                        opacity: 0.25,
-                        attribution: 'Hillshade layer by GIScience http://www.osm-wms.de',
-                        crs: L.CRS.EPSG900913
-                    }
-                },
-                editlayer: {
-                    name: 'editlayer',
-                    type: 'd3layer',
-                    visible: true,
-                    //binds: binds,
-                    layerOptions: {
-                        data: $scope.collection,
-                        options: {
-                           
-                            onClick: editmenu,
-                            labels: true,
-                            labelconfig: {
-                                field: "name",
-                                style: {
-                                    stroke: "#000033"
-                                    //stroke: "steelBlue"
-                                }
-                            }
-                        }
-                    }
-                },
-                extentlayer: {
-                    name: 'extents',
-                    type: 'd3layer',
-                    visible: true,
-                    layerOptions: {
-                        data: $scope.extents,
-                        options: {
-                         
-                        }
-                    }
-                }
-            }
-        }
+        layers: 
+            $scope.definedLayers
+            //baselayers: {
+            //    cloudmade: $scope.definedLayers.cloudmade,
+            //    osm: $scope.definedLayers.osm
+            //},
+            //overlays: $scope.definedOverlays
+        
     });
+    
+    
+    $scope.toggleLayer = function(layerName) {
+        var baselayers = $scope.layers.baselayers;
+        if (baselayers.hasOwnProperty(layerName)) {
+            delete baselayers[layerName];
+        } else {
+            baselayers[layerName] = $scope.definedLayers[layerName];
+        }
+    };
+    $scope.toggleOverlay = function(overlayName) {
+        var overlays = $scope.layers.overlays;
+        if (overlays.hasOwnProperty(overlayName)) {
+            delete overlays[overlayName];
+        } else {
+            overlays[overlayName] = $scope.definedOverlays[overlayName];
+        }
+    };
     
     var handleNewExtent = function(e){
         var center = e.target.getCenter();
@@ -410,7 +402,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             feature.properties.key = core.peerid() + "_" + timestamp;
             feature.properties.creator = core.user().data('name');
             feature.properties.owner = core.user().data('name');
-            feature.properties['marker-url'] = $scope.currentstyle.icon.url;
+            feature.properties['marker-url'] = './images/mapicons/' + $scope.currentstyle.icon.url;
             //Stroke depends on what kind of geom we're drawing
             if (controls.polycontrol.enabled()){
                 feature.properties.stroke = $scope.currentstyle.polygon.stroke;
