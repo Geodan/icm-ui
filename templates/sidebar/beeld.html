@@ -11,7 +11,7 @@
 </div>-->
 
 <div class="list-group" ng-controller='BeeldSideCtrl'>
-    <a  ui-sref-active="active" class="list-group-item " ng-class="{'list-group-item-danger': beeld.updated}" ng-repeat="beeld in beelden"  ui-sref="incidenten.incident.beeld({beeldType:beeld.beeld})">{{beeld.title}}<span class="badge " ng-class="{hidden: !beeld.updated}"><span class=" glyphicon glyphicon-bell"></spam></span></a>
+    <a  ui-sref-active="active" class="list-group-item " ng-class="{'list-group-item-danger': beeld.updated}" ng-repeat="beeld in beelden"  ui-sref="incidenten.incident.beeld({beeldType:beeld.beeld})">{{beeld.title}}<span class="badge " ng-class="{hidden: !beeld.updated}" ng-click="setRead(beeld)"><span class=" glyphicon glyphicon-bell"></spam></span></a>
         
     
 </div>

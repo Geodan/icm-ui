@@ -31,6 +31,17 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
              
         });
     }
+    $scope.setRead = function(beeld) {
+        var bld = beeld.beeld;
+        var beelden  =$scope.beelden;
+        _(beelden).each(function(b){
+            if(b.beeld == bld) {
+                b.timestamp = new Date().getTime();
+                b.updated = false;
+            }
+        })
+        return false;
+    }
     
     //Update de items na een datachange van de itemStore
     store.bind('datachange', function () {
