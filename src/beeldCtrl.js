@@ -46,22 +46,31 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
             })
             if(beeldonderdeelItem.length > 0) {
                 //er is al een item, we gaan hem aanpassen
-                beeldonderdeelItem[0].data('beeldcontent',onderdeel.content).sync();
+                beeldonderdeelItem[0]
+                    .data('beeldcontent',onderdeel.contentedit)
+                    .sync();
             }
             else {
                 //er is nog geen item, we gaan een nieuwe maken
                 var id = $scope.beeldType + '_' + onderdeel.id;
-                var item = Core.project().items({_id:id}).data('beeld',$scope.beeldType).data('beeldonderdeel',onderdeel.id).data('beeldcontent',onderdeel.content).sync();
+                var item = Core.project().items({_id:id})
+                    .data('beeld',$scope.beeldType)
+                    .data('beeldonderdeel',onderdeel.id)
+                    .data('beeldcontent',onderdeel.contentedit)
+                    .sync();
             }
+
             
         }
         else {
             //we gaan editen, zorg dat de huidige versie opgeslagen is in de scope zodat cancel makkelijk is.
+            this.onderdeel.contentedit = this.onderdeel.content;
            this.onderdeel.oldVersion = this.onderdeel.content;
         }
         this.onderdeel.isedit = !isedit;
     }
     $scope.cancelEdit = function() {
+
         this.onderdeel.isedit = false;
         this.onderdeel.content = this.onderdeel.oldVersion;
     }
