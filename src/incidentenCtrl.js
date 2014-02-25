@@ -5,7 +5,7 @@
 /*
  * Deze angular control gaat over de lijst met incidenten in /incidenten
  */
-icm.controller('IncidentenCtrl' ,['$scope', 'Core', function($scope, Core){
+icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'LeafletService', function($scope, Core, LeafletService){
     console.log('creating IncidentenCtrl');
     
     $scope.project = Core.project(); //Get current project
@@ -15,13 +15,13 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', function($scope, Core){
     store.bind('datachange', function () {
         $scope.$apply(function(){
             $scope.projecten = Core.projects();
-        })
-    })
+        });
+    });
     //Set the current project
     $scope.setProject = function(project) {
         //$scope.incident = project.data('name')||project.id();
         Core.project(project.id());   
-        
+        LeafletService.reset();
     };
 
 }]);

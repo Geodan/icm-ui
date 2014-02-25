@@ -16,29 +16,18 @@ icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
   
     /** Default baselayer **/
     instance.definedLayers = {
-        cloudmade: {
-            name: 'Cloudmade Tourist',
-            type: 'xyz',
-            url: 'http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',
-            layerParams: {
-                key: '007b9471b4c74da4a6ec7ff43552b16f',
-                styleId: 7
-            }
+        osm: {
+            name: 'OpenStreetMap',
+            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            type: 'xyz'
         }
     };
-    instance.definedOverlays = { 
-        //waterkeringen: {
-        //    name:"Waterkeringen",
-        //    type:"wms",
-        //    url:"http://hhnk.webgispublisher.nl:8080/geoserver/wms",
-        //    visible:true,
-        //    layerOptions:{
-        //        layers:"GeoData:LRWK_Regionale_Waterkeringen",
-        //        format:"image/png",
-        //        transparent:true
-        //    }
-        //}
-    };
+    instance.definedOverlays = {};
   
+    instance.reset = function(){
+        //instance._center = null;
+        
+    }
+    
   return instance;
 }]);
