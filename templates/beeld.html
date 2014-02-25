@@ -4,12 +4,12 @@
     <div class="list-group">
     <div class="list-group-item" ng-repeat="onderdeel in currentBeeld.beeldonderdeel" >
       <h5 class="list-group-item-heading text-primary"> {{onderdeel.title}} 
-        <a class="pull-right glyphicon" ng-click="editItem(onderdeel.isedit)" ng-class="{'glyphicon-pencil': !onderdeel.isedit, 'glyphicon-ok': onderdeel.isedit, 'text-success': onderdeel.isedit}"></a>
-        <a class="pull-right glyphicon text-danger" ng-click="cancelEdit()" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a>
+        <a class="pull-right glyphicon" ng-click="editItem(onderdeel.isedit)" ng-class="{'glyphicon-pencil': !onderdeel.isedit, 'glyphicon-ok': onderdeel.isedit}"></a>
+        <a class="pull-right glyphicon" ng-click="cancelEdit()" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a>
       </h5>
       <hr class="small"/>
-      <p class="list-group-item-text" ng-class="{'hidden': onderdeel.isedit}"  ng-bind-html="onderdeel.content" ></p>
-      <p class="list-group-item-text well" contenteditable ng-class="{'hidden': !onderdeel.isedit}"  ng-model="onderdeel.contentedit" ></p>
+      <p class="list-group-item-text" ng-class="{'hidden': onderdeel.isedit}"  ng-bind-html="onderdeel.content" required></p>
+      <p class="list-group-item-text well" contenteditable ng-class="{'hidden': !onderdeel.isedit}"  ng-model="onderdeel.content" required></p>
     </div>
         
     
@@ -19,8 +19,11 @@
   
   <div class="col-sm-6  col-md-6 col-lg-7 kaart"   ng-controller="LeafletController">
     <a ui-sref="incidenten.incident.beeld.kaart">kaart</a><br>
-    <div class="btn-group" ng-repeat="(key, val) in leafletService.layers().baselayers" data-toggle="buttons">
+    <div class="btn-group" ng-repeat="(key, val) in leafletService.layers.baselayers" data-toggle="buttons">
         <button type="button" class="btn btn-default active" ng-click="toggleLayer(key)">{{val.name}}</button>
+    </div>
+    <div class="btn-group" ng-repeat="(key, val) in leafletService.layers.overlays" data-toggle="buttons">
+        <button type="button" class="btn btn-default active" ng-click="toggleOverlay(key)">{{val.name}}</button>
     </div>
     
     <leaflet center="center" height="400px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
@@ -78,6 +81,6 @@
     </ul>
   </span>
   <p>Layer definition:</p>
-  <pre ng-bind="layers.baselayers | json"></pre>
+  <pre ng-bind="layers | json"></pre>
   </div>
 </div>

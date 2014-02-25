@@ -12,7 +12,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var drawControl;
     $scope.icontypes = {};
     $scope.leafletService = LeafletService;
-    
+    $scope.leafletService.initlayers();
     
     /* Initiate the marker icons */
     $http({method: 'POST', url: './images/mapicons/imoov_list_subset.js'}).
@@ -234,30 +234,19 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     populateFeatures();
     populatePeers();
     
-    /** Default baselayer **/
-    $scope.definedLayers = {
-        baselayers: {
-            cloudmade: {
-                name: 'Cloudmade Tourist',
-                type: 'xyz',
-                url: 'http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',
-                layerParams: {
-                    key: '007b9471b4c74da4a6ec7ff43552b16f',
-                    styleId: 7
-                }
-            }
-        }
-    };
-    $scope.extralayers = $scope.leafletService.layers();
-
+    
+    $scope.extralayers = $scope.leafletService.layers;
+    
     angular.extend($scope, {
         center: {
             lat: 52.752087,
             lng: 4.896941,
             zoom: 9
         },
-        layers: 
-            $scope.definedLayers
+        layers: {
+            baselayers: $scope.leafletService.definedLayers,
+            overlays: $scope.leafletService.definedOverlays
+        }
     });
     
     
@@ -274,7 +263,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         if (overlays.hasOwnProperty(overlayName)) {
             delete overlays[overlayName];
         } else {
-            overlays[overlayName] = $scope.definedOverlays[overlayName];
+            overlays[overlayName] = $scope.extralayers.overlays[overlayName];
         }
     };
     
