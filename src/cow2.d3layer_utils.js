@@ -24,17 +24,18 @@ Cow_utils.menuconfig = {
           icon: './css/img/text_letter_t_icon.png',
           label: "Tekst",
           size: 1
-     },{
-          "name": "share",
-          icon: './css/img/share_2_icon.png',
-          label: "Delen",
-          size: 1
-     },{
-         "name": "model.smoke",
-          icon: './css/img/cloud_icon.png',
-          label: "Rookpluim",
-          size: 1
-     }]
+     }//,{
+     //     "name": "share",
+     //     icon: './css/img/share_2_icon.png',
+     //     label: "Delen",
+     //     size: 1
+     //},{
+     //    "name": "model.smoke",
+     //     icon: './css/img/cloud_icon.png',
+     //     label: "Rookpluim",
+     //     size: 1
+     //}
+     ]
 };
 
 Cow_utils.menu = function(event, config){
