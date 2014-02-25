@@ -397,7 +397,7 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
           });
       };
       map.on("viewreset", function(){
-          if (self.geojson.features.length > 0){
+          if (self.geojson.features && self.geojson.features.length > 0){
               reset(self);
           }
       });
@@ -411,7 +411,7 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
       var self = this;
       this._map = map;
       
-      if (this.geojson.features.length > 0){
+      if (this.geojson && this.geojson.features.length > 0){
           return this.reload();
       }
       return this.resetFunction = this.reload;
