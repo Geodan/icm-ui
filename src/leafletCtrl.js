@@ -6,6 +6,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         //return false;
     }
     var core = Core;
+    $scope.core = core;
     tmp = $scope;
     var controls= {};
     var drawControl;
@@ -233,52 +234,50 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     populateFeatures();
     populatePeers();
     $scope.definedLayers = {
-        cloudmade: {
-            name: 'Cloudmade Tourist',
-            type: 'xyz',
-            url: 'http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',
-            layerParams: {
-                key: '007b9471b4c74da4a6ec7ff43552b16f',
-                styleId: 7
-            }
-        },
-        osm: {
-            name: 'OpenStreetMap',
-            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            type: 'xyz'
-        }
-    };
-    $scope.definedOverlays = {
-        hillshade: {
-            name: 'Hillshade Europa',
-            type: 'wms',
-            url: 'http://129.206.228.72/cached/hillshade',
-            visible: true,
-            layerOptions: {
-                layers: 'europe_wms:hs_srtm_europa',
-                format: 'image/png',
-                opacity: 0.25,
-                attribution: 'Hillshade layer by GIScience http://www.osm-wms.de',
-                crs: L.CRS.EPSG900913
+        baselayers: {
+            cloudmade: {
+                name: 'Cloudmade Tourist',
+                type: 'xyz',
+                url: 'http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',
+                layerParams: {
+                    key: '007b9471b4c74da4a6ec7ff43552b16f',
+                    styleId: 7
+                }
             }
         }
     };
+    //var overlays = {
+    //    hillshade:{
+    //        name: 'Hillshade Europa',
+    //        type:'wms',
+    //        url:'http://129.206.228.72/cached/hillshade',
+    //        visible:true,
+    //        layerOptions:{
+    //            layers:'europe_wms:hs_srtm_europa',
+    //            format:'image/png',
+    //            opacity:0.25,
+    //            crs: {"Simple":{"projection":{},"transformation":{"_a":1,"_b":0,"_c":-1,"_d":0}},"code":"EPSG:900913","projection":{"MAX_LATITUDE":85.0511287798},"transformation":{"_a":0.15915494309189535,"_b":0.5,"_c":-0.15915494309189535,"_d":0.5}}
+    //}}};
+    
+     
+    angular.extend($scope.definedLayers.baselayers, $scope.leafletService.layers().baselayers);
     angular.extend($scope, {
         center: {
             lat: 52.752087,
             lng: 4.896941,
             zoom: 9
         },
-        layers: {
-            baselayers: {
-                cloudmade: $scope.definedLayers.cloudmade,
-                osm: $scope.definedLayers.osm
-            },
-            overlays: {
-                hillshade: $scope.definedOverlays.hillshade
-            }
-        }
+        layers: 
+            $scope.definedLayers
+            //baselayers: {
+            //    cloudmade: $scope.definedLayers.cloudmade,
+            //    osm: $scope.definedLayers.osm
+            //},
+            //overlays: $scope.definedOverlays
+        
     });
+    
+    
     $scope.toggleLayer = function(layerName) {
         var baselayers = $scope.layers.baselayers;
         if (baselayers.hasOwnProperty(layerName)) {
