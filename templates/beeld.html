@@ -1,25 +1,15 @@
 <div class="row" >
   <div class="col-sm-6 col-md-6 col-lg-5">
   	<a ui-sref="incidenten.incident.beeld.text">text</a>
-   <!-- <dl>
-      <beeld  ng-repeat="txt in currentBeeld.beeldonderdeel">
-        <dt>{{txt}}<span class="pull-right btn btn-link"><span class="glyphicon glyphicon-pencil"></span></span></dt>
-	    <dd class="well"></dd>
- 	  </beeld>
-  	</dl> -->
-    <!--
-  	<div class="panel panel-default"  ng-repeat="onderdeel in currentBeeld.beeldonderdeel">
-	  <div class="panel-heading">
-    	<h3 class="panel-title">{{onderdeel.title}}<span class="pull-right btn  text-success "><span class="glyphicon glyphicon-ok"></span></span><span class="pull-right btn  text-danger "><span class="glyphicon glyphicon-remove"></span></span><span class="pull-right btn btn-link"><span class="glyphicon glyphicon-pencil"></span></span></h3>
-  	  </div> 
-	  <div class="panel-body" contenteditable="true">
-	    {{onderdeel.content}}
-	  </div>
-	</div>-->
-<div class="list-group">
-    <div class="list-group-item" ng-repeat="onderdeel in currentBeeld.beeldonderdeel" is-edit="isedit">
-     <h5 class="list-group-item-heading text-primary"> {{onderdeel.title}} <a class="pull-right glyphicon" ng-class="{'glyphicon-pencil': !isedit, 'glyphicon-chevron-right': isedit}"></a></h5><hr class="small"/>
-      <p class="list-group-item-text" contenteditable="isedit" ng-class="{'well': isedit}">{{onderdeel.content}}</p>
+    <div class="list-group">
+    <div class="list-group-item" ng-repeat="onderdeel in currentBeeld.beeldonderdeel" >
+      <h5 class="list-group-item-heading text-primary"> {{onderdeel.title}} 
+        <a class="pull-right glyphicon" ng-click="editItem(onderdeel.isedit)" ng-class="{'glyphicon-pencil': !onderdeel.isedit, 'glyphicon-ok': onderdeel.isedit}"></a>
+        <a class="pull-right glyphicon" ng-click="cancelEdit()" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a>
+      </h5>
+      <hr class="small"/>
+      <p class="list-group-item-text" ng-class="{'hidden': onderdeel.isedit}"  ng-bind-html="onderdeel.content" required></p>
+      <p class="list-group-item-text well" contenteditable ng-class="{'hidden': !onderdeel.isedit}"  ng-model="onderdeel.content" required></p>
     </div>
         
     
