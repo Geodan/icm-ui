@@ -3,7 +3,7 @@
   	<a ui-sref="incidenten.incident.beeld.text">text</a>
     <div class="list-group">
     <div class="list-group-item" ng-repeat="onderdeel in currentBeeld.beeldonderdeel" >
-      <h5 class="list-group-item-heading text-primary"> {{onderdeel.title}} 
+      <h5 class="list-group-item-heading text-primary"><span  ng-click="editItem(onderdeel.isedit,true)">{{onderdeel.title}}</span>
         <a class="pull-right glyphicon" ng-click="editItem(onderdeel.isedit)" ng-class="{'glyphicon-pencil': !onderdeel.isedit, 'glyphicon-ok': onderdeel.isedit, 'text-success': onderdeel.isedit}"></a>
         <a class="pull-right glyphicon text-danger" ng-click="cancelEdit()" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a>
       </h5>
@@ -16,8 +16,6 @@
       <p class="list-group-item-text" ng-class="{'hidden': onderdeel.isedit}"  ng-bind-html="onderdeel.content" ></p>
       <p class="list-group-item-text well" contenteditable ng-class="{'hidden': !onderdeel.isedit}"  ng-model="onderdeel.contentedit" ></p>
     </div>
-        
-    
 </div>
  
   </div>

@@ -125,10 +125,12 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
 
               // So this one is targeting the unnamed view within the parent state's template.
               'main@': {
-                templateUrl: "templates/text.html"
+                templateUrl: "templates/text.html",
+                controller: 'BeeldCtrl'
                 },
                'sidebar@': {
-                templateUrl: "templates/sidebar/text.html"
+                templateUrl: "templates/sidebar/text.html",
+                controller: 'BeeldSideCtrl'
                 }
             }
         });       

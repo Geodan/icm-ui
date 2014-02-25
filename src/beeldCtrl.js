@@ -1,12 +1,11 @@
-
-icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils', function  ($scope, $stateParams, Beelden, Core, Utils) {    
+icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils', function  ($scope, $stateParams, Beelden, Core, Utils) {
     $scope.beeldType = $stateParams.beeldType;
-    
+
     if(!Core.project()) {
         //TODO: hier moet je of terug gestuurd worden naar incidenten of netjes met een promise oid alsnog alle gegevens zetten
         if(!Core.project($stateParams.incidentID)) return false;
-        
-    } 
+
+    }
 
     //functie om het huidige beeld op te halen
     $scope.currentBeeld = _(Beelden.beelden).filter(function(d){
@@ -14,20 +13,33 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     })[0];
    
     var store = Core.project().itemStore();
-        
+
     function updateItems(a) {
-         $scope.items = Utils.filter(Core.project().items(), $scope.currentBeeld.beeld);
-         _($scope.currentBeeld.beeldonderdeel).each(function(d){
+        $scope.items = Utils.filter(Core.project().items(), $scope.currentBeeld.beeld);
+        _($scope.currentBeeld.beeldonderdeel).each(function(d){
             if(d.isedit === undefined) d.isedit = false;
             if(d.zeker === undefined) d.zeker = true;
             var item = _($scope.items).filter(function(b){
                 return b.data('beeldonderdeel') == d.id
             })
             if(item.length > 0)
-                d.content = item[0].data('beeldcontent');
+            {
+                var deltas = item[0].deltas();
+                var oldValue = '';
+                for (var i =  deltas.length - 2; i >= 0; i--)
+                {
+                    if (deltas[i].data.beeldcontent !== undefined)
+                    {
+                        oldValue = deltas[i].data.beeldcontent;
+                        break;
+                    }
+                }
+                var diff =  TextDifference(oldValue, item[0].data('beeldcontent')) ;
+                d.content = diff;
+            }
         })
     }
-    
+
     //Update de items na een datachange van de itemStore
     store.bind('datachange', function (a) {
         $scope.$apply(function(){
@@ -36,11 +48,14 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     });
     updateItems();
 
-    $scope.editItem = function(isedit) {
+    $scope.editItem = function(isedit,title) {
+
         var onderdeel = this.onderdeel;
 
 
+        
         if(isedit) {
+             if(title) return false;
             //Er is geedit, we moeten de wijzigingen aan de cow.item() doorgeven en syncen
             var beeldonderdeelItem =  _($scope.items).filter(function(b){
                 return b.data('beeldonderdeel') == onderdeel.id;
@@ -65,12 +80,12 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
                     .sync();
             }
 
-            
+
         }
         else {
             //we gaan editen, zorg dat de huidige versie opgeslagen is in de scope zodat cancel makkelijk is.
             this.onderdeel.contentedit = this.onderdeel.content;
-           this.onderdeel.oldVersion = this.onderdeel.content;
+            this.onderdeel.oldVersion = this.onderdeel.content;
         }
         this.onderdeel.isedit = !isedit;
     }
@@ -86,4 +101,3 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     }
 
 }])
-
