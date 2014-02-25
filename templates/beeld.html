@@ -31,8 +31,10 @@
     <div class="btn-group" ng-repeat="(key, val) in definedLayers.baselayers" data-toggle="buttons">
         <button type="button" class="btn btn-default active" ng-click="toggleLayer(key)">{{key}}</button>
     </div>
-    <p>Layer definition:</p>
-    <pre ng-bind="layers.baselayers | json"></pre>
+    <div class="btn-group" ng-repeat="(key, val) in leafletService.layers.overlays" data-toggle="buttons">
+        <button type="button" class="btn btn-default active" ng-click="toggleOverlay(key)">{{val.name}}</button>
+    </div>
+    
     <leaflet center="center" height="400px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
     
     <span class="dropdown">
@@ -87,6 +89,9 @@
         </li>
     </ul>
   </span>
-  
+  <!--
+  <p>Layer definition:</p>
+  <pre ng-bind="layers | json"></pre>
+  -->
   </div>
 </div>
