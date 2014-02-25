@@ -52,6 +52,7 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
         var onderdeel = this.onderdeel;
 
 
+        
         if(isedit) {
             //Er is geedit, we moeten de wijzigingen aan de cow.item() doorgeven en syncen
             var beeldonderdeelItem =  _($scope.items).filter(function(b){
