@@ -11,7 +11,7 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     $scope.currentBeeld = _(Beelden.beelden).filter(function(d){
         return d.beeld == $scope.beeldType;
     })[0];
-
+   
     var store = Core.project().itemStore();
 
     function updateItems() {
@@ -51,10 +51,13 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     });
     updateItems();
 
-    $scope.editItem = function(isedit) {
+    $scope.editItem = function(isedit,title) {
+
         var onderdeel = this.onderdeel;
         console.log('isEdit' + isedit);
+        
         if(isedit) {
+             if(title) return false;
             //Er is geedit, we moeten de wijzigingen aan de cow.item() doorgeven en syncen
             var beeldonderdeelItem =  _($scope.items).filter(function(b){
                 return b.data('beeldonderdeel') == onderdeel.id;
@@ -98,11 +101,5 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
             this.onderdeel.content = this.onderdeel.oldVersion;
         }
     }
-
-}]);
-
-icm.controller('BeeldSideCtrl', ['$scope', 'Beelden', function  ($scope, Beelden) {
-    $scope.beelden = Beelden.beelden;
-
 
 }]);

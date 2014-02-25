@@ -52,16 +52,8 @@ hr.small {
 /*
 Text Diff
 */
-del {
-    background-color: #ffaaaa;
-    font-weight:bold;
-    text-decoration:line-through;
-}
-ins {
-    color: #dd0000;
-    font-weight:bold;
-    text-decoration: none;
-}
+del { background-color: #fcf8e3; text-decoration:line-through; }
+ins { color: #dd0000; font-weight:bold; text-decoration: none;}
 
 /*
  * Sidebar
