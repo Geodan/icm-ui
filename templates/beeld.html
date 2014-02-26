@@ -28,14 +28,7 @@
   </div>
   <!--- MAP --->
   <div class="col-sm-6  col-md-6 col-lg-7 kaart"   ng-controller="LeafletController">
-    <div class="btn-group" ng-repeat="(key, val) in leafletService.layers.baselayers" data-toggle="buttons">
-        <button type="button" class="btn btn-default active" ng-click="toggleLayer(key)">{{key}}</button>
-    </div><br>
-    <div class="btn-group" ng-repeat="(key, val) in leafletService.layers.overlays" data-toggle="buttons">
-        <button type="button" class="btn btn-default active" ng-click="toggleOverlay(key)">{{val.name}}</button>
-    </div>
     
-    <leaflet center="center" height="800px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
     
     <span class="dropdown">
     <button class="btn btn-primary" type="button">
@@ -89,6 +82,15 @@
         </li>
     </ul>
   </span>
+  <leaflet center="center" height="800px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
+  <div class="btn-group" ng-repeat="(key, val) in leafletService.layers.baselayers" data-toggle="buttons">
+        <button type="button" class="btn btn-default active" ng-click="toggleLayer(key)">{{key}}</button>
+    </div><br>
+    <div class="btn-group" ng-repeat="(key, val) in leafletService.layers.overlays" data-toggle="buttons">
+        <button type="button" class="btn btn-default active" ng-click="toggleOverlay(key)">{{val.name}}</button>
+    </div>
+    
+    
   <!--
   <p>Layer definition:</p>
   <pre ng-bind="layers | json"></pre>

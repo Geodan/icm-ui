@@ -14,7 +14,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.leafletService = LeafletService;
     
     /* Initiate the marker icons */
-    $http({method: 'POST', url: './images/mapicons/imoov_list_subset.js'}).
+    //$http({method: 'POST', url: './images/mapicons/imoov_list_subset.js'}).
+    $http({method: 'POST', url: './images/mapicons/progideon_list.js'}).
         success(function(data, status, headers, config) {
             _(data.icons).each(function(d){
                 $scope.icontypes[d.url] = d;
