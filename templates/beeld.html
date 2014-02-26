@@ -3,7 +3,7 @@
     <a ui-sref="incidenten.incident.beeld.text" class="pull-right">text ></a>
   </div>
   <div class="col-sm-6  col-md-6 col-lg-7 ">
-    <a ui-sref="incidenten.incident.beeld.kaart">< kaart</a>
+    <a ui-sref="incidenten.incident.beeld.kaart" class="pull-left">< kaart</a>
   </div>
 </div>
 <div class="row" >
@@ -26,7 +26,7 @@
 </div>
  
   </div>
-  
+  <!--- MAP --->
   <div class="col-sm-6  col-md-6 col-lg-7 kaart"   ng-controller="LeafletController">
     <div class="btn-group" ng-repeat="(key, val) in leafletService.layers.baselayers" data-toggle="buttons">
         <button type="button" class="btn btn-default active" ng-click="toggleLayer(key)">{{key}}</button>
