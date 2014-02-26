@@ -10,11 +10,11 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Beelden', 'LeafletService',
     
     $scope.project = Core.project(); //Get current project
     var store = Core.projectStore(); //Get projectstore
-    $scope.projecten = Core.projects(); //Get list of projects
+    $scope.projecten = _(Core.projects()).filter(function(d){return !d.deleted();}); //Get list of projects
     //Bind storechange to angular DOM
     store.bind('datachange', function () {
         $scope.$apply(function(){
-            $scope.projecten = Core.projects();
+            $scope.projecten = _(Core.projects()).filter(function(d){return !d.deleted();});
         })
     })
     //Set the current project
