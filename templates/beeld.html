@@ -1,9 +1,16 @@
+<div class="row">
+  <div class="col-sm-6 col-md-6 col-lg-5">
+    <a ui-sref="incidenten.incident.beeld.text" class="pull-right">text ></a>
+  </div>
+  <div class="col-sm-6  col-md-6 col-lg-7 ">
+    <a ui-sref="incidenten.incident.beeld.kaart" class="pull-left">< kaart</a>
+  </div>
+</div>
 <div class="row" >
   <div class="col-sm-6 col-md-6 col-lg-5">
-  	<a ui-sref="incidenten.incident.beeld.text">text</a>
     <div class="list-group">
     <div class="list-group-item" ng-repeat="onderdeel in currentBeeld.beeldonderdeel" >
-      <h5 class="list-group-item-heading text-primary"> {{onderdeel.title}}
+      <h5 class="list-group-item-heading text-primary"><span  ng-click="editItem(onderdeel.isedit,true)">{{onderdeel.title}}</span>
         <a class="pull-right glyphicon" ng-click="editItem(onderdeel.isedit)" ng-class="{'glyphicon-pencil': !onderdeel.isedit, 'glyphicon-ok': onderdeel.isedit, 'text-success': onderdeel.isedit}"></a>
         <a class="pull-right glyphicon text-danger" ng-click="cancelEdit()" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a>
       </h5>
@@ -13,21 +20,22 @@
   Klik nogmaals op annuleren om de wijzigingen ongedaan te maken
 </div>
 
-      <p class="list-group-item-text" ng-class="{'hidden': onderdeel.isedit}"  ng-bind-html="onderdeel.content" ></p>
+      <p class="list-group-item-text beeldcontent" ng-class="{'hidden': onderdeel.isedit}"  ng-bind-html="onderdeel.content" ></p>
       <p class="list-group-item-text well" contenteditable ng-class="{'hidden': !onderdeel.isedit}"  ng-model="onderdeel.contentedit" ></p>
     </div>
 </div>
  
   </div>
-  
+  <!--- MAP --->
   <div class="col-sm-6  col-md-6 col-lg-7 kaart"   ng-controller="LeafletController">
-    <a ui-sref="incidenten.incident.beeld.kaart">kaart</a><br>
-    <div class="btn-group" ng-repeat="(key, val) in definedLayers.baselayers" data-toggle="buttons">
+    <div class="btn-group" ng-repeat="(key, val) in leafletService.layers.baselayers" data-toggle="buttons">
         <button type="button" class="btn btn-default active" ng-click="toggleLayer(key)">{{key}}</button>
+    </div><br>
+    <div class="btn-group" ng-repeat="(key, val) in leafletService.layers.overlays" data-toggle="buttons">
+        <button type="button" class="btn btn-default active" ng-click="toggleOverlay(key)">{{val.name}}</button>
     </div>
-    <p>Layer definition:</p>
-    <pre ng-bind="layers.baselayers | json"></pre>
-    <leaflet center="center" height="400px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
+    
+    <leaflet center="center" height="800px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
     
     <span class="dropdown">
     <button class="btn btn-primary" type="button">
@@ -81,6 +89,9 @@
         </li>
     </ul>
   </span>
-  
+  <!--
+  <p>Layer definition:</p>
+  <pre ng-bind="layers | json"></pre>
+  -->
   </div>
 </div>
