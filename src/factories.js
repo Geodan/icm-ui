@@ -61,8 +61,10 @@ icm.factory('Core', ['$rootScope', function($rootScope) {
           wsUrl: 'wss://websocket.geodan.nl:443/icms'
         });   
     cow.userStore().loaded.then(function(){
-        cow.users({_id:'1'}).data('name','Anonymous').sync();
-        cow.user('1');
+        if (!cow.users('1')){
+            cow.users({_id:'1'}).data('name','Anonymous').sync();
+        }
+        cow.user('1'); //set current user
     });
    return cow;
 
