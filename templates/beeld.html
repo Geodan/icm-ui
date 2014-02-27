@@ -31,8 +31,8 @@
     
     
     <span class="dropdown">
-    <button class="btn btn-primary" type="button">
-        <img alt="" width="29" ng-src="./images/mapicons/{{currentstyle.icon.url}}" ng-click="drawPoint(currentstyle.icon)"/>
+    <button class="btn btn-primary" type="button" ng-click="drawPoint(currentstyle.icon)">
+        <img alt="" width="29" ng-src="./images/mapicons/{{currentstyle.icon.url}}"/>
     </button>
     <button class="btn dropdown-toggle btn-primary" type="button" id="dropdownMenu1" data-toggle="dropdown">
         <span class="caret"></span>
@@ -48,7 +48,7 @@
     </ul>
     </span>
     <span class="dropdown">
-    <button class="btn btn-primary" type="button">
+    <button class="btn btn-primary" type="button" ng-click="drawLine(currentstyle.line)">
         <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1" width="29" height="29"><g  transform="translate(-27.086869,-417.52882)"><path   transform="translate(27.086869,429.63625)" d="M 7.3188002,12.071144 23.749999,2.4282866 10.267857,-1.9467135 20.401786,-5.8306419" style="stroke:{{currentstyle.line.stroke}};stroke-width:2;fill:none;" /></g></svg>
     </button>
     <button class="btn dropdown-toggle btn-primary" type="button" id="dropdownMenu2" data-toggle="dropdown">
@@ -66,7 +66,7 @@
   </span>
   
   <span class="dropdown">
-    <button class="btn btn-primary" type="button">
+    <button class="btn btn-primary" type="button" ng-click="drawPolygon(currentstyle.polygon)">
         <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1" width="29" height="29"><g  transform="translate(-27.086869,-417.52882)"><path d="M 2.7731138,5.3788833 14.252526,11.064017 26.527918,3.1859009 20.874459,-6.2398619 7.3960719,-3.9366059 z" transform="translate(27.086869,429.63625)"      style="fill:{{currentstyle.polygon.fill}};fill-opacity:0.7;stroke:{{currentstyle.polygon.stroke}};stroke-width:1;" /></g></svg>
     </button>
     <button class="btn dropdown-toggle btn-primary" type="button" id="dropdownMenu3" data-toggle="dropdown">

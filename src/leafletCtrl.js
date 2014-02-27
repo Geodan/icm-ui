@@ -91,6 +91,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         editmenu(event);
     });
     $scope.$on('leafletDirectiveMap.moveend', function(event,e){
+        d3.selectAll('.popup').remove();//Remove all popups on map
         handleNewExtent(e.leafletEvent);
     });
     $scope.$on('leafletDirectiveMap.click', function(event,e){
