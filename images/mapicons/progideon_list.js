@@ -1,47 +1,40 @@
 {"icons":[
- "mapicons/direction_downleft.png"
-,"mapicons/direction_down.png"
-,"mapicons/direction_downright.png"
-,"mapicons/direction_left.png"
-,"mapicons/direction_right.png"
-,"mapicons/direction_upleft.png"
-,"mapicons/direction_up.png"
-,"mapicons/direction_upright.png"
-,"mapicons/accesdenied.png"
-,"mapicons/caution.png"
-,"mapicons/bus.png"
-,"mapicons/parkinggarage.png"
-
-,"mapicons/firstaid.png"
-,"mapicons/emergencyphone.png"
-,"mapicons/ambulance.png"
-,"mapicons/hospital-building.png"
-,"mapicons/medicine.png"
-,"mapicons/school.png"
-
-,"mapicons/communitycentre.png"
-,"mapicons/seniorsite.png"
-,"mapicons/family.png"
-,"mapicons/daycare.png"
-
-,"mapicons/blast.png"
-,"mapicons/skull.png"
-,"mapicons/earthquake-3.png"
-,"mapicons/poweroutage.png"
-,"mapicons/fire.png"
-,"mapicons/flood.png"
-
-
-,"mapicons/radio-station-2.png"
-,"mapicons/regroup.png"
-
-,"mapicons/wifi.png"
-,"mapicons/group-2.png"
-
-,"mapicons/firemen.png"
-,"mapicons/police.png"
-,"mapicons/cctv.png"
-,"mapicons/moderntower.png"
-,"mapicons/comment-map-icon.png"
-,"mapicons/smiley_happy.png"
+{"cat":"none", "text":"none", "url":"mapicons/direction_downleft.png"}
+,{"cat":"none", "text":"none","url":"mapicons/direction_down.png"}
+,{"cat":"none", "text":"none","url":"mapicons/direction_downright.png"}
+,{"cat":"none", "text":"none","url":"mapicons/direction_left.png"}
+,{"cat":"none", "text":"none","url":"mapicons/direction_right.png"}
+,{"cat":"none", "text":"none","url":"mapicons/direction_upleft.png"}
+,{"cat":"none", "text":"none","url":"mapicons/direction_up.png"}
+,{"cat":"none", "text":"none","url":"mapicons/direction_upright.png"}
+,{"cat":"none", "text":"none","url":"mapicons/accesdenied.png"}
+,{"cat":"none", "text":"none","url":"mapicons/caution.png"}
+,{"cat":"none", "text":"none","url":"mapicons/bus.png"}
+,{"cat":"none", "text":"none","url":"mapicons/parkinggarage.png"}
+,{"cat":"none", "text":"none","url":"mapicons/firstaid.png"}
+,{"cat":"none", "text":"none","url":"mapicons/emergencyphone.png"}
+,{"cat":"none", "text":"none","url":"mapicons/ambulance.png"}
+,{"cat":"none", "text":"none","url":"mapicons/hospital-building.png"}
+,{"cat":"none", "text":"none","url":"mapicons/medicine.png"}
+,{"cat":"none", "text":"none","url":"mapicons/school.png"}
+,{"cat":"none", "text":"none","url":"mapicons/communitycentre.png"}
+,{"cat":"none", "text":"none","url":"mapicons/seniorsite.png"}
+,{"cat":"none", "text":"none","url":"mapicons/family.png"}
+,{"cat":"none", "text":"none","url":"mapicons/daycare.png"}
+,{"cat":"none", "text":"none","url":"mapicons/blast.png"}
+,{"cat":"none", "text":"none","url":"mapicons/skull.png"}
+,{"cat":"none", "text":"none","url":"mapicons/earthquake-3.png"}
+,{"cat":"none", "text":"none","url":"mapicons/poweroutage.png"}
+,{"cat":"none", "text":"none","url":"mapicons/fire.png"}
+,{"cat":"none", "text":"none","url":"mapicons/flood.png"}
+,{"cat":"none", "text":"none","url":"mapicons/radio-station-2.png"}
+,{"cat":"none", "text":"none","url":"mapicons/regroup.png"}
+,{"cat":"none", "text":"none","url":"mapicons/wifi.png"}
+,{"cat":"none", "text":"none","url":"mapicons/group-2.png"}
+,{"cat":"none", "text":"none","url":"mapicons/firemen.png"}
+,{"cat":"none", "text":"none","url":"mapicons/police.png"}
+,{"cat":"none", "text":"none","url":"mapicons/cctv.png"}
+,{"cat":"none", "text":"none","url":"mapicons/moderntower.png"}
+,{"cat":"none", "text":"none","url":"mapicons/comment-map-icon.png"}
+,{"cat":"none", "text":"none","url":"mapicons/smiley_happy.png"}
 ]}      
