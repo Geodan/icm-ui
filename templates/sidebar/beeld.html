@@ -15,7 +15,9 @@
         
     
 </div>
-<h2>Peers</h2>
-<div class="list-group" ng-controller='UserCtrl'>
-    <div class="list-group-item" ng-repeat="peer in peers">{{peer.id()}} ({{peer.username()}})</div>
+<div class="panel panel-info">
+  <div class="panel-heading">Online:</div>
+    <div class="list-group" ng-controller='UserCtrl'>
+        <div class="list-group-item" ng-repeat="peer in peers">{{peer.username()}} <small>({{peer.created() | date:'HH:mm:ss'}})</small></div>
+    </div>
 </div>
