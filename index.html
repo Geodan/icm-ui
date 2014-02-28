@@ -38,7 +38,14 @@
             <a href="#" role="button" class="navbar-brand">
                 ICM
             </a>
+            
         </div>
+        <div class="col-lg-3 pull-right">
+          <div class='container-fluid' ng-controller="UserCtrl">
+           <input type="text" ng-model="selected" typeahead="user for user in users | filter:$viewValue | limitTo:8" typeahead-editable='false' typeahead-on-select="onSelect($item, $model, $label)" class="form-control">
+           </div>
+        </div><!-- /.col-lg-6 -->
+            
         
       </div>
     </header>
@@ -98,6 +105,7 @@
 <script type="text/javascript" src="lib/angular-leaflet-directive.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-sanitize.js"></script>
 <script type="text/javascript" src="lib/ui-bootstrap-0.10.0.min.js"></script>
+<script type="text/javascript" src="lib/ui-bootstrap-tpls-0.10.0.min.js"></script>
 <script type="text/javascript" src="src/state.js"></script>
 <script type="text/javascript" src="src/services.js"></script>
 <script type="text/javascript" src="src/factories.js"></script>
