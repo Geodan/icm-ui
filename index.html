@@ -43,7 +43,7 @@
         <!-- USER SELECTION -->
         <div class="col-lg-3 pull-right">
           <div class='container-fluid' ng-controller="UserCtrl">
-           <input type="text" ng-model="selected" typeahead="user for user in users | filter:$viewValue | limitTo:8" typeahead-editable='false' typeahead-on-select="onSelect($item, $model, $label)" class="form-control">
+           Naam:<input type="text" ng-model="selected" typeahead="user for user in users | filter:$viewValue | limitTo:8" typeahead-editable='false' typeahead-on-select="onSelect($item, $model, $label)" class="form-control">
            </div>
         </div>
             

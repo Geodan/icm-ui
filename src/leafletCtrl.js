@@ -322,7 +322,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var initmap = function(){
       $scope.center = $scope.leafletService.center() || $scope.center;
       return leafletData.getMap().then(function(map) {
-        
+        //tmp = map;
         // Use a geoJson object for the drawnItems instead of featureGroup
         var drawnItems = new L.geoJson();
         map.addLayer(drawnItems);
