@@ -53,20 +53,22 @@ icm.factory('Beelden', ['$rootScope',function($rootScope) {
     		]}
     ];
     return data;
-}])
+}]);
 
 icm.factory('Core', ['$rootScope', function($rootScope) {
    
    var cow = new Cow.core({
-          wsUrl: 'wss://websocket.geodan.nl:443/new'
+          wsUrl: 'wss://websocket.geodan.nl:443/icms'
         });   
     cow.userStore().loaded.then(function(){
-        cow.users({_id:'1'}).data('name','Anonymous').sync();
-        cow.user('1');
+        if (!cow.users('1')){
+            cow.users({_id:'1'}).data('name','Anonymous').sync();
+        }
+        cow.user('1'); //set current user
     });
    return cow;
 
-}])
+}]);
 
 icm.factory('Utils', ['$rootScope', function ($rootScope) {
   return {
@@ -76,9 +78,9 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
         });
 
       }
-    } 
+    }; 
 
-}])
+}]);
 
 icm.directive('contenteditable', function() {
   return {
@@ -91,13 +93,6 @@ icm.directive('contenteditable', function() {
       ngModel.$render = function() {
         element.html(ngModel.$viewValue || '');
       };
-     
-      // Listen for change events to enable binding
-      element.on('blur keyup change', function() {
-        scope.$apply(read);
-      });
-      read(); // initialize
-       
       // Write data to the model
       function read() {
         var html = element.html();
@@ -108,6 +103,12 @@ icm.directive('contenteditable', function() {
         }
         ngModel.$setViewValue(html);
       }
+     
+      // Listen for change events to enable binding
+      element.on('blur keyup change', function() {
+        scope.$apply(read);
+      });
+      read(); // initialize
     }
   };
 });
