@@ -1,7 +1,7 @@
 <a ui-sref="incidenten.incident.beeld">tekst</a>
 
-<div class="row">
-  <div class="col-sm-6  col-md-10 col-lg-10 kaart"   ng-controller="LeafletController">
+<div class="row beeld">
+  <div class="col-sm-10  col-md-10 col-lg-10 kaarten"   ng-controller="LeafletController">
     <div class="btn-group" ng-repeat="(key, val) in leafletService.layers.baselayers" data-toggle="buttons">
         <button type="button" class="btn btn-default active" ng-click="toggleLayer(key)">{{key}}</button>
     </div><br>
@@ -9,7 +9,7 @@
         <button type="button" class="btn btn-default active" ng-click="toggleOverlay(key)">{{val.name}}</button>
     </div>
     
-    <leaflet center="center" height="500px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
+    <leaflet center="center" height="800px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
     
     <span class="dropdown">
     <button class="btn btn-primary" type="button">

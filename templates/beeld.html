@@ -1,33 +1,32 @@
 <div class="row">
-  <div class="col-sm-6 col-md-6 col-lg-5">
+  <div class="col-sm-6 col-md-6 col-lg-6">
     <a ui-sref="incidenten.incident.beeld.text" class="pull-right">text ></a>
   </div>
-  <div class="col-sm-6  col-md-6 col-lg-7 ">
+  <div class="col-sm-6  col-md-6 col-lg-6 ">
     <a ui-sref="incidenten.incident.beeld.kaart" class="pull-left">< kaart</a>
   </div>
 </div>
-<div class="row" >
-  <div class="col-sm-6 col-md-6 col-lg-5">
+<div class="row beeld" >
+  <div class="col-sm-6 col-md-6 col-lg-6 beelden" >
     <div class="list-group">
-    <div class="list-group-item" ng-repeat="onderdeel in currentBeeld.beeldonderdeel" >
-      <h5 class="list-group-item-heading text-primary"><span  ng-click="editItem(onderdeel.isedit,true)">{{onderdeel.title}}</span>
-        <a class="pull-right glyphicon" ng-click="editItem(onderdeel.isedit)" ng-class="{'glyphicon-pencil': !onderdeel.isedit, 'glyphicon-ok': onderdeel.isedit, 'text-success': onderdeel.isedit}"></a>
-        <a class="pull-right glyphicon text-danger" ng-click="cancelEdit()" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a>
-      </h5>
-      <hr class="small"/>
-      <div class="alert alert-warning alert-dismissable" ng-class="{'hidden':onderdeel.zeker}">
-  <button type="button" class="close" ng-click="onderdeel.zeker = true" >&times;</button>
-  Klik nogmaals op annuleren om de wijzigingen ongedaan te maken
-</div>
+      <div class="list-group-item" ng-repeat="onderdeel in currentBeeld.beeldonderdeel" >
+        <h5 class="list-group-item-heading text-primary"><span  ng-click="editItem(onderdeel.isedit,true)">{{onderdeel.title}}</span>
+          <a class="pull-right glyphicon" ng-click="editItem(onderdeel.isedit)" ng-class="{'glyphicon-pencil': !onderdeel.isedit, 'glyphicon-ok': onderdeel.isedit, 'text-success': onderdeel.isedit}"></a>
+          <a class="pull-right glyphicon text-danger" ng-click="cancelEdit()" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a>
+        </h5>
+        <hr class="small"/>
+        <div class="alert alert-warning alert-dismissable" ng-class="{'hidden':onderdeel.zeker}">
+          <button type="button" class="close" ng-click="onderdeel.zeker = true" >&times;</button>
+          Klik nogmaals op annuleren om de wijzigingen ongedaan te maken
+        </div>
 
-      <p class="list-group-item-text beeldcontent" ng-class="{'hidden': onderdeel.isedit}"  ng-bind-html="onderdeel.content" ></p>
-      <p class="list-group-item-text well" contenteditable ng-class="{'hidden': !onderdeel.isedit}"  ng-model="onderdeel.contentedit" ></p>
+        <p class="list-group-item-text beeldcontent" ng-class="{'hidden': onderdeel.isedit}"  ng-bind-html="onderdeel.content" ></p>
+        <p class="list-group-item-text well" contenteditable ng-class="{'hidden': !onderdeel.isedit}"  ng-model="onderdeel.contentedit" ></p>
+      </div>
     </div>
-</div>
- 
   </div>
-  <!--- MAP --->
-  <div class="col-sm-6  col-md-6 col-lg-7 kaart"   ng-controller="LeafletController">
+  <!--- MAP -->
+  <div class="col-sm-5  col-md-5 col-lg-5 kaarten"   ng-controller="LeafletController">
     
     
     <span class="dropdown">
