@@ -50,12 +50,6 @@ hr.small {
 }
 
 /*
-Text Diff
-*/
-del { background-color: #fcf8e3; text-decoration:line-through; }
-ins { color: #dd0000; font-weight:bold; text-decoration: none;}
-
-/*
  * Sidebar
  */
 
@@ -178,6 +172,24 @@ padding: 5px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+/**
+    Text Angular styles
+**/
+.ta-editor {
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+}
+/*
+Text Diff
+*/
+del { background-color: #fcf8e3; text-decoration:line-through; }
+ins { color: #dd0000; font-weight:bold; text-decoration: none;}
+
+.delete { background-color: #fcf8e3; text-decoration:line-through; }
+.insert { color: #dd0000; font-weight:bold; text-decoration: none;}
 
 
 /**
