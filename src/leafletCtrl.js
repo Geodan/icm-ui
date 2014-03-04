@@ -231,7 +231,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 };
 	        }
 	    }
-    }
+    };
     populateFeatures();
     populatePeers();
     
@@ -255,12 +255,13 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             baselayers[layerName] = $scope.extralayers.baselayers[layerName];
         }
     };
-    $scope.toggleOverlay = function(overlayName) {
+    $scope.toggleOverlay = function(layer) {
         var overlays = $scope.layers.overlays;
+        var overlayName = layer.name;
         if (overlays.hasOwnProperty(overlayName)) {
             delete overlays[overlayName];
         } else {
-            overlays[overlayName] = $scope.extralayers.overlays[overlayName];
+            overlays[overlayName] = layer;
         }
     };
     
