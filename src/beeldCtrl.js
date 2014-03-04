@@ -54,9 +54,10 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     $scope.editItem = function(isedit,title) {
 
         var onderdeel = this.onderdeel;
-        console.log('isEdit' + isedit);
-        
+
         if(isedit) {
+
+            //onderdeel.contentedit = onderdeel.contentedit.replace('<div>','<br>').replace('</div>','');
              if(title) return false;
             //Er is geedit, we moeten de wijzigingen aan de cow.item() doorgeven en syncen
             var beeldonderdeelItem =  _($scope.items).filter(function(b){
@@ -81,6 +82,7 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
                     .data('beeldcontent',onderdeel.contentedit)
                     .sync();
             }
+            this.onderdeel.zeker = true;
         }
         else {
             //we gaan editen, zorg dat de huidige versie opgeslagen is in de scope zodat cancel makkelijk is.
