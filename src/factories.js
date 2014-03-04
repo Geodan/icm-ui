@@ -77,7 +77,9 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
            return d.data('beeld') == beeld; 
         });
 
-      }
+      },
+      user: "",
+      incident: ""
     }; 
 
 }]);

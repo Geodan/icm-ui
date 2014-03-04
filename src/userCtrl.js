@@ -4,12 +4,12 @@
 
 
 icm.controller('UserCtrl', ['$scope', '$stateParams', 'Core', 'Utils', function  ($scope, $stateParams, Core, Utils) {    
-  $scope.selected = undefined;
-  $scope.onSelect = function ($item, $model, $label) {
-    $scope.$item = $item;
-    $scope.$model = $model;
-    $scope.$label = $label;
+  $scope.data = Utils;
+
+  $scope.onSelect = function ($item) {
+    
     Core.user($item);
+
   };
   
   var userstore = Core.userStore();
