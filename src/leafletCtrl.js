@@ -12,6 +12,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var drawControl;
     $scope.icontypes = {};
     $scope.leafletService = LeafletService;
+    $scope.leafletData = leafletData; 
+    
     
     /* Initiate the marker icons */
     //$http({method: 'POST', url: './images/mapicons/imoov_list_subset.js'}).
@@ -81,6 +83,35 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
          });
     };
     
+    //Identify ESRI features
+    var identify = function(event){
+        var e = event.leafletEvent;
+        leafletData.getLayers().then(function(lllayers){
+            var dynamiclayers = _($scope.layers.overlays).filter(function(d){return d.type == 'esri_map';});
+            _.each(dynamiclayers,function(dynLayer){
+                lllayers.overlays[dynLayer.name].identify(e.latlng, function(data) {
+                  if(data.error){
+                      throw data.error;
+                  }
+                  if(data.results.length > 0) {
+                    //Popup text should be in html format.  Showing all the attributes
+                    popupText = '';
+                    _.each(data.results[0].attributes, function(val,key){
+                            popupText =  popupText + "<b>" + key + "</b>:&nbsp;" + val + "<br>";
+                    });
+        
+                    //Add Popup to the map when the mouse was clicked at
+                    var popup = L.popup()
+                      .setLatLng(e.latlng)
+                      .setContent(popupText)
+                      .openOn($scope.map);
+                  }
+                });
+            });
+        });
+     };
+
+    
     /* Map Listeners */
     $scope.$on('leafletDirectiveMarker.click', function(event, args){
         var event = args.leafletEvent;
@@ -98,6 +129,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         d3.selectAll('.popup').remove();//Remove all popups on map
         controls.editcontrol.save();
         controls.editcontrol.disable();
+        identify(e);
     });
     $scope.$on('leafletDirectiveMap.load', function (event, args) {
         initmap();
@@ -231,7 +263,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 };
 	        }
 	    }
-    }
+    };
     populateFeatures();
     populatePeers();
     
@@ -255,12 +287,15 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             baselayers[layerName] = $scope.extralayers.baselayers[layerName];
         }
     };
-    $scope.toggleOverlay = function(overlayName) {
+    $scope.toggleOverlay = function(val) {
         var overlays = $scope.layers.overlays;
+        var overlayName = val.layer.name;
         if (overlays.hasOwnProperty(overlayName)) {
             delete overlays[overlayName];
+            val.buttonclass = 'btn-default';
         } else {
-            overlays[overlayName] = $scope.extralayers.overlays[overlayName];
+            overlays[overlayName] = val.layer;
+            val.buttonclass = 'btn-primary';
         }
     };
     
@@ -334,9 +369,17 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 remove: false
             }
         });
-
-        map.addControl(drawControl);
+        $scope.map = map;
         
+        map.addControl(drawControl);
+        var RD = new L.Proj.CRS.TMS(
+         'EPSG:28992',
+         '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs',
+         [-285401.92,22598.08,595401.9199999999,903401.9199999999], {
+         resolutions: [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420]
+         });
+        map.options.crs = RD;
+        map.setView([52.7,4.7]);
         controls.pointcontrol = new L.Draw.Marker(map,  drawControl.options.Marker);
         controls.linecontrol = new L.Draw.Polyline(map, drawControl.options.polyline);  
         controls.polycontrol =  new L.Draw.Polygon(map, drawControl.options.polygon);
@@ -395,6 +438,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
       });
     };
     
+    leafletData.getLayers().then(function(layers){
+            $scope.leafletLayers = layers;
+    });
    
     $scope.drawPoint = function(style){
         $scope.currentstyle.icon = style;
