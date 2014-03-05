@@ -8,17 +8,18 @@ icm.controller('UserCtrl', ['$scope', '$stateParams', 'Core', 'Utils', function 
 
   $scope.onSelect = function ($item) {
     
-    Core.user($item);
+    Core.user($item.name);
 
   };
   
+  $scope.users = Utils.onlineUsers(Core.users(),Core.peers());
   var userstore = Core.userStore();
   userstore.bind('datachange', function () {
         $scope.$apply(function(){
-            $scope.users = _.pluck(Core.users(), '_id');
+            $scope.users = Utils.onlineUsers(Core.users(),Core.peers());
         });
     });
-  $scope.users = _.pluck(Core.users(), '_id');
+  
   // Any function returning a promise object can be used to load values asynchronously
   //$scope.getLocation = function(val) {
   //  return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
@@ -44,12 +45,12 @@ icm.controller('UserCtrl', ['$scope', '$stateParams', 'Core', 'Utils', function 
     } 
 
     var store = Core.peerStore();
-    $scope.peers = _(Core.peers()).filter(function(d){return !d.deleted();}); //Get list of peers
+    
     
     //Update de items na een datachange van de itemStore
     store.bind('datachange', function () {
         $scope.$apply(function(){
-            $scope.peers = _(Core.peers()).filter(function(d){return !d.deleted();}); //Get list of peers
+           $scope.users = Utils.onlineUsers(Core.users(),Core.peers());
         });
     });
    
