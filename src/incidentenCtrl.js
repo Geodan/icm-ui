@@ -5,9 +5,9 @@
 /*
  * Deze angular control gaat over de lijst met incidenten in /incidenten
  */
-icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Beelden', 'LeafletService', function($scope, Core, Beelden, LeafletService){
+icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'LeafletService', function($scope, Core, Utils, Beelden, LeafletService){
     console.log('creating IncidentenCtrl');
-    
+    $scope.data= Utils;    
     $scope.project = Core.project(); //Get current project
     var store = Core.projectStore(); //Get projectstore
     $scope.projecten = _(Core.projects()).filter(function(d){return !d.deleted();}); //Get list of projects
@@ -19,6 +19,7 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Beelden', 'LeafletService',
     })
     //Set the current project
     $scope.setProject = function(project) {
+        $scope.data.incident=project.data('name');
         //$scope.incident = project.data('name')||project.id();
         Beelden.beelden = [
         { beeld: 'situatie', title: 'Situatie', timestamp: 0, beeldonderdeel: 

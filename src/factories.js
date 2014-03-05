@@ -77,6 +77,20 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
            return d.data('beeld') == beeld; 
         });
 
+      },
+      user: "",
+      incident: "",
+      onlineUsers: function (users,peers) {
+        var activeUsers = _.pluck(_.filter(users,function(d){return !d.deleted()}),'_id');
+        var onlinePeers = _.map( _.filter(peers,function(d){return !d.deleted()}),function(d){return d.data('userid')})
+        var onlineUsers = [];        
+        _.each(activeUsers,function(d){
+          var user = {};
+          user.online = _.contains(onlinePeers,d);
+          user.name = d;
+          onlineUsers.push(user)
+        });
+        return onlineUsers;
       }
     }; 
 
