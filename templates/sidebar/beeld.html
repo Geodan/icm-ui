@@ -7,9 +7,7 @@
 <div class="panel panel-info">
   <div class="panel-heading">Online:</div>
     <div class="list-group" >
-        <table>
-       <tr class="list-group-item" ng-repeat="user in data.users | orderBy:'online':true "><td>{{user.name}} </td><td>{{user.online}}</td></tr>
-   </table>
+       <div class="list-group-item" ng-repeat="user in data.users | orderBy:'online':true">{{user.name}} <small>{{user.online}}</small></div>
     </div>
 </div>
 </div>
