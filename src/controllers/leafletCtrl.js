@@ -48,7 +48,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         line: {stroke: '#000'},
         polygon: {stroke: '#000',fill: '#000'}
     };
-    
+    /*
     $scope.markers = {};
     $scope.paths = {};
     
@@ -60,29 +60,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             enable: leafletEvents.getAvailablePathEvents()
         }
     };
-    /* Menu created on clicking the object */
-    var editmenu = function(event){
-        var menu = new Cow_utils.menu(event, {
-            menuconfig: Cow_utils.menuconfig
-        });
-        /* Menu listeners */
-        menu.on('delete', function(d){
-            if (confirm('Verwijderen?')) {
-                var key = d.fid;
-                Core.project().items(key).deleted('true').sync();
-            } else {
-                // Do nothing!
-            }
-        });
-        menu.on('edit.geom', function(d){
-            var feat = d.layer.toGeoJSON();
-            feat.properties.id = d.layer.options.id;
-            //Cheap ass cloning of the feature
-            drawControl.options.edit.featureGroup.addData(feat);
-            controls.editcontrol.enable();
-         });
-    };
-    
+    */
     //Identify ESRI features
     var identify = function(event){
         var e = event.leafletEvent;
@@ -113,6 +91,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
 
     
     /* Map Listeners */
+    /*
     $scope.$on('leafletDirectiveMarker.click', function(event, args){
         var event = args.leafletEvent;
         editmenu(event); 
@@ -121,6 +100,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         var event = args.leafletEvent;
         editmenu(event);
     });
+    */
     $scope.$on('leafletDirectiveMap.moveend', function(event,e){
         d3.selectAll('.popup').remove();//Remove all popups on map
         handleNewExtent(e.leafletEvent);
@@ -134,13 +114,14 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.$on('leafletDirectiveMap.load', function (event, args) {
         initmap();
     });
+    /*
     $scope.$on("leafletDirectiveMap.markerMouseover", function(ev, leafletEvent) {
         console.log(leafletEvent);
     });
     $scope.$on("leafletDirectiveMap.markerClick", function(ev, featureSelected, leafletEvent) {
         console.log(featureSelected);
     });
-    
+    */
     
     
     var populateFeatures = function(){
@@ -450,8 +431,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         /** END OF EXTENT LAYER **/
         
         /** FEATURE LAYER **/
-        var editmenu = function(feat,event){
-            var menu = new Cow_utils.menu(feat,event, {
+        var editmenu = function(feat,container, element, event){
+            var menu = new Cow_utils.menu(feat,event, container, element, {
                 menuconfig: Cow_utils.menuconfig
             });
             /* Menu listeners */
@@ -464,12 +445,13 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 }
             });
             menu.on('edit.geom', function(d){
-                var feat = d.layer.toGeoJSON();
-                feat.properties.id = d.layer.options.id;
-                //Cheap ass cloning of the feature
-                drawControl.options.edit.featureGroup.addData(feat);
+                drawControl.options.edit.featureGroup.addData(d.layer);
                 controls.editcontrol.enable();
              });
+            menu.on('edit.text', function(d){
+                //TODO: edit the text in the bottom of the map
+            });
+            
         };
         
         var editLayer = new L.GeoJSON.d3(dummyCollection, {
@@ -516,16 +498,17 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             var layers = e.layers;
             layers.eachLayer(function (layer) {
                 var geojson = layer.toGeoJSON();
-                var fid = layer.feature.properties.id;
-                delete $scope.paths[fid];
+                var fid = layer.feature.id;
+                //delete $scope.paths[fid];
                 var feature = Core.project().items(fid).data('feature');
                 feature.geometry = geojson.geometry;
                 //First transform into featurestore item
-                var item = Core.project().items(feature.properties.key) //TODO
+                var item = Core.project().items(fid) //TODO
                     .data('feature',feature)
                     .sync();
             });
-            drawControl.options.edit.featureGroup.clearLayers(); 
+            drawControl.options.edit.featureGroup.clearLayers();
+            populateFeatures();
         }); //TODO
 
         map.on('draw:created', function (e) {
@@ -557,6 +540,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 .permissions('edit',mygroups)//Set default permissions to my groups
                 .permissions('share',mygroups)//Set default permissions to my groups
                 .sync();
+            populateFeatures();
         });//TODO
         populateFeatures();
       });
