@@ -5,11 +5,11 @@ Cow_utils = {};
 Cow_utils.menuconfig = {
      "name": "root",
      "children": [{
-          "name": "model.population",
-          icon: './css/img/users_icon.png',
-          label: "Populatie",
-          size: 1
-      },{
+      // "name": "model.population",
+      //    icon: './css/img/users_icon.png',
+      //    label: "Populatie",
+      //    size: 1
+      //},{
           "name": "edit.geom",        
           icon: './css/img/pencil_icon.png',
           label: 'Bewerken',
@@ -129,9 +129,13 @@ Cow_utils.menu = function(feat, event, container, element, config){
         });
         
     g.append("path")
+        .style('opacity',0)
+        .transition()
+        .style('opacity',1)
         .attr("d", function(d){
             return arc(d);
         })
+        
         .style("stroke", "#fff")
         .style("fill", function(d) {
             if (d.name == 'root') {

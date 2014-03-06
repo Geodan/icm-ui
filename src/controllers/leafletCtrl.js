@@ -48,7 +48,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         line: {stroke: '#000'},
         polygon: {stroke: '#000',fill: '#000'}
     };
-    
+    /*
     $scope.markers = {};
     $scope.paths = {};
     
@@ -60,29 +60,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             enable: leafletEvents.getAvailablePathEvents()
         }
     };
-    /* Menu created on clicking the object */
-    //var editmenu = function(event){
-    //    var menu = new Cow_utils.menu(event, {
-    //        menuconfig: Cow_utils.menuconfig
-    //    });
-    //    /* Menu listeners */
-    //    menu.on('delete', function(d){
-    //        if (confirm('Verwijderen?')) {
-    //            var key = d.fid;
-    //            Core.project().items(key).deleted('true').sync();
-    //        } else {
-    //            // Do nothing!
-    //        }
-    //    });
-    //    menu.on('edit.geom', function(d){
-    //        var feat = d.layer.toGeoJSON();
-    //        feat.properties.id = d.layer.options.id;
-    //        //Cheap ass cloning of the feature
-    //        drawControl.options.edit.featureGroup.addData(feat);
-    //        controls.editcontrol.enable();
-    //     });
-    //};
-    
+    */
     //Identify ESRI features
     var identify = function(event){
         var e = event.leafletEvent;
@@ -113,6 +91,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
 
     
     /* Map Listeners */
+    /*
     $scope.$on('leafletDirectiveMarker.click', function(event, args){
         var event = args.leafletEvent;
         editmenu(event); 
@@ -121,6 +100,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         var event = args.leafletEvent;
         editmenu(event);
     });
+    */
     $scope.$on('leafletDirectiveMap.moveend', function(event,e){
         d3.selectAll('.popup').remove();//Remove all popups on map
         handleNewExtent(e.leafletEvent);
@@ -134,13 +114,14 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.$on('leafletDirectiveMap.load', function (event, args) {
         initmap();
     });
+    /*
     $scope.$on("leafletDirectiveMap.markerMouseover", function(ev, leafletEvent) {
         console.log(leafletEvent);
     });
     $scope.$on("leafletDirectiveMap.markerClick", function(ev, featureSelected, leafletEvent) {
         console.log(featureSelected);
     });
-    
+    */
     
     
     var populateFeatures = function(){
@@ -464,10 +445,13 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 }
             });
             menu.on('edit.geom', function(d){
-                //Cheap ass cloning of the feature
                 drawControl.options.edit.featureGroup.addData(d.layer);
                 controls.editcontrol.enable();
              });
+            menu.on('edit.text', function(d){
+                //TODO: edit the text in the bottom of the map
+            });
+            
         };
         
         var editLayer = new L.GeoJSON.d3(dummyCollection, {
