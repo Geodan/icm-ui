@@ -1,23 +1,15 @@
-<!--
-<div class="beelden"  ng-controller='BeeldSideCtrl'>
-  <p  ui-sref-active="bg-info"  class="" ng-repeat="beeld in beelden">
-    <a   ui-sref="incidenten.incident.beeld({beeldType:beeld.beeld})">
-        <span class="badge pull-right">1</span>
-        {{beeld.title}}
-    </a>
-  </p>
-   
-
-</div>-->
-
-<div class="list-group" ng-controller='BeeldSideCtrl'>
+<div  ng-controller='BeeldSideCtrl'>
+<div class="list-group">
     <a  ui-sref-active="active" class="list-group-item " ng-class="{'list-group-item-danger': beeld.updated}" ng-repeat="beeld in beelden"  ui-sref="incidenten.incident.beeld({beeldType:beeld.beeld})">{{beeld.title}}<span class="badge " ng-class="{hidden: !beeld.updated}" ng-click="setRead(beeld)"><span class=" glyphicon glyphicon-bell"></span></span><span class="clearfix"></span></a>
         
     
 </div>
 <div class="panel panel-info">
   <div class="panel-heading">Online:</div>
-    <div class="list-group" ng-controller='UserCtrl'>
-        <div class="list-group-item" ng-repeat="user in users">{{user.name}} <small>{{user.online}}</small></div>
+    <div class="list-group" >
+        <table>
+       <tr class="list-group-item" ng-repeat="user in data.users | orderBy:'online':true "><td>{{user.name}} </td><td>{{user.online}}</td></tr>
+   </table>
     </div>
+</div>
 </div>

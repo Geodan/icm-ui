@@ -100,10 +100,12 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 		};
 		this.labelgenerator = labelgenerator; 
 		var click = function(d,e){
+		    var element = this;
+		    var event = d3.event;
 		    d3.event.stopPropagation();//Prevent the map from firing click event as well
 		    if (onClick){
 		        //onClick(d,self);
-		        onClick(d,d3.event);
+		        onClick(d,self._svg,element, event);
 		    }
 		};
 		
@@ -188,7 +190,7 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 		  else{
 		    var path = entity.select("path");
 		    var defstyles = self.styledefaults; 
-			for (var key in defstyles) { //First check for generic layer style
+			_(defstyles).each(function(val, key) { //First check for generic layer style
 				path.style(key,function(d){
 					if (d.properties[key]){
 				        return d.properties[key]; //Override with features style if present
@@ -203,23 +205,14 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
                         }
                     }
 				});
-			}
-			//Now apply remaining styles of feature (possible doing a bit double work from previous loop)
-			/* OBS since simplestyle implementation
-			if (d.style) { //If feature has style information
-				for (var key in d.style){ //run through the styles
-				    if (d.style[key] != null){
-				        path.style(key,d.style[key]); //and apply them
-				    }
-				}
-			}
-			*/
+			});
 		  }
 		};
 		//A per feature styling method
-		var textstyling = function(d){ 
-			for (var key in labelconfig.style) { //First check for generic layer style
-				d3.select(this).style(key,function(d){
+		var textstyling = function(d){
+		    var obj = this;
+			_(labelconfig.style).each(function(val, key) { //First check for generic layer style
+				d3.select(obj).style(key,function(d){
 					if (d.labelconfig && d.labelconfig.style && d.labelconfig.style[key]){
 						return d.labelconfig.style[key]; //Override with features style if present
 					}
@@ -227,12 +220,12 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 						return labelconfig.style[key]; //Apply generic style
 					}
 				});
-			}
+			});
 			//Now apply remaining styles of feature (possible doing a bit double work from previous loop)
 			if (d.labelconfig && d.labelconfig.style) { //If feature has style information
-				for (var key in d.labelconfig.style){ //run through the styles
-					d3.select(this).style(key,d.labelconfig.style[key]); //and apply them
-				}
+				_(d.labelconfig.style).each(function(val, key){ //run through the styles
+					d3.select(obj).style(key,d.labelconfig.style[key]); //and apply them
+				});
 			}
 		};
 		//Some path specific styles (point radius, label placement eg.)
@@ -319,7 +312,7 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 			    var x = path.centroid(d)[0];
                 var y = path.centroid(d)[1];
                 
-                if (d.style && d.style.icon && d.geometry.type == 'Point'){
+                if (d.properties['marker-url'] && d.geometry.type == 'Point'){
                     entity.select('image')
                         .transition().duration(500)
                         .attr("x",x-25)
@@ -328,10 +321,8 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
                 else{
                     entity.select('path') //Only 1 path per entity
                         .transition().duration(500)
-                        .attr("d",pathStyler(d))
+                        .attr("d",pathStyler(d));
                         //.style('opacity',0)
-                        
-                        ;
                 }
 			    
 			    if (labels){
@@ -405,7 +396,8 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
       //var feature = g.selectAll('path');
       //return feature.attr("d", path);
       
-      return this.resetFunction = reset;
+      this.resetFunction = reset;
+      return reset;
     },
     
     updateData: function(map) {
@@ -415,7 +407,8 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
       if (this.geojson && this.geojson.features.length > 0){
           return this.reload();
       }
-      return this.resetFunction = this.reload;
+      this.resetFunction = this.reload;
+      return this.reserFunction;
     },
     onAdd: function(map) {
       /* Initialize the SVG layer */
@@ -435,33 +428,17 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
             "stroke" : "#555555",
             "stroke-opacity" : 1.0,
             "stroke-width" : 2,  
-            "fill" : "#555555",
+            "fill" : "none",
             "fill-opacity" : 0.5,
             "opacity" : 0.5
       };
+      _.extend(this.styledefaults, this.options.style);
       return this.updateData(map);
     },
     onRemove: function(map) {
       this._svg.remove();
       return map.off("viewreset", this.resetFunction);
-    },
-    /* OBS?
-	changeFeature: function(self, feature){
-	    var desc = document.getElementById('descfld').value; //FIXME FIXME FIXME!!
-        //feature.properties.name = document.getElementById('titlefld').value; //TODO. Yuck, yuck yuck....
-        feature.properties.desc = desc;
-        feature.properties.owner = self.core.user().data('name');
-        self._map.closePopup(); //we have to destroy since the next line triggers a reload of all features
-		//if (self.core.activeproject() == feature.properties.store){
-            var key = feature.properties.key;
-            var item = self.core.project().items(key)
-                .data('feature', feature)
-                .data('msg',desc)
-                .sync();
-        //}
-        //self.editLayer.clearLayers();
-	}
-	*/
+    }
     
   });
 }).call(this);

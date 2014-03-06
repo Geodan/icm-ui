@@ -44,14 +44,10 @@ icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
         instance.definedLayers = {
             brt: {
                 name: 'BRT',
-                url: 'http://geodata.nationaalgeoregister.nl/wmts/',
-                type: 'wmts',
-                layerParams: {
-                    layer: "brtachtergrondkaart",
-                    tilematrixSet: "EPSG:28992",
-                    matrixIds: matrixIds28992,
-                    format: "image/png8",
-                    style: ''
+                url: 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{y}.png',
+                type: 'xyz',
+                layerOptions: {
+                    tms: true,
                 }
             }
         };

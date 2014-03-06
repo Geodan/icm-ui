@@ -115,17 +115,13 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
           onlineUsers.push(user)
         });
         return onlineUsers;
-      },
-      //stores:
-      //project : incidentenctrl
-      //item : Beeldsidectrl, Beeldctrl, leafletctrl
-      //users : userctrl
-      //peers : leafletctrl , userctrl.
+      },      
       project: {},
       projectlist: [],
       itemlist: [],
       userlist: [],
       peerlist: [],
+      users: [],
       beeldcontentDiff: function(item) {
         if(!item) return '';
         var deltas = item.deltas();
