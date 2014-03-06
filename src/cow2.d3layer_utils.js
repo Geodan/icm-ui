@@ -38,13 +38,13 @@ Cow_utils.menuconfig = {
      ]
 };
 
-Cow_utils.menu = function(event, config){
+Cow_utils.menu = function(feat, event, map, config){
     var self = this;
-    var fid = event.target.options.id;
+    var fid = feat.id;
     d3.selectAll('.popup').remove(); //Remove any old menu's
-    var feature = event.target.toGeoJSON();
+    var feature = feat;
     var menuconfig = config.menuconfig;
-    var map = event.target._map;
+    
     //var core = layer.core;
     //var g = layer._svg.append('g');
     var d3Selector, g, overlayPane, svg;

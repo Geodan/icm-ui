@@ -451,7 +451,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         
         /** FEATURE LAYER **/
         var editmenu = function(feat,event){
-            var menu = new Cow_utils.menu(feat,event, {
+            var menu = new Cow_utils.menu(feat,event, $scope.map, {
                 menuconfig: Cow_utils.menuconfig
             });
             /* Menu listeners */
