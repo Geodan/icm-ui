@@ -1,6 +1,7 @@
 icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils', function  ($scope, $stateParams, Beelden, Core, Utils) {
     $scope.beeldType = $stateParams.beeldType;
     $scope.data = Utils;
+   
 
     if(!Core.project()) {
         //TODO: hier moet je of terug gestuurd worden naar incidenten of netjes met een promise oid alsnog alle gegevens zetten
