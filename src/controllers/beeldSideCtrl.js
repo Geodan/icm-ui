@@ -1,6 +1,7 @@
 icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils', function  ($scope, $stateParams, Beelden, Core, Utils) {    
     $scope.beeldType = $stateParams.beeldType;
     $scope.beelden = Beelden.beelden;
+    $scope.data =Utils;
 
      if(!Core.project()) {
         //TODO: hier moet je of terug gestuurd worden naar incidenten of netjes met een promise oid alsnog alle gegevens zetten
@@ -13,7 +14,7 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
         return d.beeld == $scope.beeldType;
     })[0];
      $scope.currentBeeld.timestamp = new Date().getTime();
-    var store = Core.project().itemStore();
+    
 
     
 
@@ -43,12 +44,7 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
         return false;
     }
     
-    //Update de items na een datachange van de itemStore
-    store.bind('datachange', function () {
-        $scope.$apply(function(){
-            updateItems()
-        })
-    });
-    updateItems();
+
+
 
 }]);
