@@ -1,5 +1,6 @@
 icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils', function  ($scope, $stateParams, Beelden, Core, Utils) {
     $scope.beeldType = $stateParams.beeldType;
+    $scope.data = Utils;
 
     if(!Core.project()) {
         //TODO: hier moet je of terug gestuurd worden naar incidenten of netjes met een promise oid alsnog alle gegevens zetten
@@ -14,8 +15,12 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
    
     var store = Core.project().itemStore();
 
-    function updateItems() {
-        $scope.items = Utils.filter(Core.project().items(), $scope.currentBeeld.beeld);
+    //onderdeel in data.itemlist | filter:data.undeleted | beeldfilter:currentBeeld.beeld
+    
+
+
+  //  function updateItems() {
+   /*     $scope.items = Utils.filter($scope.data.itemlist, $scope.currentBeeld.beeld);
         _($scope.currentBeeld.beeldonderdeel).each(function(d){
             if(d.isedit === undefined) d.isedit = false;
 
@@ -40,16 +45,16 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
                 d.cleancontent = item[0].data('beeldcontent'); //content without diff information for editing purposes
                 d.content = TextDifference(oldValue, item[0].data('beeldcontent')) ;
             }
-        })
-    }
+        })*/
+    //}
 
     //Update de items na een datachange van de itemStore
-    store.bind('datachange', function () {
+    /*store.bind('datachange', function () {
         $scope.$apply(function(){
             updateItems();
         })
     });
-    updateItems();
+    updateItems();*/
 
     $scope.editItem = function(isedit,title) {
 

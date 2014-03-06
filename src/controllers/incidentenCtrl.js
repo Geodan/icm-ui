@@ -1,25 +1,33 @@
-
-
-
-
 /*
  * Deze angular control gaat over de lijst met incidenten in /incidenten
  */
 icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'LeafletService', function($scope, Core, Utils, Beelden, LeafletService){
-    console.log('creating IncidentenCtrl');
     $scope.data= Utils;    
-    $scope.project = Core.project(); //Get current project
-    var store = Core.projectStore(); //Get projectstore
-    $scope.projecten = _(Core.projects()).filter(function(d){return !d.deleted();}); //Get list of projects
+    $scope.data.project = Core.project(); //Get current project
+    var store = Core.projectStore(); //Get projectstore    
+
+    //zet de 
+    $scope.data.projectlist = Core.projects()
     //Bind storechange to angular DOM
     store.bind('datachange', function () {
         $scope.$apply(function(){
-            $scope.projecten = _(Core.projects()).filter(function(d){return !d.deleted();});
+            $scope.data.projectlist = Core.projects();
         })
     })
+    
     //Set the current project
     $scope.setProject = function(project) {
+        Core.project(project.id()); 
         $scope.data.incident=project.data('name');
+        $scope.data.project = project;
+        var itemstore = project.itemStore();
+        $scope.data.itemlist = project.items();        
+        itemstore.bind('datachange', function () {
+            $scope.$apply(function(){
+                $scope.data.itemlist = project.items(); 
+            })
+        });
+
         //$scope.incident = project.data('name')||project.id();
         Beelden.beelden = [
         { beeld: 'situatie', title: 'Situatie', timestamp: 0, beeldonderdeel: 
@@ -72,9 +80,10 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'Leaflet
                 {title:'Communicatie intern het waterschap',id:'intern'}
             ]}
     ];
-        Core.project(project.id());   
+          
          LeafletService.reset();
     };
+    
 
 }]);
 

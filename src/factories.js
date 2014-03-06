@@ -3,53 +3,53 @@ icm.factory('Beelden', ['$rootScope',function($rootScope) {
     var data = {};
     data.beelden = [
         { beeld: 'situatie', title: 'Situatie', timestamp: 0, beeldonderdeel: 
-        	[	{id:'situatie', title: 'Situatie'}
+        	[	{id:'situatie', title: 'Situatie', isedit: false, zeker: true}
         	]}    
         ,{ beeld: 'meldingen', title: 'Meldingen', timestamp: 0, beeldonderdeel: 
-        	[	{title:'Tijdlijn',id:'Tijdlijn'},
-        		{title:'Meldingen beeld',id:'meldingen' },
-        		{title: 'Acute meldingen', id:'acuut'},
-        		{title: 'Situatie Plaats Incident',id: 'spi'} ,
-        		{title: 'Genomen acties',id:'acties' }
+        	[	{title:'Tijdlijn',id:'Tijdlijn', isedit: false, zeker: true},
+        		{title:'Meldingen beeld',id:'meldingen' , isedit: false, zeker: true},
+        		{title: 'Acute meldingen', id:'acuut', isedit: false, zeker: true},
+        		{title: 'Situatie Plaats Incident',id: 'spi', isedit: false, zeker: true} ,
+        		{title: 'Genomen acties',id:'acties' , isedit: false, zeker: true}
     		]}
         ,{ beeld: 'wat', title: 'Operationeel (WAT)', timestamp: 0, beeldonderdeel: 
-       		[	{title:'Tijdlijn',id:'tijdlijn'},
-       			{title:'Beeldvorming',id:'beeldvorming'},
-       			{title:'Oordeelsvorming',id:'oordeelsvorming'},
-       			{title:'Besluitsvorming',id:'besluitsvorming'},
-       			{title:'Knelpunten',id:'knelpunten'},
-       			{title:'Acties/maatregelen',id:'maatregelen'},
-       			{title:'Veiligheid medewerkers',id:'veiligheid'},
-       			{title:'Prognose (verwachting)',id:'prognose'}
+       		[	{title:'Tijdlijn',id:'tijdlijn', isedit: false, zeker: true},
+       			{title:'Beeldvorming',id:'beeldvorming', isedit: false, zeker: true},
+       			{title:'Oordeelsvorming',id:'oordeelsvorming', isedit: false, zeker: true},
+       			{title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
+       			{title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
+       			{title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},
+       			{title:'Veiligheid medewerkers',id:'veiligheid', isedit: false, zeker: true},
+       			{title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
    			]}
         ,{ beeld: 'wot', title: 'Tactisch (WOT)', timestamp: 0, beeldonderdeel:
-         	[	{title:'Tijdlijn',id:'tijdlijn'},
-       			{title:'Beeldvorming',id:'beeldvorming'},
-       			{title:'Oordeelsvorming',id:'oordeelsvorming'},
-       			{title:'Besluitsvorming',id:'besluitsvorming'},
-       			{title:'Knelpunten',id:'knelpunten'},
-       			{title:'Acties/maatregelen',id:'maatregelen'},       		
-       			{title:'Prognose (verwachting)',id:'prognose'}
+         	[	{title:'Tijdlijn',id:'tijdlijn', isedit: false, zeker: true},
+       			{title:'Beeldvorming',id:'beeldvorming', isedit: false, zeker: true},
+       			{title:'Oordeelsvorming',id:'oordeelsvorming', isedit: false, zeker: true},
+       			{title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
+       			{title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
+       			{title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},       		
+       			{title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
    			]}   			
         ,{ beeld: 'wbt', title: 'Strategisch (WBT)', timestamp: 0, beeldonderdeel: 
-        	[	{title:'Tijdlijn',id:'tijdlijn'},
-       			{title:'Beeldvorming',id:'beeldvorming'},
-       			{title:'Oordeelsvorming',id:'oordeelsvorming'},
-       			{title:'Besluitsvorming',id:'besluitsvorming'},
-       			{title:'Knelpunten',id:'knelpunten'},
-       			{title:'Acties/maatregelen',id:'maatregelen'},       		
-       			{title:'Prognose (verwachting)',id:'prognose'}
+        	[	{title:'Tijdlijn',id:'tijdlijn', isedit: false, zeker: true},
+       			{title:'Beeldvorming',id:'beeldvorming', isedit: false, zeker: true},
+       			{title:'Oordeelsvorming',id:'oordeelsvorming', isedit: false, zeker: true},
+       			{title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
+       			{title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
+       			{title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},       		
+       			{title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
    			]}
         ,{ beeld: 'scenarios', title: 'Scenario\'s', timestamp: 0, beeldonderdeel: 
-        	[	{title:'Meest waarschijnlijk',id:'meest'},
-        		{title:'Minder waarschijnlijk',id:'minder'},
-        		{title:'Minst waarschijnlijk',id:'minst'}
+        	[	{title:'Meest waarschijnlijk',id:'meest', isedit: false, zeker: true},
+        		{title:'Minder waarschijnlijk',id:'minder', isedit: false, zeker: true},
+        		{title:'Minst waarschijnlijk',id:'minst', isedit: false, zeker: true}
     		]}
         ,{ beeld: 'communicatie', title: 'Communicatie', timestamp: 0, beeldonderdeel: 
-        	[	{title:'Kernboodschap',id:'kernboodschap'},
-        		{title:'Omgevingsbeeld',id:'omgevingsbeeld'},
-        		{title:'Communicatie vanuit het waterschap',id:'extern'},
-        		{title:'Communicatie intern het waterschap',id:'intern'}
+        	[	{title:'Kernboodschap',id:'kernboodschap', isedit: false, zeker: true},
+        		{title:'Omgevingsbeeld',id:'omgevingsbeeld', isedit: false, zeker: true},
+        		{title:'Communicatie vanuit het waterschap',id:'extern', isedit: false, zeker: true},
+        		{title:'Communicatie intern het waterschap',id:'intern', isedit: false, zeker: true}
     		]}
     ];
     return data;
@@ -70,13 +70,34 @@ icm.factory('Core', ['$rootScope', function($rootScope) {
 
 }]);
 
+icm.filter('beeldfilter', function() {
+  return function(items,beeld) {
+    if(!beeld) {
+      return items;
+    }
+    return _(items).filter(function(d){
+           return d.data('beeld') == beeld; 
+    });
+  }
+});
+icm.filter('onderdeelfilter', function() {
+  return function(items,onderdeel) {
+    if(!onderdeel) {
+      return items;
+    }
+    return _(items).filter(function(d){
+           return d.data('beeldonderdeel') == onderdeel; 
+    });
+  }
+});
 icm.factory('Utils', ['$rootScope', function ($rootScope) {
   return {
-     filter: function (items,beeld) { 
-        return _(items).filter(function(d){
-           return d.data('beeld') == beeld; 
-        });
-
+   
+      nondeleted : function(item) {
+        return !item.deleted();
+      },
+      beeldcontent: function(item) {
+        return item.data('beeldcontent');
       },
       user: "",
       incident: "",
@@ -91,7 +112,17 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
           onlineUsers.push(user)
         });
         return onlineUsers;
-      }
+      },
+      //stores:
+      //project : incidentenctrl
+      //item : Beeldsidectrl, Beeldctrl, leafletctrl
+      //users : userctrl
+      //peers : leafletctrl , userctrl.
+      project: {},
+      projectlist: [],
+      itemlist: [],
+      userlist: [],
+      peerlist: []
     }; 
 
 }]);
