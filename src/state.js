@@ -29,6 +29,11 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
         .state("login", {
             url: "/",
             views: {
+                'nav': {
+                  templateUrl: "templates/nav.html",
+                  controller: "HeaderCtrl"
+
+                },
                 'main': {
                     templateUrl: "templates/login.html",
                     controller: "LoginCtrl"
@@ -48,11 +53,19 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
             // Dit is een lijst met alle beschikbare incidenten
             url: "/incidenten",
             views: {
+              'nav': {
+                  templateUrl: "templates/nav.html",
+                  controller: "HeaderCtrl"
+
+                },
               'main@': {
                 templateUrl: "templates/incidenten.html",
                 // zorg dat de scope, state en de incidenten door worden gegeven aan de
                 // controller
                 controller: 'IncidentenCtrl'
+                },
+                'header@': {
+                  templateUrl: "templates/header.html"
                 }
             },
             data: {

@@ -18,6 +18,6 @@
 <div class="panel panel-info">
   <div class="panel-heading">Online:</div>
     <div class="list-group" ng-controller='UserCtrl'>
-        <div class="list-group-item" ng-repeat="peer in peers">{{peer.username()}} <small>({{peer.created() | date:'HH:mm:ss'}})</small></div>
+        <div class="list-group-item" ng-repeat="user in users">{{user.name}} <small>{{user.online}}</small></div>
     </div>
 </div>
