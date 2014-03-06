@@ -102,7 +102,8 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 		var click = function(d,e){
 		    d3.event.stopPropagation();//Prevent the map from firing click event as well
 		    if (onClick){
-		        onClick(d,self);
+		        //onClick(d,self);
+		        onClick(d,d3.event);
 		    }
 		};
 		
@@ -145,7 +146,7 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
         var build = function(d){
           var entity = d3.select(this);
           //Point/icon feature
-          if (d.style && d.style.icon && d.geometry.type == 'Point'){ 
+          if (d.properties['marker-url'] && d.geometry.type == 'Point'){ 
               var x = project(d.geometry.coordinates)[0];
               var y = project(d.geometry.coordinates)[1];
               var img = entity.append("image")
@@ -357,7 +358,7 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
                 var x = self.path.centroid(d)[0];
                 var y = self.path.centroid(d)[1];
     
-                if (d.style && d.style.icon && d.geometry.type == 'Point'){
+                if (d.properties['marker-url'] && d.geometry.type == 'Point'){
                     entity.select('image')
                         .attr("x",x-25)
                         .attr("y",y-25);

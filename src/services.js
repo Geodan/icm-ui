@@ -12,8 +12,10 @@ icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
     instance.reset = function(){
         if (core.project()){
             var items = _(core.project().items())
-                    .filter(function(d){return d.data('type') == 'baselayer' && !d.deleted()}); 
-             instance.layers.baselayers = _.map(items,function(d){return d.data('layer')});
+                    .filter(function(d){return d.data('type') == 'baselayer' && !d.deleted()});
+             var mapped = _.map(items, function(d){return d.data()});
+             instance.layers.baselayers = _.groupBy(mapped,function(d){return d.category;});
+             
              var items = _(core.project().items())
                     .filter(function(d){return d.data('type') == 'overlay' && !d.deleted()}); 
              var mapped = _.map(items, function(d){return d.data()});
