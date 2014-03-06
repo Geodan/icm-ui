@@ -100,10 +100,12 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 		};
 		this.labelgenerator = labelgenerator; 
 		var click = function(d,e){
+		    var element = this;
+		    var event = d3.event;
 		    d3.event.stopPropagation();//Prevent the map from firing click event as well
 		    if (onClick){
 		        //onClick(d,self);
-		        onClick(d,d3.event);
+		        onClick(d,self._svg,element, event);
 		    }
 		};
 		
@@ -319,7 +321,7 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 			    var x = path.centroid(d)[0];
                 var y = path.centroid(d)[1];
                 
-                if (d.style && d.style.icon && d.geometry.type == 'Point'){
+                if (d.properties['marker-url'] && d.geometry.type == 'Point'){
                     entity.select('image')
                         .transition().duration(500)
                         .attr("x",x-25)

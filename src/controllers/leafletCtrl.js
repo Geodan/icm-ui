@@ -61,27 +61,27 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         }
     };
     /* Menu created on clicking the object */
-    var editmenu = function(event){
-        var menu = new Cow_utils.menu(event, {
-            menuconfig: Cow_utils.menuconfig
-        });
-        /* Menu listeners */
-        menu.on('delete', function(d){
-            if (confirm('Verwijderen?')) {
-                var key = d.fid;
-                Core.project().items(key).deleted('true').sync();
-            } else {
-                // Do nothing!
-            }
-        });
-        menu.on('edit.geom', function(d){
-            var feat = d.layer.toGeoJSON();
-            feat.properties.id = d.layer.options.id;
-            //Cheap ass cloning of the feature
-            drawControl.options.edit.featureGroup.addData(feat);
-            controls.editcontrol.enable();
-         });
-    };
+    //var editmenu = function(event){
+    //    var menu = new Cow_utils.menu(event, {
+    //        menuconfig: Cow_utils.menuconfig
+    //    });
+    //    /* Menu listeners */
+    //    menu.on('delete', function(d){
+    //        if (confirm('Verwijderen?')) {
+    //            var key = d.fid;
+    //            Core.project().items(key).deleted('true').sync();
+    //        } else {
+    //            // Do nothing!
+    //        }
+    //    });
+    //    menu.on('edit.geom', function(d){
+    //        var feat = d.layer.toGeoJSON();
+    //        feat.properties.id = d.layer.options.id;
+    //        //Cheap ass cloning of the feature
+    //        drawControl.options.edit.featureGroup.addData(feat);
+    //        controls.editcontrol.enable();
+    //     });
+    //};
     
     //Identify ESRI features
     var identify = function(event){
@@ -450,8 +450,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         /** END OF EXTENT LAYER **/
         
         /** FEATURE LAYER **/
-        var editmenu = function(feat,event){
-            var menu = new Cow_utils.menu(feat,event, $scope.map, {
+        var editmenu = function(feat,container, element, event){
+            var menu = new Cow_utils.menu(feat,event, container, element, {
                 menuconfig: Cow_utils.menuconfig
             });
             /* Menu listeners */
@@ -464,10 +464,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 }
             });
             menu.on('edit.geom', function(d){
-                var feat = d.layer.toGeoJSON();
-                feat.properties.id = d.layer.options.id;
                 //Cheap ass cloning of the feature
-                drawControl.options.edit.featureGroup.addData(feat);
+                drawControl.options.edit.featureGroup.addData(d.layer);
                 controls.editcontrol.enable();
              });
         };
@@ -516,16 +514,17 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             var layers = e.layers;
             layers.eachLayer(function (layer) {
                 var geojson = layer.toGeoJSON();
-                var fid = layer.feature.properties.id;
-                delete $scope.paths[fid];
+                var fid = layer.feature.id;
+                //delete $scope.paths[fid];
                 var feature = Core.project().items(fid).data('feature');
                 feature.geometry = geojson.geometry;
                 //First transform into featurestore item
-                var item = Core.project().items(feature.properties.key) //TODO
+                var item = Core.project().items(fid) //TODO
                     .data('feature',feature)
                     .sync();
             });
-            drawControl.options.edit.featureGroup.clearLayers(); 
+            drawControl.options.edit.featureGroup.clearLayers();
+            populateFeatures();
         }); //TODO
 
         map.on('draw:created', function (e) {
@@ -557,6 +556,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 .permissions('edit',mygroups)//Set default permissions to my groups
                 .permissions('share',mygroups)//Set default permissions to my groups
                 .sync();
+            populateFeatures();
         });//TODO
         populateFeatures();
       });
