@@ -11,52 +11,9 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     //functie om het huidige beeld op te halen
     $scope.currentBeeld = _(Beelden.beelden).filter(function(d){
         return d.beeld == $scope.beeldType;
-    })[0];
-   
-    var store = Core.project().itemStore();
+    })[0];   
 
-    //onderdeel in data.itemlist | filter:data.undeleted | beeldfilter:currentBeeld.beeld
-    
-
-
-  //  function updateItems() {
-   /*     $scope.items = Utils.filter($scope.data.itemlist, $scope.currentBeeld.beeld);
-        _($scope.currentBeeld.beeldonderdeel).each(function(d){
-            if(d.isedit === undefined) d.isedit = false;
-
-            if(d.zeker === undefined) d.zeker = true;
-
-            var item = _($scope.items).filter(function(b){
-                return b.data('beeldonderdeel') == d.id
-            });
-
-            if(item.length > 0)
-            {
-                var deltas = item[0].deltas();
-                var oldValue = '';
-                for (var i =  deltas.length - 2; i >= 0; i--)
-                {
-                    if (deltas[i].data.beeldcontent !== undefined)
-                    {
-                        oldValue = deltas[i].data.beeldcontent;
-                        break;
-                    }
-                }
-                d.cleancontent = item[0].data('beeldcontent'); //content without diff information for editing purposes
-                d.content = TextDifference(oldValue, item[0].data('beeldcontent')) ;
-            }
-        })*/
-    //}
-
-    //Update de items na een datachange van de itemStore
-    /*store.bind('datachange', function () {
-        $scope.$apply(function(){
-            updateItems();
-        })
-    });
-    updateItems();*/
-
-    $scope.editItem = function(isedit,title) {
+    $scope.editItem = function(isedit,item,title) {
 
         var onderdeel = this.onderdeel;
 
@@ -65,12 +22,9 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
             //onderdeel.contentedit = onderdeel.contentedit.replace('<div>','<br>').replace('</div>','');
              if(title) return false;
             //Er is geedit, we moeten de wijzigingen aan de cow.item() doorgeven en syncen
-            var beeldonderdeelItem =  _($scope.items).filter(function(b){
-                return b.data('beeldonderdeel') == onderdeel.id;
-            });
-            if(beeldonderdeelItem.length > 0) {
+            if(item) {
                 //er is al een item, we gaan hem aanpassen
-                beeldonderdeelItem[0]
+                item
                     .data('beeldcontent',onderdeel.contentedit)
                     .sync();
             }
@@ -92,20 +46,21 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
         else {
             //we gaan editen, zorg dat de huidige versie opgeslagen is in de scope zodat cancel makkelijk is.
             //hierbij moet de nieuwe string zonder de diff gebruikt worden.
-            this.onderdeel.contentedit = this.onderdeel.cleancontent;
-            this.onderdeel.oldVersion = this.onderdeel.content;
+            if(!item)  this.onderdeel.contentedit = '';
+            else this.onderdeel.contentedit =item.data('beeldcontent');
+            
         }
         this.onderdeel.isedit = !isedit;
     };
 
-    $scope.cancelEdit = function() {
+    $scope.cancelEdit = function(item) {
         if(this.onderdeel.zeker) {
             this.onderdeel.zeker = false;
         }
-        else {
+        else {            
             this.onderdeel.zeker = true;
             this.onderdeel.isedit = false;
-            this.onderdeel.content = this.onderdeel.oldVersion;
+            this.onderdeel.content = item?item.data('beeldcontent'):'';
         }
     }
 

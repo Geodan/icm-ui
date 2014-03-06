@@ -75,6 +75,9 @@ icm.filter('beeldfilter', function() {
     if(!beeld) {
       return items;
     }
+    if(!items) {
+      return [];
+    }
     return _(items).filter(function(d){
            return d.data('beeld') == beeld; 
     });
@@ -95,7 +98,7 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
    
       nondeleted : function(item) {
         return !item.deleted();
-      },
+      },      
       beeldcontent: function(item) {
         return item.data('beeldcontent');
       },
@@ -122,7 +125,21 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
       projectlist: [],
       itemlist: [],
       userlist: [],
-      peerlist: []
+      peerlist: [],
+      beeldcontentDiff: function(item) {
+        if(!item) return '';
+        var deltas = item.deltas();
+        var oldValue = '';
+        for (var i =  deltas.length - 2; i >= 0; i--)
+        {
+          if (deltas[i].data.beeldcontent !== undefined)
+          {
+            oldValue = deltas[i].data.beeldcontent;
+            break;
+          }
+        }
+        return TextDifference(oldValue, item.data('beeldcontent'));
+      }
     }; 
 
 }]);
