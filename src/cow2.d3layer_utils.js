@@ -51,6 +51,15 @@ Cow_utils.menu = function(feat, event, container, element, config){
     var loc = d3.mouse(element); //Wrong on firefox
     var center = {x: event.layerX, y: event.layerY};
     
+    if (navigator.userAgent.match('Firefox')){
+        loc[0] = loc[0] + 10;
+        loc[1] = loc[1] + 10;
+    }
+    if (navigator.userAgent.match('MSIE')){
+        loc[0] = loc[0] - 90;
+        loc[1] = loc[1] + 2;
+    }
+    
     g.attr('class','popup')
         .attr("transform", function(z){
             var x = loc[0];
