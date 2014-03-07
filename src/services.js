@@ -4,7 +4,13 @@ icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
     var _center;
     instance.layers = {};
     instance.center = function(center){
-          return instance._center = center || instance._center;
+        if (!center){
+            console.log('Getting center: ', instance._center);
+        }
+        else{
+            console.log('setting center: ', center);
+        }
+        return instance._center = center || instance._center;
     };
     
     /** Default baselayer **/

@@ -7,7 +7,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     }
     var core = Core;
     var map;
-    $scope.map = map; //DEBUG
+    
     $scope.core = core; //DEBUG
     tmp = $scope; //DEBUG
     var controls= {};
@@ -172,7 +172,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     /** Map Listeners **/
     $scope.$on('leafletDirectiveMap.moveend', function(event,e){
         d3.selectAll('.popup').remove();//Remove all popups on map
-        //handleNewExtent(e.leafletEvent); //DISABLED
+        handleNewExtent(e.leafletEvent); 
     });
     $scope.$on('leafletDirectiveMap.click', function(event,e){
         d3.selectAll('.popup').remove();//Remove all popups on map
@@ -184,18 +184,14 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         initmap();
     });
    
-    
-    /** SECTION FOR EXTRA LAYERS **/
-    //Get extra layers from leafletService
-    $scope.extralayers = $scope.leafletService.layers;
-    //Get the center from leafletService
-    $scope.center = $scope.leafletService.center();
-    //Set init layers from leafletService
+  
     angular.extend($scope, {
+        extralayers: $scope.leafletService.layers,
         layers: {
             baselayers: $scope.leafletService.definedLayers,
             overlays: $scope.leafletService.definedOverlays
-        }
+        },
+        initcenter: $scope.leafletService.center()
     });
     
     //Toggle baselayers
@@ -308,6 +304,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var handleNewExtent = function(e){
         var center = e.target.getCenter();
         var zoom = e.target.getZoom();
+        //Set center
         $scope.leafletService.center({lat: center.lat, lng:center.lng, zoom: zoom}); 
         var bounds = e.target.getBounds();
         var bbox = {
@@ -334,10 +331,12 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                         "label":""
                     }
                 };
+        /* DISABLED         
         if (core.peerid()){
             var peer = core.peers(core.peerid());
             peer.data('extent',feature).sync();
         }
+        */
     };
 
 
@@ -348,18 +347,19 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     **/
     
     var initmap = function(){
-      $scope.center = $scope.leafletService.center() || $scope.center;
       leafletData.getMap().then(function(d) {
         map = d;
+        $scope.map = d;
+        
         //Set correct projection for map
         var RD = new L.Proj.CRS.TMS(
-         'EPSG:28992',
-         '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs',
-         [-285401.92,22598.08,595401.9199999999,903401.9199999999], {
-         resolutions: [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420]
-         });
+             'EPSG:28992',
+             '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs',
+             [-285401.92,22598.08,595401.9199999999,903401.9199999999], {
+             resolutions: [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420]
+        });
         map.options.crs = RD;
-        map.setView($scope.leafletService.center());
+        
         /** ADD LAYERS **/
         map.addLayer(extentLayer);
         map.addLayer(featureLayer);
@@ -445,8 +445,13 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             populatePeers();
         });
         
+        var center = $scope.leafletService.center(); 
+        map.setView(center);
+        
         //Initialize first time features
         populateFeatures();
+        
+        
       });
     };
     
