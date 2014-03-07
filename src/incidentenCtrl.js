@@ -7,7 +7,7 @@
  */
 icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'LeafletService', function($scope, Core, Utils, Beelden, LeafletService){
     console.log('creating IncidentenCtrl');
-    $scope.data= Utils;    
+    $scope.data= Utils;
     $scope.project = Core.project(); //Get current project
     var store = Core.projectStore(); //Get projectstore
     $scope.projecten = _(Core.projects()).filter(function(d){return !d.deleted();}); //Get list of projects
@@ -22,17 +22,17 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'Leaflet
         $scope.data.incident=project.data('name');
         //$scope.incident = project.data('name')||project.id();
         Beelden.beelden = [
-        { beeld: 'situatie', title: 'Situatie', timestamp: 0, beeldonderdeel: 
+        { beeld: 'situatie', title: 'Situatie', timestamp: 0, beeldonderdeel:
             [   {id:'situatie', title: 'Situatie'}
-            ]}    
-        ,{ beeld: 'meldingen', title: 'Meldingen', timestamp: 0, beeldonderdeel: 
+            ]}
+        ,{ beeld: 'meldingen', title: 'Meldingen', timestamp: 0, beeldonderdeel:
             [   {title:'Tijdlijn',id:'Tijdlijn'},
                 {title:'Meldingen beeld',id:'meldingen' },
                 {title: 'Acute meldingen', id:'acuut'},
                 {title: 'Situatie Plaats Incident',id: 'spi'} ,
                 {title: 'Genomen acties',id:'acties' }
             ]}
-        ,{ beeld: 'wat', title: 'Operationeel (WAT)', timestamp: 0, beeldonderdeel: 
+        ,{ beeld: 'wat', title: 'Operationeel (WAT)', timestamp: 0, beeldonderdeel:
             [   {title:'Tijdlijn',id:'tijdlijn'},
                 {title:'Beeldvorming',id:'beeldvorming'},
                 {title:'Oordeelsvorming',id:'oordeelsvorming'},
@@ -48,33 +48,64 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'Leaflet
                 {title:'Oordeelsvorming',id:'oordeelsvorming'},
                 {title:'Besluitsvorming',id:'besluitsvorming'},
                 {title:'Knelpunten',id:'knelpunten'},
-                {title:'Acties/maatregelen',id:'maatregelen'},              
+                {title:'Acties/maatregelen',id:'maatregelen'},
                 {title:'Prognose (verwachting)',id:'prognose'}
-            ]}              
-        ,{ beeld: 'wbt', title: 'Strategisch (WBT)', timestamp: 0, beeldonderdeel: 
+            ]}
+        ,{ beeld: 'wbt', title: 'Strategisch (WBT)', timestamp: 0, beeldonderdeel:
             [   {title:'Tijdlijn',id:'tijdlijn'},
                 {title:'Beeldvorming',id:'beeldvorming'},
                 {title:'Oordeelsvorming',id:'oordeelsvorming'},
                 {title:'Besluitsvorming',id:'besluitsvorming'},
                 {title:'Knelpunten',id:'knelpunten'},
-                {title:'Acties/maatregelen',id:'maatregelen'},              
+                {title:'Acties/maatregelen',id:'maatregelen'},
                 {title:'Prognose (verwachting)',id:'prognose'}
             ]}
-        ,{ beeld: 'scenarios', title: 'Scenario\'s', timestamp: 0, beeldonderdeel: 
+        ,{ beeld: 'scenarios', title: 'Scenario\'s', timestamp: 0, beeldonderdeel:
             [   {title:'Meest waarschijnlijk',id:'meest'},
                 {title:'Minder waarschijnlijk',id:'minder'},
                 {title:'Minst waarschijnlijk',id:'minst'}
             ]}
-        ,{ beeld: 'communicatie', title: 'Communicatie', timestamp: 0, beeldonderdeel: 
+        ,{ beeld: 'communicatie', title: 'Communicatie', timestamp: 0, beeldonderdeel:
             [   {title:'Kernboodschap',id:'kernboodschap'},
                 {title:'Omgevingsbeeld',id:'omgevingsbeeld'},
                 {title:'Communicatie vanuit het waterschap',id:'extern'},
                 {title:'Communicatie intern het waterschap',id:'intern'}
             ]}
     ];
-        Core.project(project.id());   
+        Core.project(project.id());
          LeafletService.reset();
     };
 
+    $scope.toggleNew = function(editable) {
+        $scope.data.showNew = editable;
+        if (editable)
+        {
+            $scope.data.name = '';
+            $scope.data.status = $scope.projectStatuses[0];
+            $scope.data.type = $scope.projectTypes[1];
+        }
+        //debugger;
+    };
+
+    $scope.makeNew = function() {
+        Core.projects({_id: Date.now()})
+            .data('name',$scope.data.name)
+            .data('status',$scope.data.status)
+            .data('type',$scope.data.type)
+            .sync();
+        $scope.data.showNew = false;
+    };
+
+    $scope.projectStatuses =
+    [
+        { id: 0, name: "Actief" },
+        { id: 1, name: "Gepland" },
+        { id: 2, name: "Gesloten" }
+    ];
+    $scope.projectTypes =
+    [
+        { id: 0, name: "Echt" },
+        { id: 1, name: "Proef" }
+    ];
 }]);
 
