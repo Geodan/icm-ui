@@ -230,9 +230,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
       var items = _(core.project().items()).filter(function(d){
             return (!d.deleted() && d.data('type')=='feature');
       });
-      
-      var editCollection = dummyCollection; //FIXME
-      var viewCollection = dummyCollection; //FIXME
+      var editCollection  = {"type":"FeatureCollection","features":[]};
+      var viewCollection = {"type":"FeatureCollection","features":[]};
       for (i=0;i<items.length;i++){
 		    var item = items[i];
 			var feature = item.data('feature');
@@ -263,6 +262,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
 			}
 		}
 		if (featureLayer){
+		    console.log('Redrawing features');
 			featureLayer.data(editCollection);
 		    featureLayer.updateData(map);
 		}
@@ -392,15 +392,15 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             layers.eachLayer(function (layer) {
                 var geojson = layer.toGeoJSON();
                 var fid = layer.feature.id;
-                var feature = Core.project().items(fid).data('feature');
+                var feature = core.project().items(fid).data('feature');
                 feature.geometry = geojson.geometry;
                 //First transform into featurestore item
-                var item = Core.project().items(fid)
+                var item = core.project().items(fid)
                     .data('feature',feature)
                     .sync();
             });
             drawControl.options.edit.featureGroup.clearLayers();
-            populateFeatures();
+            //populateFeatures();
         }); 
 
         map.on('draw:created', function (e) {
@@ -430,16 +430,18 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 .data('feature', feature)
                 //TODO: add permissions here
                 .sync();
-            populateFeatures();
+            //populateFeatures();
         });
         
         /** Bind layer reload on storechanged **/
         var itemstore = core.project().itemStore();
         var peerstore = core.peerStore();
-        itemstore.bind('datachange',function() {
+        itemstore.off('datachange');
+        itemstore.on('datachange',function() {
              populateFeatures();
         });
-        peerstore.bind('datachange',function() {
+        peerstore.off('datachange');
+        peerstore.on('datachange',function() {
             populatePeers();
         });
         
