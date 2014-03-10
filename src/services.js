@@ -1,13 +1,18 @@
 icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
-  var instance = {};
-  var core = Core;
-  var _center;
-  instance.center = function(center){
-          return instance._center = center || instance._center;
-  };
-  
-  instance.layers = {};
-  
+    var instance = {};
+    var core = Core;
+    var _center;
+    instance.layers = {};
+    instance.center = function(center){
+        if (!center){
+            console.log('Getting center: ', instance._center);
+        }
+        else{
+            console.log('setting center: ', center);
+        }
+        return instance._center = center || instance._center;
+    };
+    
     /** Default baselayer **/
     instance.reset = function(){
         if (core.project()){
@@ -22,25 +27,14 @@ icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
              instance.layers.overlays = _.groupBy(mapped, function(d){return d.category;});
              
         }
-        //instance._center = null;
+        
         var initcenter = {
-            lat: 52.752087,
+            lat: 52.752087, //Approx HHNK
             lng: 4.896941,
-            zoom: 9
+            zoom: 5
         };
         instance.center(initcenter);
-        var matrixIds = new Array(26);
-          for (var i=0; i<26; ++i) {
-            //matrixIds[i] = 'EPSG:28992'+':' + i;
-            matrixIds[i] = i;
-        }
-        var matrixIds28992 = new Array(26);
-        for (var i= 0; i<26; i++) {
-            matrixIds28992[i]= {
-                identifier    : "EPSG:28992:" + i,
-                topLeftCorner : new L.LatLng(903402.0, -285401.92)
-            };
-        }
+        
         instance.definedLayers = {
             brt: {
                 name: 'BRT',
@@ -56,6 +50,6 @@ icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
     }
     instance.reset();
     
-  return instance;
+    return instance;
 }]);
 
