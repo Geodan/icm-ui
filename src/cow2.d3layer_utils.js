@@ -56,7 +56,7 @@ Cow_utils.menu = function(feat, event, container, element, config){
         loc[1] = loc[1] + 10;
     }
     if (navigator.userAgent.match('MSIE')){
-        loc[0] = loc[0] - 90;
+        loc[0] = loc[0] - 140;
         loc[1] = loc[1] + 2;
     }
     
@@ -108,7 +108,7 @@ Cow_utils.menu = function(feat, event, container, element, config){
              entity.remove();
              d3.event.stopPropagation();//Prevent the map from firing click event as well
              var name = d.name;
-             self.trigger(name, {fid: fid, layer: feature});
+             self.trigger(name, {fid: fid, layer: feature, obj: element});
         })
         .on('mouseover', function(d){ //Mouseover menulabel
             d3.select(this)
@@ -263,7 +263,7 @@ if (item.permissions('view')){
 
 Cow_utils.editText = function(feature,self){
     //icm.msg(item);
-    /*
+    var loc = d3.event;
     name = feature.properties.name || "";
     desc = feature.properties.desc || "";
     innerHtml = '' + 
@@ -285,57 +285,18 @@ Cow_utils.editText = function(feature,self){
     var sheader = div.append('div')
         .classed('sheader', true)
         .attr('title','Dit object is gemaakt door');
-    sheader.append('span')
-        .classed('group populatie',true); //TODO add own groups here
-    //sheader.append('span').html(groupnames);
+    
     var scontent = div.append('div')
         .classed('scontent', true);
     desc = desc.replace(/\r\n?|\n/g, '<br />');
     scontent.append('div').classed('ssubheader', true).html(innerHtml);
-    var names = ['Tom', 'Steven', 'Luis'];
-    var tags = ['Flood','hospital'];
-    $('#descfld').textcomplete([
-    {
-        match: /(^|\s)@(\w*)$/,
-        search: function (term, callback) {
-          callback($.map(names, function (element) {
-                return element.indexOf(term) === 0 ? element : null;
-            }));
-        },
-        replace: function (value) {
-          return '$1@' + value + ' ';
-        }
-     },{
-        match: /(^|\s)#(\w*)$/,
-        search: function (term, callback) {
-          callback($.map(tags, function (element) {
-                return element.indexOf(term) === 0 ? element : null;
-            }));
-        },
-        replace: function (value) {
-          return '$1#' + value + ' ';
-        }
-     }]);
     scontent.append('div')
             .html('Opslaan')
             .classed('popupbutton', true)
             .on('click',function(z){
-                    leaflmap.changeFeature(self, feature);
+                    //leaflmap.changeFeature(self, feature); //TODO
                     div.remove();
             });
-    sfooter = div.append('div')
-        .classed('sfooter',true)
-        .attr('id','permissionlist');//TODO dont use ids;
-    if (item.permissions('view')){
-        var itemgroups = item.permissions('view').groups;
-        var blokje = d3.select('#permissionlist').selectAll('.permission').data(itemgroups);
-        blokje.enter()
-            .append('span')
-            .attr('class',function(d){
-                var groupname = self.core.projects(1).groups(d).data('name');
-                return 'group ' + groupname;
-            });
-    }
     /*
     var div = d3.select('body').append('div')
         .attr("height", 500)

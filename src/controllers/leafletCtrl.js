@@ -101,7 +101,40 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             controls.editcontrol.enable();
          });
         menu.on('edit.text', function(d){
-            //TODO: edit the text in the bottom of the map
+            var feat = d.layer;
+            var fid = d.fid;
+            var entity = d.obj;
+            var bbox = entity.getBBox();
+            //Cow_utils.textbox = function(feat, obj);
+            var fe = d3.select('.leaflet-popup-pane')
+                .append('div')
+                .classed('popup',true)
+                .style('position', 'absolute')
+                .style('left', function(){return bbox.x + 35 + 'px';})
+                .style('top', function(){return bbox.y + 35 + 'px';})
+                .attr("width", 200)
+                .attr("height", 200)
+                .on('click', function(){
+                    d3.event.stopPropagation();//Prevent the map from firing click event as well
+                });
+
+            var sheader = fe.append('div')
+                .classed('sheader', true)
+                .attr('title','Dit object is gemaakt door');
+            var desc = feat.properties.desc || "";
+            var innerHtml = 'Description: <br> <textarea class="mention" id="descfld" name="desc" rows="6" cols="25">'+desc+'</textarea><br/>';
+            var scontent = fe.append('div')
+                .classed('scontent', true);
+            desc = desc.replace(/\r\n?|\n/g, '<br />');
+            scontent.append('div').html(innerHtml);
+            scontent.append('div')
+                    .html('Opslaan')
+                    .classed('popupbutton', true)
+                    .on('click',function(z){
+                            feat.properties.desc = d3.select('#descfld')[0][0].value; //FIXME
+                            $scope.core.project().items(fid).data('feature',feat).sync();
+                            fe.remove();
+                    });
         });
         
     };
@@ -112,8 +145,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         //onMouseover: cow.textbox,
         labels: true,
         labelconfig: {
-            field: "name",
+            field: "desc",
             style: {
+                'stroke-width': 0.2,
                 stroke: "#000033"
             }
         },
