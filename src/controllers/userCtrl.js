@@ -7,7 +7,7 @@ icm.controller('UserCtrl', ['$scope', '$stateParams', 'Core', 'Utils', function 
     $scope.data.userlist = Core.users();
     
     
-    
+
   };
   
   $scope.data.users = $scope.data.onlineUsers(Core.users(),Core.peers());
@@ -22,9 +22,9 @@ icm.controller('UserCtrl', ['$scope', '$stateParams', 'Core', 'Utils', function 
     //Update de items na een datachange van de itemStore
     peerstore.bind('datachange', function () {
         $scope.$apply(function(){
-           $scope.data.users = $scope.data.onlineUsers(Core.users(),Core.peers());
-            $scope.data.userlist = Core.users();
-            $scope.data.peerlist = Core.peers();
+          $scope.data.users = $scope.data.onlineUsers(Core.users(),Core.peers());
+          $scope.data.userlist = Core.users();
+          $scope.data.peerlist = Core.peers();
         });
     });
             
