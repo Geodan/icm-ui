@@ -29,7 +29,7 @@ icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
         }
         
         var initcenter = {
-            lat: 52.752087,
+            lat: 52.752087, //Approx HHNK
             lng: 4.896941,
             zoom: 5
         };

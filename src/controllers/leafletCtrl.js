@@ -6,7 +6,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         //return false;
     }
     var core = Core;
-    var map;
     
     $scope.core = core; //DEBUG
     tmp = $scope; //DEBUG
@@ -15,6 +14,27 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.icontypes = {};
     $scope.leafletService = LeafletService;
     $scope.leafletData = leafletData;
+    
+    var RD = new L.Proj.CRS.TMS(
+         'EPSG:28992',
+         '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs',
+         [-285401.92,22598.08,595401.9199999999,903401.9199999999], {
+         resolutions: [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420]
+    });
+    
+    angular.extend($scope, {
+        extralayers: LeafletService.layers,
+        layers: {
+            baselayers: LeafletService.definedLayers,
+            overlays: LeafletService.definedOverlays
+        },
+        initcenter: LeafletService.center(),
+        defaults: {
+            crs: RD
+        }
+    });
+    
+    
     //FIXME: d3 layer still expects initial feature collection with at least 1 feature
     var dummyfeature = { 
             "id": 0,
@@ -183,16 +203,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.$on('leafletDirectiveMap.load', function (event, args) {
         initmap();
     });
-   
+    
+    
   
-    angular.extend($scope, {
-        extralayers: $scope.leafletService.layers,
-        layers: {
-            baselayers: $scope.leafletService.definedLayers,
-            overlays: $scope.leafletService.definedOverlays
-        },
-        initcenter: $scope.leafletService.center()
-    });
+    
     
     //Toggle baselayers
     $scope.toggleLayer = function(val) {
@@ -200,9 +214,11 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         var layerName = val.layer.name;
         if (baselayers.hasOwnProperty(layerName)) {
             delete baselayers[layerName];
+            map.removeLayer(val.layer);
             val.buttonclass = 'btn-default';
         } else {
             baselayers[layerName] = val.layer;
+            map.addLayer(val.layer);
             val.buttonclass = 'btn-primary';
         }
     };
@@ -260,7 +276,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
 		if (featureLayer){
 		    console.log('Redrawing features');
 			featureLayer.data(editCollection);
-		    featureLayer.updateData(map);
+		    featureLayer.updateData($scope.map);
 		}
     };
     //Anything changed in the peers store results in redraw of peer items (extents & points)
@@ -298,7 +314,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             //self.locationLayer.clearLayers();
             //self.locationLayer.addData(locationCollection);
             locationLayer.data(locationCollection);
-            locationLayer.updateData(map);
+            locationLayer.updateData($scope.map);
         }
     };
     var handleNewExtent = function(e){
@@ -347,17 +363,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     **/
     
     var initmap = function(){
-      leafletData.getMap().then(function(d) {
-        map = d;
-        $scope.map = d;
-        
+      leafletData.getMap().then(function(map) {
+        $scope.map = map;
+       
         //Set correct projection for map
-        var RD = new L.Proj.CRS.TMS(
-             'EPSG:28992',
-             '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs',
-             [-285401.92,22598.08,595401.9199999999,903401.9199999999], {
-             resolutions: [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420]
-        });
         map.options.crs = RD;
         
         /** ADD LAYERS **/
@@ -445,19 +454,19 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             populatePeers();
         });
         
-        var center = $scope.leafletService.center(); 
-        map.setView(center);
+        var center = $scope.leafletService.center();
+        //map.setView([center.lat, center.lng],center.zoom);
+        
         
         //Initialize first time features
         populateFeatures();
         
-        
       });
-    };
-    
-    leafletData.getLayers().then(function(layers){
-            $scope.leafletLayers = layers;
-    });
+    };  
+ 
+    //leafletData.getLayers().then(function(layers){
+    //        $scope.leafletLayers = layers;
+    //});
    
     $scope.drawPoint = function(style){
         $scope.currentstyle.icon = style;
