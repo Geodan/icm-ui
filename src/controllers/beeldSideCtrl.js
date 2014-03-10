@@ -20,6 +20,7 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
 
     function updateItems() {
         _($scope.beelden).each(function(b){
+            
              var items = Utils.filter(Core.project().items(),b.beeld);             
              var updated = false;
              _(items).each(function(item){
