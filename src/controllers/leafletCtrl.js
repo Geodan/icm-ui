@@ -105,36 +105,50 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             var fid = d.fid;
             var entity = d.obj;
             var bbox = entity.getBBox();
-            //Cow_utils.textbox = function(feat, obj);
             var fe = d3.select('.leaflet-popup-pane')
                 .append('div')
-                .classed('popup',true)
+                .classed('popup panel panel-primary',true)
                 .style('position', 'absolute')
                 .style('left', function(){return bbox.x + 35 + 'px';})
                 .style('top', function(){return bbox.y + 35 + 'px';})
-                .attr("width", 200)
-                .attr("height", 200)
+                .style("width", '400px')
+                .style("height", '200px')
                 .on('click', function(){
                     d3.event.stopPropagation();//Prevent the map from firing click event as well
                 });
-
-            var sheader = fe.append('div')
-                .classed('sheader', true)
-                .attr('title','Dit object is gemaakt door');
+                
             var desc = feat.properties.desc || "";
-            var innerHtml = 'Description: <br> <textarea class="mention" id="descfld" name="desc" rows="6" cols="25">'+desc+'</textarea><br/>';
+            var name = feat.properties.name || "";
+            var sheader = fe.append('div')
+                .classed('panel-heading', true)
+                .attr('contenteditable','true')
+                .html(name);
+
             var scontent = fe.append('div')
-                .classed('scontent', true);
+                .classed('panel-body', true);
             desc = desc.replace(/\r\n?|\n/g, '<br />');
-            scontent.append('div').html(innerHtml);
-            scontent.append('div')
-                    .html('Opslaan')
-                    .classed('popupbutton', true)
-                    .on('click',function(z){
-                            feat.properties.desc = d3.select('#descfld')[0][0].value; //FIXME
-                            $scope.core.project().items(fid).data('feature',feat).sync();
-                            fe.remove();
-                    });
+
+            var editdiv = scontent.append('div')
+                .attr('contenteditable','true')
+                .attr('id','descfield')
+                .classed('well well-sm', true)
+                .style('height','80px')
+                .html(desc);
+            scontent.append('span')
+                .html('Opslaan')
+                .classed('btn btn-success', true)
+                .on('click',function(z){
+                    feat.properties.name = sheader.html();
+                    feat.properties.desc = editdiv.html();
+                    $scope.core.project().items(fid).data('feature',feat).sync();
+                    fe.remove();
+                });
+            scontent.append('span')
+                .html('Annuleren')
+                .classed('btn btn-danger pull-right', true)
+                .on('click',function(z){
+                    fe.remove();
+                });
         });
         
     };
@@ -145,7 +159,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         //onMouseover: cow.textbox,
         labels: true,
         labelconfig: {
-            field: "desc",
+            field: "name",
             style: {
                 'stroke-width': 0.2,
                 stroke: "#000033"
@@ -290,7 +304,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 var opacity = 1;
                 feature.id = item.id();
                 var props = feature.properties;
-                props.name = item.data('name'); 
+
                 feature.style = {
                     "marker-url": props['marker-url'] || './images/mapicons/imoov/s0620_B12---g.png',
                     stroke: props.stroke || "#555555",
