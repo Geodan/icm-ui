@@ -5,7 +5,7 @@
 /*
  * Deze angular control gaat over de lijst met incidenten in /incidenten
  */
-icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'LeafletService', function($scope, Core, Utils, Beelden, LeafletService){
+icm.controller('IncidentenCtrl' ,['$scope', '$modal', 'Core', 'Utils', 'Beelden', 'LeafletService', function($scope, $modal, Core, Utils, Beelden, LeafletService){
     console.log('creating IncidentenCtrl');
     $scope.data= Utils;
     $scope.project = Core.project(); //Get current project
@@ -16,7 +16,7 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'Leaflet
         $scope.$apply(function(){
             $scope.projecten = _(Core.projects()).filter(function(d){return !d.deleted();});
         })
-    })
+    });
     //Set the current project
     $scope.setProject = function(project) {
         $scope.data.incident=project.data('name');
@@ -76,36 +76,26 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'Leaflet
          LeafletService.reset();
     };
 
-    $scope.toggleNew = function(editable) {
-        $scope.data.showNew = editable;
-        if (editable)
-        {
-            $scope.data.name = '';
-            $scope.data.status = $scope.projectStatuses[0];
-            $scope.data.type = $scope.projectTypes[1];
-        }
-        //debugger;
+
+    $scope.open = function (project) {
+
+        var modalInstance = $modal.open({
+            templateUrl: './templates/incidentModal.html',
+            controller: 'IncidentCtrl',
+            resolve: {
+                project: function() {
+                    return project; //$scope.project;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            console.log('Returned OK');
+            $scope.selected = selectedItem;
+        }, function () {
+            console.log('Returned Cancel');
+        });
     };
 
-    $scope.makeNew = function() {
-        Core.projects({_id: Date.now()})
-            .data('name',$scope.data.name)
-            .data('status',$scope.data.status)
-            .data('type',$scope.data.type)
-            .sync();
-        $scope.data.showNew = false;
-    };
-
-    $scope.projectStatuses =
-    [
-        { id: 0, name: "Actief" },
-        { id: 1, name: "Gepland" },
-        { id: 2, name: "Gesloten" }
-    ];
-    $scope.projectTypes =
-    [
-        { id: 0, name: "Echt" },
-        { id: 1, name: "Proef" }
-    ];
 }]);
 

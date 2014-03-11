@@ -1,49 +1,14 @@
 <div class="row">
   <table class="table table-striped">
-    <tr  ng-repeat="project in projecten" ng-click="setProject(project)">
+    <tr  ng-repeat="project in projecten | orderBy:['data(\'type\').id','data(\'status\').id','timestamp']" ng-click="setProject(project)">
       <td ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType:"situatie"})'>{{project.data('name') || project.id()}} </td>
       <td> {{project.data('type').name}} </td>
       <td> {{project.data('status').name}} </td>
       <td> {{project.timestamp() | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+      <td><a class="pull-right glyphicon" ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType:"situatie"})' ng-class="{'glyphicon-pencil': true}"></a></td>
     </tr>
   </table>
-    <button type="button" class="btn btn-success" ng-click="toggleNew(true)" ng-class="{'hidden':data.showNew}">Nieuw</button>
-    <div class="container" ng-class="{'hidden':!data.showNew}">
-        <h4>Nieuw incident aanmaken</h4>
-        <table>
-            <tr><td>Incidentnaam </td>
-                <td colspan="3">
-                <input type="text" ng-model="data.name" class="form-control">
-            </td> </tr>
-            <tr>
-                <td>
-                    Status
-                </td>
-                <td>
-                <select data-ng-model="data.status"
-                        data-ng-options="status.name for status in projectStatuses" ng-init="status=0">
-                </select>
-                </td></tr>
-            <tr>
-                <td>
-                    Type
-                </td>
-                <td>
-            <select data-ng-model="data.type"
-                        data-ng-options="type.name for type in projectTypes">
-                </select>
-            </td></tr>
-        </table>
-
-        <div class="row">
-            <div class="col-sm-6 col-md-6 col-lg-5">
-                <div class='container-fluid'>
-                    <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-danger" ng-click="toggleNew(false)">Annuleer</button>
-                        <button type="button" class="btn btn-success" ng-click="makeNew()">Aanmaken</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- /container -->
+    <div>
+        <button class="btn btn-default" ng-click="open(null)">Nieuw Incident</button>
+    </div>
 </div>
