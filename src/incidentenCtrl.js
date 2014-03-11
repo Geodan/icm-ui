@@ -6,7 +6,6 @@
  * Deze angular control gaat over de lijst met incidenten in /incidenten
  */
 icm.controller('IncidentenCtrl' ,['$scope', '$modal', 'Core', 'Utils', 'Beelden', 'LeafletService', function($scope, $modal, Core, Utils, Beelden, LeafletService){
-    console.log('creating IncidentenCtrl');
     $scope.data= Utils;
     $scope.project = Core.project(); //Get current project
     var store = Core.projectStore(); //Get projectstore
