@@ -73,6 +73,29 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
             }
         })
 
+
+          //////////////////////
+          // Incident > Nieuw //
+          //////////////////////
+
+
+          .state('incidenten.nieuw', {
+              url: "/nieuw",
+              views: {
+
+                  // So this one is targeting the unnamed view within the parent state's template.
+                  'main@': {
+                      templateUrl: "templates/incident.html",
+                      controller: 'IncidentCtrl'
+                      //},
+                      //'sidebar@': {
+                      //    templateUrl: "templates/sidebar/beeld.html",
+                      //    controller: 'BeeldSideCtrl'
+                  }
+              }
+          })
+
+
           ///////////////////////////
           // Incidenten > Incident //
           ///////////////////////////
@@ -86,6 +109,30 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
               title: '/:incidentID'
             }
         })
+
+
+
+          //////////////////////
+          // Incident > Wijzig //
+          //////////////////////
+
+
+          .state('incidenten.incident.wijzig', {
+              url: "/wijzig",
+              views: {
+
+                  // So this one is targeting the unnamed view within the parent state's template.
+                  'main@': {
+                      templateUrl: "templates/incident.html",
+                      controller: 'IncidentCtrl'
+                      //},
+                      //'sidebar@': {
+                      //    templateUrl: "templates/sidebar/beeld.html",
+                      //    controller: 'BeeldSideCtrl'
+                  }
+              }
+          })
+
 
           //////////////////////
           // Incident > Beeld //
