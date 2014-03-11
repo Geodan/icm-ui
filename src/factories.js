@@ -100,6 +100,16 @@ icm.filter('onderdeelfilter', function() {
     });
   }
 });
+icm.filter('berichtfilter', function() {
+  return function(items,me,you) {
+    if(!items) {
+      return [];
+    }
+    return  _.chain(items).filter(function(d){
+           return  ((d.data('van') == me &&  d.data('naar') == you) || (d.data('naar') == me && d.data('van') == you)); 
+    }).sortBy('_created').value()
+  }
+});
 icm.factory('Utils', ['$rootScope', function ($rootScope) {
   return {
    
