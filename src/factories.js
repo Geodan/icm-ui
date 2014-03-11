@@ -129,6 +129,7 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
           var user = {};
           user.online = _.contains(onlinePeers,d);
           user.name = d;
+          user.timestamp = 0;
           onlineUsers.push(user)
         });
         return onlineUsers;

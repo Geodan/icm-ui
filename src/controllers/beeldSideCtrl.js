@@ -9,7 +9,15 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
         if(!Core.project($stateParams.incidentID)) return false;
         
     } 
+    $scope.nieuwBericht = false;
+    $scope.$watch('data.users',function(users){
+        var updated = false;
+        _(users).each(function(d){
+            if(d.updated) updated = true;
+        })
+        $scope.nieuwBericht =updated;
 
+    }, true);
     //functie om het huidige beeld op te halen
     $scope.currentBeeld = _(Beelden.beelden).filter(function(d){
         return d.beeld == $scope.beeldType;
@@ -49,6 +57,8 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
     $scope.getBerichten = function(user) {
         $scope.discussie = user.name;
         $scope.gesprek = true;
+        user.timestamp = new Date().getTime();
+        user.updated = false;
     }
     $scope.sendMessage = function() {
         if($scope.chat == '') return false;
