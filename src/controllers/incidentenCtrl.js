@@ -47,8 +47,8 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'Leaflet
         });
 
         //$scope.incident = project.data('name')||project.id();
-        Beelden.reset(new Date().getTime());
-          
+         Beelden.reset(new Date().getTime());
+        // Beelden.reset(); 
          LeafletService.reset();
          newItems();
     };
