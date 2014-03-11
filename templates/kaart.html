@@ -71,6 +71,12 @@
             </li>
         </ul>
       </span>
+      <button type="button" class="btn btn-primary" ng-model="chronos" ng-change="toggleChronos()" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+        Chronologie
+      </button>
+      <span ng-model="mytime" ng-change="timechanged()" ng-show="chronos" style="display:inline-block;">
+        <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+      </span>
       <leaflet center="initcenter" defaults="defaults" height="800px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
       </div>
       </div>

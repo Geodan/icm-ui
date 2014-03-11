@@ -7,6 +7,24 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     }
     var core = Core;
     
+    /** Some time functionality **/
+    $scope.chronos = false;
+    $scope.timeDisplay = 'none';
+    $scope.mytime = new Date();
+    $scope.hstep = 1;
+    $scope.mstep = 15;
+    $scope.ismeridian = true;
+    $scope.time = Date.now();
+    $scope.timechanged = function () {
+        console.log('Time changed to: ' + $scope.mytime);
+        $scope.time = new Date($scope.mytime).getTime();
+        populateFeatures();
+    };
+    $scope.toggleChronos = function(){
+        populateFeatures();
+    };
+    /** end of time **/
+    
     $scope.core = core; //DEBUG
     tmp = $scope; //DEBUG
     var controls= {};
@@ -167,7 +185,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var featureLayer = new L.GeoJSON.d3(dummyCollection, {
         //core: Core,
         onClick: editmenu,
-        onMouseover: Cow_utils.textbox,
+        //onMouseover: Cow_utils.textbox,
         labels: true,
         labelconfig: {
             field: "name",
@@ -305,12 +323,16 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
       var viewCollection = {"type":"FeatureCollection","features":[]};
       for (i=0;i<items.length;i++){
 		    var item = items[i];
-			var feature = item.data('feature');
-            if(feature === undefined) {
-                console.warn('old item type');
-                return false;
-            }
-            else{
+		    var t;
+		    if ($scope.chronos){
+		        t = $scope.time;
+		    }
+		    else {
+		        t = Date.now();
+		    }
+			//var feature = item.data('feature');
+            if(item.data_on(t) && item.data_on(t).feature) {
+                var feature = item.data_on(t).feature;
                 //Add feature
                 var opacity = 1;
                 feature.id = item.id();
@@ -498,24 +520,16 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 .data('feature', feature)
                 //TODO: add permissions here
                 .sync();
-            //populateFeatures();
+
         });
         
         /** Bind layer reload on storechanged **/
         var itemstore = core.project().itemStore();
         var peerstore = core.peerStore();
-        itemstore.off('datachange');
-        itemstore.on('datachange',function() {
-             populateFeatures();
-        });
-        peerstore.off('datachange');
-        peerstore.on('datachange',function() {
-            populatePeers();
-        });
-        
-        var center = $scope.leafletService.center();
-        //map.setView([center.lat, center.lng],center.zoom);
-        
+        itemstore.off('datachange',populateFeatures);
+        itemstore.on('datachange',populateFeatures);
+        peerstore.off('datachange',populatePeers);
+        peerstore.on('datachange',populatePeers);
         
         //Initialize first time features
         populateFeatures();
