@@ -504,11 +504,11 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         /** Bind layer reload on storechanged **/
         var itemstore = core.project().itemStore();
         var peerstore = core.peerStore();
-        itemstore.off('datachange');
+        //itemstore.off('datachange');
         itemstore.on('datachange',function() {
              populateFeatures();
         });
-        peerstore.off('datachange');
+       // peerstore.off('datachange');
         peerstore.on('datachange',function() {
             populatePeers();
         });
