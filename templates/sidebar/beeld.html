@@ -4,13 +4,13 @@
         
     
 </div>
-<div class="panel panel-info">
-    <div class="panel-heading">Berichten <span  ng-click="isCollapsed = !isCollapsed" ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon"></span><span class="clearfix"></span></div>
+<div class="panel panel-info" ng-class="{'panel-danger':nieuwBericht,'active':nieuwBericht}">
+    <div class="panel-heading"  ng-click="isCollapsed = !isCollapsed">Berichten <span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon"></span><span class="clearfix"></span></div>
     <div class="list-group"  collapse="isCollapsed">
-       <div ng-class="{'hidden':gesprek}" class="list-group-item" ng-click="getBerichten(user)" ng-repeat="user in data.users | orderBy:'online':true">
+       <div ng-class="{'hidden':gesprek,'list-group-item-danger': user.updated}" class="list-group-item" ng-click="getBerichten(user)"  ng-repeat="user in data.users | orderBy:'online':true">
             {{user.name}} 
             <span class="pull-right" >
-                <span class="glyphicon" ng-class="{'glyphicon-ok-sign': user.online, 'glyphicon-minus-sign': !user.online,'text-danger':!user.online, 'text-success':user.online}"></span>
+                <span class="glyphicon" ng-class="{'glyphicon-ok-sign': user.online, 'glyphicon-minus-sign': !user.online,'text-danger':!user.online, 'text-success':user.online}"></span><span class="glyphicon" ng-class="{'glyphicon-bell': user.updated}"></span>
             </span>
         </div>
         
