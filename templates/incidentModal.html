@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <h2>{{ isNew ? 'Nieuw' : 'Wijzig' + ' incident'}}</h2>
+ </div>
+<div>
+    <h3>Incidentnaam</h3>
+    <input type="text" ng-model="incident.name" class="form-control">
+    <p>Vul hier de naam van het incident in</p>
+    <h3>Type</h3>
+    <select data-ng-model="incident.type"
+        data-ng-options="type.name for type in projectTypes" class="form-control">
+    </select>
+    <p>Kies hier het type van het incident</p>
+    <h3>Status</h3>
+    <select data-ng-model="incident.status" data-ng-options="status.name for status in projectStatuses" class="form-control">
+    </select>
+    <p>Kies hier de status van het incident</p>
+</div>
+    <leaflet height="300px" width="100%"></leaflet>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK - {{ isNew ? 'Voeg toe' : 'Wijzig'}}</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
