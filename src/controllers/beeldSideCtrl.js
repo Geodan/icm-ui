@@ -1,6 +1,8 @@
 icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils', function  ($scope, $stateParams, Beelden, Core, Utils) {    
     $scope.beeldType = $stateParams.beeldType;
     $scope.beelden = Beelden.beelden;
+    $scope.data =Utils;
+    $scope.discussie = '';
 
      if(!Core.project()) {
         //TODO: hier moet je of terug gestuurd worden naar incidenten of netjes met een promise oid alsnog alle gegevens zetten
@@ -13,12 +15,10 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
         return d.beeld == $scope.beeldType;
     })[0];
      $scope.currentBeeld.timestamp = new Date().getTime();
-    var store = Core.project().itemStore();
-
-    
 
     function updateItems() {
         _($scope.beelden).each(function(b){
+
              var items = Utils.filter(Core.project().items(),b.beeld);             
              var updated = false;
              _(items).each(function(item){
@@ -42,13 +42,23 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
         })
         return false;
     }
-    
-    //Update de items na een datachange van de itemStore
-    store.bind('datachange', function () {
-        $scope.$apply(function(){
-            updateItems()
-        })
-    });
-    updateItems();
+    //berichten:
+    //van
+    //naar
+    //bericht
+    $scope.getBerichten = function(user) {
+        $scope.discussie = user.name;
+        $scope.gesprek = true;
+    }
+    $scope.sendMessage = function() {
+        if($scope.chat == '') return false;
+        var id = $scope.data.user + '_' + $scope.discussie + '_' + new Date().getTime();
+         var item = Core.project().items({_id:id})
+                    .data('van',$scope.data.user)
+                    .data('naar',$scope.discussie)
+                    .data('bericht',$scope.chat)
+                    .sync();
+        $scope.chat='';
+    }
 
 }]);

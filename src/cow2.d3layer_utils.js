@@ -5,11 +5,11 @@ Cow_utils = {};
 Cow_utils.menuconfig = {
      "name": "root",
      "children": [{
-          "name": "model.population",
-          icon: './css/img/users_icon.png',
-          label: "Populatie",
-          size: 1
-      },{
+      // "name": "model.population",
+      //    icon: './css/img/users_icon.png',
+      //    label: "Populatie",
+      //    size: 1
+      //},{
           "name": "edit.geom",        
           icon: './css/img/pencil_icon.png',
           label: 'Bewerken',
@@ -38,38 +38,36 @@ Cow_utils.menuconfig = {
      ]
 };
 
-Cow_utils.menu = function(event, config){
+Cow_utils.menu = function(feat, event, container, element, config){
     var self = this;
-    var fid = event.target.options.id;
+    var fid = feat.id;
     d3.selectAll('.popup').remove(); //Remove any old menu's
-    var feature = event.target.toGeoJSON();
+    var feature = feat;
     var menuconfig = config.menuconfig;
-    var map = event.target._map;
-    //var core = layer.core;
-    //var g = layer._svg.append('g');
-    var d3Selector, g, overlayPane, svg;
-    overlayPane = map.getPanes().overlayPane;
-    d3Selector = d3.select(overlayPane);
-    this._svg = svg = d3Selector.select('svg');
+
+    var g, svg;
+    this._svg = svg = container;
     g = svg.append('g');
-    //var g = d3.select('#map').select('svg').append('g');
-    var center = map.latLngToLayerPoint(event.latlng);
+    var loc = d3.mouse(element); //Wrong on firefox
+    var center = {x: event.layerX, y: event.layerY};
+    
+    if (navigator.userAgent.match('Firefox')){
+        loc[0] = loc[0] + 10;
+        loc[1] = loc[1] + 10;
+    }
+    if (navigator.userAgent.match('MSIE')){
+        loc[0] = loc[0] - 90;
+        loc[1] = loc[1] + 2;
+    }
     
     g.attr('class','popup')
         .attr("transform", function(z){
-            var x = center.x;
-            var y = center.y;
+            var x = loc[0];
+            var y = loc[1];
             return "translate(" + x + "," + y + ")";
         });
-
-    //var item = core.project().items(feature.properties.key); //TODO
-    //var groups = core.project().groups();
-    /* OBS?
-    $.each(groups, function(i,d){
-        d.children = [{name: 'Vw'},{name: 'Ed'},{name: 'Sh'}];
-    });
-    */
-    var data = menuconfig; //TODO: move out of menu code, make param
+  
+    var data = menuconfig; 
     width = 150;
     height = 150;
     var radius = Math.min(width, height) / 2;
@@ -110,7 +108,7 @@ Cow_utils.menu = function(event, config){
              entity.remove();
              d3.event.stopPropagation();//Prevent the map from firing click event as well
              var name = d.name;
-             self.trigger(name, {fid: fid, layer: event.target});
+             self.trigger(name, {fid: fid, layer: feature});
         })
         .on('mouseover', function(d){ //Mouseover menulabel
             d3.select(this)
@@ -140,9 +138,13 @@ Cow_utils.menu = function(event, config){
         });
         
     g.append("path")
+        .style('opacity',0)
+        .transition()
+        .style('opacity',1)
         .attr("d", function(d){
             return arc(d);
         })
+        
         .style("stroke", "#fff")
         .style("fill", function(d) {
             if (d.name == 'root') {

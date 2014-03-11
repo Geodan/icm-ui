@@ -1,6 +1,6 @@
 <div class="row">
   <table class="table table-striped">
-    <tr  ng-repeat="project in projecten | orderBy:['data(\'type\').id','data(\'status\').id','timestamp']" ng-click="setProject(project)">
+    <tr  ng-repeat="project in data.projectlist | filter:data.nondeleted | orderBy:['data(\'type\').id','data(\'status\').id','timestamp']"  ng-click="setProject(project)">
       <td ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType:"situatie"})'>{{project.data('name') || project.id()}} </td>
       <td> {{project.data('type').name}} </td>
       <td> {{project.data('status').name}} </td>
