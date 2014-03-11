@@ -191,7 +191,7 @@ Cow_utils.editText = function(feature,entity){
     
 };
 
-Cow_utils.textbox = function(feature,obj, svg){
+Cow_utils.textbox = function(feature,obj){
     var _this = this;
     var self = this.map;
     //d3.selectAll('.popup').remove(); //Remove any old menu's
