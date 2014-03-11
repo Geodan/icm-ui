@@ -315,7 +315,7 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
                 if (d.properties['marker-url'] && d.geometry.type == 'Point'){
                     entity.select('image')
                         .transition().duration(500)
-                        .attr("x",x-25)
+                        .attr("x",x-12.5)
                         .attr("y",y-25);
                 }
                 else{
@@ -351,7 +351,7 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
     
                 if (d.properties['marker-url'] && d.geometry.type == 'Point'){
                     entity.select('image')
-                        .attr("x",x-25)
+                        .attr("x",x-12)
                         .attr("y",y-25);
                         //.moveToFront();
                 }
