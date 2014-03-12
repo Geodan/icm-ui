@@ -1,4 +1,4 @@
-var tmp; //DEBUG
+//var tmp; //DEBUG
 
 
 icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils', "leafletData",'leafletEvents','LeafletService',function($scope, $http, $timeout, Core, Utils,  leafletData, leafletEvents, LeafletService) {
@@ -30,8 +30,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     };
     /** end of time **/
     
-    $scope.core = core; //DEBUG
-    tmp = $scope; //DEBUG
+    //$scope.core = core; //DEBUG
+    //tmp = $scope; //DEBUG
     var controls= {};
     var drawControl;
     $scope.icontypes = {};
