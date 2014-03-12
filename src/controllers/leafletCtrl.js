@@ -1,4 +1,4 @@
-var tmp; //DEBUG
+//var tmp; //DEBUG
 
 
 icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils', "leafletData",'leafletEvents','LeafletService',function($scope, $http, $timeout, Core, Utils,  leafletData, leafletEvents, LeafletService) {
@@ -6,7 +6,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         //return false;
     }
     var core = Core;
-    
+    $scope.core = core;
     /** Some time functionality **/
     $scope.chronos = false;
     $scope.timeDisplay = 'none';
@@ -30,8 +30,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     };
     /** end of time **/
     
-    $scope.core = core; //DEBUG
-    tmp = $scope; //DEBUG
+    
+    //tmp = $scope; //DEBUG
     var controls= {};
     var drawControl;
     $scope.icontypes = {};
@@ -190,11 +190,13 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             });
         }
     };
-    
+    var textbox = function(feat,container, element, event){
+        //TODO
+    }
     var featureLayer = new L.GeoJSON.d3(dummyCollection, {
         //core: Core,
         onClick: editmenu,
-        //onMouseover: Cow_utils.textbox,
+        onMouseover: textbox,
         labels: true,
         labelconfig: {
             field: "name",
@@ -213,8 +215,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.featureLayer = featureLayer;
     
     /* Initiate the marker icons */
-    //$http({method: 'POST', url: './images/mapicons/imoov_list_subset.js'}).
-    $http({method: 'POST', url: './images/mapicons/progideon_list.js'}).
+    //$http({method: 'GET', url: './images/mapicons/imoov_list_subset.js'}).
+    $http({method: 'GET', url: './images/mapicons/progideon_list.js'}).
         success(function(data, status, headers, config) {
             _(data.icons).each(function(d){
                 $scope.icontypes[d.url] = d;

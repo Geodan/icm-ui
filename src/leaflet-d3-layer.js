@@ -127,8 +127,11 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
                         .style("top", (d3.event.pageY - 28) + "px");
                  */
                 }
+            var event = d3.event;
+            var element = this;
 		    if (onMouseover){
-		        onMouseover(d,this);
+		        //onMouseover(d,this);
+		        onMouseover(d,self._svg,element, event);
 		    }
 		};
 		var mouseout = function(d){
