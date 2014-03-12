@@ -190,11 +190,13 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             });
         }
     };
-    
+    var textbox = function(feat,container, element, event){
+        //TODO
+    }
     var featureLayer = new L.GeoJSON.d3(dummyCollection, {
         //core: Core,
         onClick: editmenu,
-        //onMouseover: Cow_utils.textbox,
+        onMouseover: textbox,
         labels: true,
         labelconfig: {
             field: "name",
