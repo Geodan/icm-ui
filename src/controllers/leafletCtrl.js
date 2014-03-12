@@ -6,7 +6,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         //return false;
     }
     var core = Core;
-    
+    $scope.core = core;
     /** Some time functionality **/
     $scope.chronos = false;
     $scope.timeDisplay = 'none';
@@ -30,7 +30,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     };
     /** end of time **/
     
-    //$scope.core = core; //DEBUG
+    
     //tmp = $scope; //DEBUG
     var controls= {};
     var drawControl;
