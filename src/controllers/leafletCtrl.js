@@ -20,6 +20,11 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         $scope.time = new Date($scope.mytime).getTime();
         populateFeatures();
     };
+    $scope.setNow = function() {
+        var d = new Date();
+        $scope.mytime = d;
+        $scope.timechanged();
+    };
     $scope.toggleChronos = function(){
         populateFeatures();
     };

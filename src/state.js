@@ -1,7 +1,7 @@
 var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",'ngSanitize', 'textAngular'])
     .run(
-      [        '$rootScope', '$state', '$stateParams',
-      function ($rootScope,   $state,   $stateParams) {
+      [        '$rootScope', '$state', '$stateParams','Utils',
+      function ($rootScope,   $state,   $stateParams, Utils) {
 
         // It's very handy to add references to $state and $stateParams to the $rootScope
         // so that you can access them from any scope within your applications.For example,
@@ -9,21 +9,16 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
         // 'contacts.list' or one of its decendents is active.
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-      
       }])
     .config(
-        [          '$stateProvider', '$urlRouterProvider',
-            function ($stateProvider, $urlRouterProvider) {
+        ['$stateProvider', '$urlRouterProvider',function ($stateProvider, $urlRouterProvider) {
   
   
       $urlRouterProvider
-       
-
-      //bij foute url stuur naar het begin
+        //bij foute url stuur naar het begin
         .otherwise("/");
       
       $stateProvider
-
         // Hier moet IAAA stuff komen, maar voorlopig moet je een username invullen voor
         // COW
         .state("login", {
