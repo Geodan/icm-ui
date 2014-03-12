@@ -65,7 +65,8 @@ icm.factory('Beelden', ['$rootScope', function( $rootScope ) {
 icm.factory('Core', ['$rootScope', function($rootScope) {
    
    var cow = new Cow.core({
-          wsUrl: 'wss://websocket.geodan.nl:443/icms'
+          //wsUrl: 'wss://websocket.geodan.nl:443/icms'
+          wsUrl: 'https://srvcis/cow/signalr'
         });   
     cow.userStore().loaded.then(function(){
         if (!cow.users('1')){

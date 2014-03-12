@@ -7,6 +7,29 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     }
     var core = Core;
     
+    /** Some time functionality **/
+    $scope.chronos = false;
+    $scope.timeDisplay = 'none';
+    $scope.mytime = new Date();
+    $scope.hstep = 1;
+    $scope.mstep = 15;
+    $scope.ismeridian = true;
+    $scope.time = Date.now();
+    $scope.timechanged = function () {
+        console.log('Time changed to: ' + $scope.mytime);
+        $scope.time = new Date($scope.mytime).getTime();
+        populateFeatures();
+    };
+    $scope.setNow = function() {
+        var d = new Date();
+        $scope.mytime = d;
+        $scope.timechanged();
+    };
+    $scope.toggleChronos = function(){
+        populateFeatures();
+    };
+    /** end of time **/
+    
     $scope.core = core; //DEBUG
     tmp = $scope; //DEBUG
     var controls= {};
@@ -84,90 +107,94 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     });
     
     var editmenu = function(feat,container, element, event){
-        var menu = new Cow_utils.menu(feat,event, container, element, {
-            menuconfig: Cow_utils.menuconfig
-        });
-        /* Menu listeners */
-        menu.on('delete', function(d){
-            if (confirm('Verwijderen?')) {
-                var key = d.fid;
-                Core.project().items(key).deleted('true').sync();
-            } else {
-                // Do nothing!
-            }
-        });
-        menu.on('edit.geom', function(d){
-            drawControl.options.edit.featureGroup.addData(d.layer);
-            controls.editcontrol.enable();
-         });
-        menu.on('edit.text', function(d){
-            var feat = d.layer;
-            var fid = d.fid;
-            var item = $scope.core.project().items(fid);
-            var entity = d.obj;
-            var bbox = entity.getBBox();
-            var fe = d3.select('.leaflet-popup-pane')
-                .attr('draggable',"true")
-                .append('div')
-                .classed('popup panel panel-primary',true)
-                .style('position', 'absolute')
-                .style('left', function(){return bbox.x + 35 + 'px';})
-                .style('top', function(){return bbox.y + 35 + 'px';})
-                .style("width", '400px')
-                //.style("height", '200px')
-                .on('click', function(){
-                    //d3.event.stopPropagation();//Prevent the map from firing click event as well
-                });
+        if ($scope.chronos){
+            return null;
+        }
+        else {
+            var menu = new Cow_utils.menu(feat,event, container, element, {
+                menuconfig: Cow_utils.menuconfig
+            });
+            /* Menu listeners */
+            menu.on('delete', function(d){
+                if (confirm('Verwijderen?')) {
+                    var key = d.fid;
+                    Core.project().items(key).deleted('true').sync();
+                } else {
+                    // Do nothing!
+                }
+            });
+            menu.on('edit.geom', function(d){
+                drawControl.options.edit.featureGroup.addData(d.layer);
+                controls.editcontrol.enable();
+             });
+            menu.on('edit.text', function(d){
+                var feat = d.layer;
+                var fid = d.fid;
+                var item = $scope.core.project().items(fid);
+                var entity = d.obj;
+                var bbox = entity.getBBox();
+                var fe = d3.select('.leaflet-popup-pane')
+                    .attr('draggable',"true")
+                    .append('div')
+                    .classed('popup panel panel-primary',true)
+                    .style('position', 'absolute')
+                    .style('left', function(){return bbox.x + 35 + 'px';})
+                    .style('top', function(){return bbox.y + 35 + 'px';})
+                    .style("width", '400px')
+                    //.style("height", '200px')
+                    .on('click', function(){
+                        d3.event.stopPropagation();//Prevent the map from firing click event as well
+                    });
+                    
+                var desc = feat.properties.desc || "";
+                var name = feat.properties.name || "";
+                var creator = feat.properties.creator || "";
+                var owner = feat.properties.owner || "";
+                var created = new Date(item.created()).toLocaleString();
+                var updated = new Date(item.timestamp()).toLocaleString();
+                desc = desc.replace(/\r\n?|\n/g, '<br />');
                 
-            var desc = feat.properties.desc || "";
-            var name = feat.properties.name || "";
-            var creator = feat.properties.creator || "";
-            var owner = feat.properties.owner || "";
-            var created = new Date(item.created()).toLocaleString();
-            var updated = new Date(item.timestamp()).toLocaleString();
-            desc = desc.replace(/\r\n?|\n/g, '<br />');
-            
-            
-            var sheader = fe.append('div')
-                .classed('panel-heading', true)
-                .attr('contenteditable','true')
-                .html(name);
-
-            var scontent = fe.append('div')
-                .classed('panel-body', true);
-            
-            
-            var editdiv = scontent.append('div')
-                .attr('contenteditable','true')
-                .attr('id','descfield')
-                .classed('well well-sm', true)
-                .style('height','80px')
-                .html(desc);
-            var html = '<small>Gemaakt door: ' + creator + ' op ' +  created + '<br> Bewerkt door: ' + owner + ' op ' + updated + '</small>'; 
-            scontent.append('div').html(html);
-            scontent.append('span')
-                .html('Opslaan')
-                .classed('btn btn-success', true)
-                .on('click',function(z){
-                    feat.properties.name = sheader.html();
-                    feat.properties.desc = editdiv.html();
-                    $scope.core.project().items(fid).data('feature',feat).sync();
-                    fe.remove();
-                });
-            scontent.append('span')
-                .html('Annuleren')
-                .classed('btn btn-danger pull-right', true)
-                .on('click',function(z){
-                    fe.remove();
-                });
-        });
-        
+                
+                var sheader = fe.append('div')
+                    .classed('panel-heading', true)
+                    .attr('contenteditable','true')
+                    .html(name);
+    
+                var scontent = fe.append('div')
+                    .classed('panel-body', true);
+                
+                
+                var editdiv = scontent.append('div')
+                    .attr('contenteditable','true')
+                    .attr('id','descfield')
+                    .classed('well well-sm', true)
+                    .style('height','80px')
+                    .html(desc);
+                var html = '<small>Gemaakt door: ' + creator + ' op ' +  created + '<br> Bewerkt door: ' + owner + ' op ' + updated + '</small>'; 
+                scontent.append('div').html(html);
+                scontent.append('span')
+                    .html('Opslaan')
+                    .classed('btn btn-success', true)
+                    .on('click',function(z){
+                        feat.properties.name = sheader.html();
+                        feat.properties.desc = editdiv.html();
+                        $scope.core.project().items(fid).data('feature',feat).sync();
+                        fe.remove();
+                    });
+                scontent.append('span')
+                    .html('Annuleren')
+                    .classed('btn btn-danger pull-right', true)
+                    .on('click',function(z){
+                        fe.remove();
+                    });
+            });
+        }
     };
     
     var featureLayer = new L.GeoJSON.d3(dummyCollection, {
         //core: Core,
         onClick: editmenu,
-        onMouseover: Cow_utils.textbox,
+        //onMouseover: Cow_utils.textbox,
         labels: true,
         labelconfig: {
             field: "name",
@@ -183,7 +210,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             opacity: 0.5
         }
     });
-    
+    $scope.featureLayer = featureLayer;
     
     /* Initiate the marker icons */
     //$http({method: 'POST', url: './images/mapicons/imoov_list_subset.js'}).
@@ -254,7 +281,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         handleNewExtent(e.leafletEvent); 
     });
     $scope.$on('leafletDirectiveMap.click', function(event,e){
-        //d3.selectAll('.popup').remove();//Remove all popups on map
+        d3.selectAll('.popup').remove();//Remove all popups on map
         controls.editcontrol.save();
         controls.editcontrol.disable();
         identify(e);
@@ -305,12 +332,16 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
       var viewCollection = {"type":"FeatureCollection","features":[]};
       for (i=0;i<items.length;i++){
 		    var item = items[i];
-			var feature = item.data('feature');
-            if(feature === undefined) {
-                console.warn('old item type');
-                return false;
-            }
-            else{
+		    var t;
+		    if ($scope.chronos){
+		        t = $scope.time;
+		    }
+		    else {
+		        t = Date.now();
+		    }
+			//var feature = item.data('feature');
+            if(item.data_on(t) && item.data_on(t).feature) {
+                var feature = item.data_on(t).feature;
                 //Add feature
                 var opacity = 1;
                 feature.id = item.id();
@@ -498,24 +529,17 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 .data('feature', feature)
                 //TODO: add permissions here
                 .sync();
-            //populateFeatures();
+
         });
         
         /** Bind layer reload on storechanged **/
         var itemstore = core.project().itemStore();
         var peerstore = core.peerStore();
-        //itemstore.off('datachange');
-        itemstore.on('datachange',function() {
-             populateFeatures();
-        });
-       // peerstore.off('datachange');
-        peerstore.on('datachange',function() {
-            populatePeers();
-        });
-        
-        var center = $scope.leafletService.center();
-        //map.setView([center.lat, center.lng],center.zoom);
-        
+
+        itemstore.off('datachange',populateFeatures);
+        itemstore.on('datachange',populateFeatures);
+        peerstore.off('datachange',populatePeers);
+        peerstore.on('datachange',populatePeers);
         
         //Initialize first time features
         populateFeatures();

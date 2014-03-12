@@ -5,10 +5,10 @@ icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
     instance.layers = {};
     instance.center = function(center){
         if (!center){
-            console.log('Getting center: ', instance._center);
+            //console.log('Getting center: ', instance._center);
         }
         else{
-            console.log('setting center: ', center);
+            //console.log('setting center: ', center);
         }
         return instance._center = center || instance._center;
     };
