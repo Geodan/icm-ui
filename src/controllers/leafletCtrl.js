@@ -39,14 +39,14 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.leafletData = leafletData;
     
     
-    
+    var incidentlocation = Core.project().data('incidentlocation');
     angular.extend($scope, {
         extralayers: LeafletService.layers,
         layers: {
             baselayers: LeafletService.definedLayers,
             overlays: LeafletService.definedOverlays
         },
-        initcenter: LeafletService.center(),
+        initcenter: LeafletService.center() || incidentlocation,
         defaults: {
             crs: LeafletService.projection()
         }
