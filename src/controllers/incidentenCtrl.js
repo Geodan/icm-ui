@@ -28,6 +28,22 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'Leaflet
              b.updated = updated;
              
         });
+        
+
+        _($scope.data.users).each(function(u){
+            var updated =false;
+            var berichten = _($scope.data.itemlist).filter(function(d){ 
+                return (d.data('naar') == $scope.data.user && d.data('van') == u.name )
+            }); 
+            _(berichten).each(function(msg){
+                if(msg._updated > u.timestamp) {
+                    updated = true;
+                }
+                u.updated = updated;
+            })
+        })
+        
+
     }
 
     //Set the current project
