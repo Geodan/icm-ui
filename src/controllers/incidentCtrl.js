@@ -1,8 +1,38 @@
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used above.
-icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '$http', function($scope, Core, $stateParams, $location, $http) {
+
+icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '$http', 'leafletData', function($scope, Core, $stateParams, $location, $http,leafletData) {
 
     var project = null;
+    /** MAP CONTROLLERS **/
+    $scope.projection =  new L.Proj.CRS.TMS(
+         'EPSG:28992',
+         '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs',
+         [-285401.92,22598.08,595401.9199999999,903401.9199999999], {
+         resolutions: [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420]
+    });
+    angular.extend($scope, {
+            center: {
+                lat: 52.752087, //Approx HHNK
+                lng: 4.896941,
+                zoom: 5
+            },
+            defaults: {
+                crs: $scope.projection
+            }
+    });
+    $scope.layers = {
+        baselayers: {
+            brt: {
+                name: 'BRT',
+                url: 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{y}.png',
+                type: 'xyz',
+                layerOptions: {
+                    tms: true
+                }
+            }
+        }
+    };
     $scope.incident = {};
     $scope.isNew = true;
     $scope.isEditable = true;
@@ -27,7 +57,8 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
         $event.stopPropagation();
         $scope.opened = true;
     };
-
+    
+    
     if ($stateParams.incidentID != undefined)
     {
         if(!Core.project()) return false;
@@ -54,6 +85,11 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
         $scope.isPlanned = $scope.incident.status.id === 1;
         $scope.isNew = false;
         $scope.isEditable = false;
+        $scope.initcenter = project.data('incidentlocation') || {
+                lat: 52.752087, //Approx HHNK
+                lng: 4.896941,
+                zoom: 5
+            };
     }
 
     $scope.changeStatus = function() {
@@ -63,8 +99,15 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
 
     $scope.setEditable = function() {
         $scope.isEditable = true;
-    }
+    };
 
+    leafletData.getMap('map1').then(function(map) {
+        //Set correct projection for map
+        map.options.crs = $scope.projection;
+        map.setView([$scope.initcenter.lat, $scope.initcenter.lng],$scope.initcenter.zoom);
+    });
+    /** END OF MAP **/
+    
     $scope.ok = function () {
         var coreProject;
 
@@ -90,11 +133,23 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
         if ($scope.isNew || $scope.isPlanned) {
             coreProject.data('date', $scope.incident.date.toISOString());
         }
-
-        coreProject.data('name',$scope.incident.name)
-            .data('status',$scope.incident.status)
-            .data('type',$scope.incident.type)
-            .sync();
-        $location.path('/incidenten');
+        
+        /* TT: For some reason the controller cannot keep track of the map-object
+        therefore we have to get it again from the leafletdata-directive */
+        leafletData.getMap('map1').then(function(map) {
+            var mapcenter = map.getCenter();
+            var mapzoom = map.getZoom();
+            var incidentlocation = {
+                lat: mapcenter.lat, 
+                lng:mapcenter.lng,
+                zoom: mapzoom
+            };
+            coreProject.data('name',$scope.incident.name)
+                .data('status',$scope.incident.status)
+                .data('type',$scope.incident.type)
+                .data('incidentlocation',incidentlocation)
+                .sync();
+            $location.path('/incidenten');
+        });
     };
 }]);
