@@ -7,13 +7,14 @@
             </div>
             <div>
                 <div class="list-group-item" >
-                    <h5 class="list-group-item-heading text-primary">Incidentnaam</h5>
-                    <input type="text" ng-model="incident.name" class="form-control" placeholder="voer een naam in">
+                    <h5 class="list-group-item-heading text-primary">Incidentnaam</h5><a class="pull-right glyphicon" ng-click="setEditable()" ng-class="{'glyphicon-pencil': true}" ng-hide="isEditable"></a>
+                    <input type="text" ng-model="incident.name" class="form-control" placeholder="voer een naam in" ng-disabled="!isEditable">
                     <p>Vul hier de naam van het incident in</p>
                 </div>
                 <div class="list-group-item" >
                     <h5 class="list-group-item-heading text-primary">Type</h5>
-                    <select data-ng-model="incident.type"
+                    <a class="pull-right glyphicon" ng-click="setEditable()" ng-class="{'glyphicon-pencil': true}" ng-hide="isEditable"></a>
+                    <select data-ng-model="incident.type" ng-disabled="!isEditable"
                         data-ng-options="type.name for type in projectTypes" class="form-control">
                     </select>
                     <p>Kies hier het type van het incident</p>
@@ -33,14 +34,13 @@
                         <button class="btn btn-default" ng-click="open($event)" ng-disabled="!isPlanned"><i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
                     </p>
-                    <p>
+                    <p ng-hide="!isPlanned">
                         <timepicker ng-model="incident.date" ng-disabled="!isPlanned" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
                     </p>
-                    <p>
-                        {{incident.date}}
+                    <p ng-hide="isPlanned">
+                        {{incident.date | date:'HH:mm'}}
                     </p>
-
-                    <p>Kies hier de datum van het incident</p>
+                    <p>Kies hier de datum en tijd van het incident</p>
                 </div>
             </div>
             <div >
