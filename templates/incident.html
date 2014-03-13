@@ -43,10 +43,11 @@
                     <p>Kies hier de datum en tijd van het incident</p>
                 </div>
             </div>
-            <div >
-                <button class="btn btn-danger" ui-sref="incidenten">Annuleer</button>
-                <button class="btn btn-success" ng-click="ok()">{{ isNew ? 'Voeg toe' : 'Wijzig'}}</button>
+           <div class="btn-group pull-right">
+                <button type="button" class="btn btn-danger"  ui-sref="incidenten">Annuleer</button><button type="button" class="btn btn-success" ng-click="ok()">{{ isNew ? 'Voeg toe' : 'Wijzig'}}</button>
             </div>
+
+              
         </div>
     </div>
 
