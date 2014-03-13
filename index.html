@@ -2,6 +2,7 @@
 <html lang="nl" ng-app="icm">
 <head>
   <meta charset="utf-8">
+
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
@@ -14,7 +15,7 @@
   <!-- signalR -->
   <script type="text/javascript" src="./lib/cow/lib/jquery-2.0.3/jquery-2.0.3.js"></script>
   <script type="text/javascript" src="./lib/cow/lib/jquery.signalR/jquery.signalR-2.0.2.js"></script>
-  <script type="text/javascript" src="/Cow/signalr/hubs"></script> <!-- CHANGE THIS TO CORRECT SIGNALR SERVER URL -->
+  <script type="text/javascript" src="/cow/signalr/hubs"></script> <!-- CHANGE THIS TO CORRECT SIGNALR SERVER URL -->
   <!-- COW -->
   <script type="text/javascript" src="./lib/cow/lib/underscore/underscore-min.js" ></script>
   <script type="text/javascript" src="./lib/cow/src/cow2.utils.js" ></script>
@@ -32,21 +33,21 @@
 
 </head>
 <body>
-    <header class="navbar navbar-default navbar-fixed-top" role="navigation" ui-view="nav">
-    </header>
-    
-    <header class="header navbar-fixed-top navbar"  ui-view="header">
-    </header>
-
-    <div class="alles">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 col-lg-2 sidebar" ui-view="sidebar">
-      
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main" ui-view="main">        
-        </div>
-      </div>   
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ui-view="nav">
+    <!--ICM, user en incident -->
+  </nav>
+  <header class="header navbar-fixed-top navbar"  ui-view="header">  
+    <!--Breadcrumbs -->
+  </header>
+  <div class="alles">
+    <div class="col-sm-3 col-md-2 col-lg-2 sidebar" ui-view="sidebar">
+      <!--Sidebar -->
     </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main" ui-view="main">        
+      <!--centraal deel -->
+
+    </div>
+  </div>
 
   <script type="text/javascript" src="./lib/d3/d3.v3.min.js"></script>
   <script type="text/javascript" src="./lib/leaflet-0.7/leaflet.js"></script>

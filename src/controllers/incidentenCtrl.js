@@ -29,7 +29,7 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'Leaflet
              
         });
         
-
+        
         _($scope.data.users).each(function(u){
             var updated =false;
             var berichten = _($scope.data.itemlist).filter(function(d){ 
