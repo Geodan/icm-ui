@@ -73,3 +73,11 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
     }
 
 }]);
+
+icm.controller('IncidentenSideCtrl', ['$scope', 'Utils', function  ($scope, Utils) {    
+ 
+    $scope.data =Utils;
+
+
+
+}]);
