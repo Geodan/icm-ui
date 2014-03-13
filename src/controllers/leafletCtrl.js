@@ -38,8 +38,12 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.leafletService = LeafletService;
     $scope.leafletData = leafletData;
     
-    
-    var incidentlocation = Core.project().data('incidentlocation');
+    var initcenter = {
+        lat: 52.752087, //Approx HHNK
+        lng: 4.896941,
+        zoom: 5
+    };
+    var incidentlocation = Core.project().data('incidentlocation') || initcenter;
     angular.extend($scope, {
         extralayers: LeafletService.layers,
         layers: {
