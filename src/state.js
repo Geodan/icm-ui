@@ -34,6 +34,7 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
                     controller: "LoginCtrl"
                 }
 
+
             },
             data: {
               title: 'Home'
@@ -61,6 +62,9 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
                 },
                 'header@': {
                   templateUrl: "templates/header.html"
+                },
+                 'sidebar':{
+                    templateUrl: "templates/sidebar/incidenten.html",
                 }
             },
             data: {
@@ -90,7 +94,13 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
               }
           })
 
+           .state('incidenten.oefening', {
+              url: "/oefening",
+              views: {
 
+                 
+              }
+          })
           ///////////////////////////
           // Incidenten > Incident //
           ///////////////////////////
