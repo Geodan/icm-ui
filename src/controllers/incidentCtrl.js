@@ -1,10 +1,11 @@
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used above.
-icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', function($scope, Core, $stateParams, $location) {
+icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '$http', function($scope, Core, $stateParams, $location, $http) {
 
     var project = null;
     $scope.incident = {};
     $scope.isNew = true;
+    $scope.isEditable = true;
     $scope.projectTypes =
         [
             { id: 0, name: "LIVE" },
@@ -52,6 +53,7 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', f
         $scope.incident.type = project.data('type') === undefined ? $scope.projectTypes[1] : $scope.projectTypes[project.data('type').id];
         $scope.isPlanned = $scope.incident.status.id === 1;
         $scope.isNew = false;
+        $scope.isEditable = false;
     }
 
     $scope.changeStatus = function() {
@@ -59,18 +61,33 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', f
         console.log('change: ' + $scope.isPlanned);
     };
 
+    $scope.setEditable = function() {
+        $scope.isEditable = true;
+    }
+
     $scope.ok = function () {
         var coreProject;
+
         if ($scope.id === null) {
             coreProject = Core.projects({_id: Date.now()});
-            coreProject.itemStore.loaded.then(function () {
-                //TODO load all map layers
+            coreProject.itemStore().loaded.then(function () {
+                //load all mapLayers
+                $http.get('./data/kaartlagen.json')
+                    .then(function(res){
+                        var layers = res.data;
+                        _.each(layers, function(d,k){
+                            coreProject.items({
+                                _id:k,
+                                data: d
+                            }).deleted(false).sync();
+                        });
+                    });
             });
         } else {
             coreProject = Core.projects(  $scope.id + '');
         }
 
-        if ($scope.isPlanned) {
+        if ($scope.isNew || $scope.isPlanned) {
             coreProject.data('date', $scope.incident.date.toISOString());
         }
 
