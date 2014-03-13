@@ -62,10 +62,20 @@ icm.factory('Beelden', ['$rootScope', function( $rootScope ) {
     };
 }]);
 
+/*TT: Cow temporarily moved to a global because signalR breaks from within a factory */
+var cow = new Cow.core({
+      wsUrl: '/Cow/signalr'
+    });   
+    cow.userStore().loaded.then(function(){
+    if (!cow.users('1')){
+        cow.users({_id:'1'}).data('name','Anonymous').sync();
+    }
+    cow.user('1'); //set current user
+});
 icm.factory('Core', ['$rootScope', function($rootScope) {
-   
+   /*
    var cow = new Cow.core({
-          wsUrl: 'wss://websocket.geodan.nl:443/icms'
+          wsUrl: '/Cow/signalr'
         });   
     cow.userStore().loaded.then(function(){
         if (!cow.users('1')){
@@ -73,6 +83,8 @@ icm.factory('Core', ['$rootScope', function($rootScope) {
         }
         cow.user('1'); //set current user
     });
+    tmp = cow;
+    */
    return cow;
 
 }]);

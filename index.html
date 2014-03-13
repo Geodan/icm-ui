@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="lib/diff/font-awesome-4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/app.css">
   <script src="./lib/cow/lib/dbjs/db.js"></script>
+  <!-- signalR ready-->
+  <script type="text/javascript" src="./lib/cow/lib/jquery-2.0.3/jquery-2.0.3.js"></script>
+  <script type="text/javascript" src="./lib/cow/lib/jquery.signalR/jquery.signalR-2.0.2.js"></script>
+  <script type="text/javascript" src="/Cow/signalr/hubs"></script> <!-- CHANGE THIS TO CORRECT SIGNALR SERVER URL -->
+  
   <script type="text/javascript" src="./lib/cow/lib/underscore/underscore-min.js" ></script>
   <script type="text/javascript" src="./lib/cow/src/cow2.utils.js" ></script>
   <script type="text/javascript" src="./lib/cow/src/cow2.record.js" ></script>
@@ -18,12 +23,11 @@
   <script type="text/javascript" src="./lib/cow/src/cow2.group.js" ></script>
   <script type="text/javascript" src="./lib/cow/src/cow2.item.js" ></script>
   <script type="text/javascript" src="./lib/cow/src/cow2.project.js" ></script>
-  <script type="text/javascript" src="./lib/cow/src/cow2.websocket.js" ></script>
+  <!--<script type="text/javascript" src="./lib/cow/src/cow2.websocket.js" ></script>-->
+  <script type="text/javascript" src="./lib/cow/src/cow2.signalR.js" ></script>
   <script type="text/javascript" src="./lib/cow/src/cow2.core.js" ></script>
   <script type="text/javascript" src="./lib/cow/lib/polyfill-promise/promise-0.1.1.min.js"></script>
-  
   <script type="text/javascript" src="./src/cow.icms.js" ></script>
-  
 
 </head>
 <body>
@@ -68,6 +72,7 @@
 <script type="text/javascript" src="lib/diff/diff_wrapper.js"></script>
 
 <!--<script type="text/javascript" src="lib/angular.min.js"></script>-->
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js"></script>
 
 <script type="text/javascript" src="lib/angular-ui-router.min.js"></script>
@@ -79,6 +84,7 @@
 <script type="text/javascript" src="src/state.js"></script>
 <script type="text/javascript" src="src/services.js"></script>
 <script type="text/javascript" src="src/factories.js"></script>
+
 <script type="text/javascript" src="src/controllers/loginCtrl.js"></script>
 <script type="text/javascript" src="src/controllers/headerCtrl.js"></script>
 <script type="text/javascript" src="src/controllers/incidentenCtrl.js"></script>
