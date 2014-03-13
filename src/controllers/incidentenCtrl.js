@@ -1,7 +1,7 @@
 /*
  * Deze angular control gaat over de lijst met incidenten in /incidenten
  */
-icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'LeafletService', function($scope, Core, Utils, Beelden, LeafletService){
+icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', '$state', 'LeafletService', function($scope, Core, Utils, Beelden, $state, LeafletService){
     $scope.data= Utils;    
     $scope.data.project = Core.project(); //Get current project
     var store = Core.projectStore(); //Get projectstore    
@@ -14,6 +14,8 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', 'Leaflet
             $scope.data.projectlist = Core.projects();
         })
     })
+
+
 
     var newItems = function() {
          _(Beelden.beelden).each(function(b){
