@@ -9,11 +9,12 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
         if(!Core.project($stateParams.incidentID)) return false;
         
     } 
-    $scope.nieuwBericht = false;
+    $scope.nieuwBericht = 0;
     $scope.$watch('data.users',function(users){
-        var updated = false;
+        var updated = 0;
+
         _(users).each(function(d){
-            if(d.updated) updated = true;
+            if(d.updated) updated++;
         })
         $scope.nieuwBericht =updated;
 
