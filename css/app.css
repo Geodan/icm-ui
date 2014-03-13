@@ -184,14 +184,12 @@ padding: 5px;
 **/
 .ta-editor {
     height: 100%;
-    border: none;
-    background-color: transparent;
-    box-shadow: none;
+
 }
 /*
 Text Diff
 */
-del { background-color: #fcf8e3; text-decoration:line-through; }
+del { background-color: #a94442; color: white; text-decoration:line-through; }
 ins { color: #dd0000; font-weight:bold; text-decoration: none;}
 
 .delete { background-color: #fcf8e3; text-decoration:line-through; }
