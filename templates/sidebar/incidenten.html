@@ -1,0 +1,18 @@
+<div  ng-controller='BeeldSideCtrl'>
+<div class="list-group" >
+     <a class="list-group-item active" ui-sref-active="active" ui-sref="incidenten"><span class="glyphicon glyphicon-warning-sign"></span> LIVE</a>
+     <a class="list-group-item"ui-sref-active="active" ui-sref="incidenten.oefening"> Oefening</a>
+     <a class="list-group-item " ui-sref-active="active" ui-sref="incidenten.nieuw" ><span class="glyphicon glyphicon-plus"></span> Nieuw Incident</a>
+</div>
+<div class="list-group" >
+    <a class="list-group-item active"  ng-click="isCollapsed = !isCollapsed">Online gebruikers <span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon"></span> <span class="clearfix"></span></a>
+    <div class="list-group"  collapse="isCollapsed">
+       <div  class="list-group-item" ng-repeat="user in data.users | filter:{online:true}">
+            {{user.name}} 
+            <span class="pull-right" >
+                <span class="glyphicon" ng-class="{'glyphicon-ok-sign': user.online, 'glyphicon-minus-sign': !user.online,'text-danger':!user.online, 'text-success':user.online}"></span>
+            </span>
+        </div>
+
+    </div>
+</div>
