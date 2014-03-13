@@ -122,6 +122,17 @@ icm.filter('berichtfilter', function() {
     }).sortBy('_created').value()
   }
 });
+icm.filter('filterIncident', function() {
+        return function(items, type){
+           if(!items) {
+            return [];
+          }
+          return _(items).filter(function(d){
+            return (d.data('type')!==undefined && d.data('type').id == type)
+          })
+          
+        }
+      });
 icm.factory('Utils', ['$rootScope', function ($rootScope) {
   return {
    
@@ -145,7 +156,7 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
           onlineUsers.push(user)
         });
         return onlineUsers;
-      },      
+      },            
       project: {},
       projectlist: [],
       itemlist: [],

@@ -1,14 +1,11 @@
 <div class="row">
-  <table class="table table-striped">
-    <tr  ng-repeat="project in data.projectlist | filter:data.nondeleted | orderBy:['data(\'type\').id','data(\'status\').id','-date']"  ng-click="setProject(project)">
+  <table class="table table-hover">
+    <tr  ng-repeat="project in data.projectlist | filter:data.nondeleted | filterIncident:$state.current.data.type | orderBy:['data(\'type\').id','data(\'status\').id','-date']"  ng-click="setProject(project)" ng-class="{'success':project.data('status').id==0,'active':project.data('status').id==2}">
       <td ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType:"situatie"})'>{{project.data('name') || project.id()}} </td>
       <td> {{project.data('type').name}} </td>
       <td> {{project.data('status').name}} </td>
       <td> {{project.data('date') | date:'yyyy-MM-dd HH:mm'}} </td>
       <td><a class="pull-right glyphicon" ui-sref="incidenten.incident.wijzig({incidentID:project.id()})" ng-class="{'glyphicon-pencil': true}"></a></td>
     </tr>
-  </table>
-    <div>
-        <button class="btn btn-default" ui-sref="incidenten.nieuw" >Nieuw Incident</button>
-    </div>
+  </table>   
 </div>

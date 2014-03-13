@@ -68,7 +68,8 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
                 }
             },
             data: {
-              title: 'Incidenten'
+              title: 'Incidenten',
+              type: 0
             }
         })
 
@@ -96,9 +97,8 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
 
            .state('incidenten.oefening', {
               url: "/oefening",
-              views: {
-
-                 
+              data: {
+                type: 1
               }
           })
           ///////////////////////////
