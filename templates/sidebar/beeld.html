@@ -4,8 +4,8 @@
         
     
 </div>
-<div class="panel panel-info" ng-class="{'panel-danger':nieuwBericht,'active':nieuwBericht}">
-    <div class="panel-heading"  ng-click="isCollapsed = !isCollapsed">Berichten <span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon"></span><span class="clearfix"></span></div>
+<div class="list-group" >
+    <a class="list-group-item active" ng-class="{'list-group-item-danger':nieuwBericht&&isCollapsed}"  ng-click="isCollapsed = !isCollapsed">Berichten <span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon"></span>  <span  ng-class="{ 'hidden':!nieuwBericht}" class="pull-right badge text-danger strong">{{nieuwBericht}}</span> <span class="clearfix"></span></a>
     <div class="list-group"  collapse="isCollapsed">
        <div ng-class="{'hidden':gesprek,'list-group-item-danger': user.updated}" class="list-group-item" ng-click="getBerichten(user)"  ng-repeat="user in data.users | orderBy:'online':true">
             {{user.name}} 
