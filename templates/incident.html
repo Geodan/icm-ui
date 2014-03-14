@@ -4,57 +4,49 @@
         <h2>{{ isNew ? 'Nieuw' : 'Wijzig'}} incident</h2>
     </div>
     <div class="col-sm-6 col-md-6 col-lg-5">
-     <div class="row">
-        <div class="list-group">
-            <div>
-                <div class="list-group-item" >
-                    <a class="pull-right glyphicon" ng-click="setEditable()" ng-class="{'glyphicon-pencil': true}" ng-hide="isEditable"></a>
-                    <h5 class="list-group-item-heading text-primary">Incidentnaam</h5>
-                    <input type="text" ng-model="incident.name" class="form-control" placeholder="voer een naam in" ng-disabled="!isEditable">
-                    <p>Vul hier de naam van het incident in</p>
-                </div>
-                <div class="list-group-item" >
-                    <a class="pull-right glyphicon" ng-click="setEditable()" ng-class="{'glyphicon-pencil': true}" ng-hide="isEditable"></a>
-                    <h5 class="list-group-item-heading text-primary">Type</h5>
-                    <select data-ng-model="incident.type" ng-disabled="!isEditable"
-                        data-ng-options="type.name for type in projectTypes" class="form-control">
-                    </select>
-                    <p>Kies hier het type van het incident</p>
-                </div>
+        <div class="row">
+            <div class="list-group">
+                <div>
+                    <div class="list-group-item" >
+                        <a class="pull-right glyphicon" ng-click="setEditable()" ng-class="{'glyphicon-pencil': true}" ng-hide="isEditable"></a>
+                        <h5 class="list-group-item-heading text-primary">Incidentnaam</h5>
+                        <input type="text" ng-model="incident.name" class="form-control" placeholder="voer een naam in" ng-disabled="!isEditable">
+                        <p>Vul hier de naam van het incident in</p>
+                    </div>
+                    <div class="list-group-item" >
+                        <a class="pull-right glyphicon" ng-click="setEditable()" ng-class="{'glyphicon-pencil': true}" ng-hide="isEditable"></a>
+                        <h5 class="list-group-item-heading text-primary">Type</h5>
+                        <select data-ng-model="incident.type" ng-disabled="!isEditable"
+                                data-ng-options="type.name for type in projectTypes" class="form-control">
+                        </select>
+                        <p>Kies hier het type van het incident</p>
+                    </div>
                     <div class="list-group-item" >
                         <h5 class="list-group-item-heading text-primary">Status</h5>
-                    <select data-ng-model="incident.status" ng-change="changeStatus()"
-                        data-ng-options="status.name for status in projectStatuses" class="form-control">
-                    </select>
-                    <p>Kies hier de status van het incident</p>
-                </div>
-                <div class="list-group-item" ng-disabled="isPlanned">
-                    <h5 class="list-group-item-heading text-primary">Incidentdatum</h5>
-                    <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="incident.date" is-open="opened" datepicker-options="dateOptions" show-button-bar="false"  show-weeks="false" date-disabled="disabled(date, mode)" close-text="Sluiten" ng-disabled="!isPlanned" />
-                      <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="open($event)" ng-disabled="!isPlanned"><i class="glyphicon glyphicon-calendar"></i></button>
-                      </span>
-                    </p>
-                    <p ng-hide="!isPlanned">
-                        <timepicker ng-model="incident.date" ng-disabled="!isPlanned" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
-                    </p>
-                    <p ng-hide="isPlanned">
-                        {{incident.date | date:'HH:mm'}}
-                    </p>
-                    <p>Kies hier de datum en tijd van het incident</p>
+                        <select data-ng-model="incident.status" ng-change="changeStatus()"
+                                data-ng-options="status.name for status in projectStatuses" class="form-control">
+                        </select>
+                        <p>Kies hier de status van het incident</p>
+                    </div>
+                    <div class="list-group-item" ng-disabled="isPlanned">
+                        <h5 class="list-group-item-heading text-primary">Incidentdatum</h5>
+                        <p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="incident.date" is-open="opened" datepicker-options="dateOptions" show-button-bar="false"  show-weeks="false" date-disabled="disabled(date, mode)" close-text="Sluiten" ng-disabled="!isPlanned" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" ng-click="open($event)" ng-disabled="!isPlanned"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                        <p ng-hide="!isPlanned">
+                            <timepicker ng-model="incident.date" ng-disabled="!isPlanned" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
+                        </p>
+                        <p ng-hide="isPlanned">
+                            {{incident.date | date:'HH:mm'}}
+                        </p>
+                        <p>Kies hier de datum en tijd van het incident</p>
+                    </div>
                 </div>
             </div>
-
         </div>
-         </div>
-        <div class="row" ng-hide="showDeleteConfirm">
-            <button class="btn btn-danger" ui-sref="incidenten">Annuleer</button>
-            <button class="btn btn-success" ng-click="ok()">{{ isNew ? 'Voeg toe' : 'Wijzig'}}</button>
-        </div>
-        <div class="row">
-            <br>
-            </div>
         <div class="row" ng-hide="showDeleteConfirm">
             <button class="btn btn-danger" ng-click="deletePreview()" ng-hide="isNew">Verwijder incident</button>
         </div>
@@ -64,16 +56,21 @@
             <br>
             <button class="btn" ng-click="deleteCancel()">Annuleer</button>
             <button class="btn btn-danger" ng-click="delete()" ng-hide="isNew">Verwijder incident definitief</button>
-
+        </div>
+        <div class="row">
+            <br>
+        </div>
+        <div class="row" ng-hide="showDeleteConfirm">
+            <button class="btn" ui-sref="incidenten">Annuleer</button>
+            <button class="btn btn-success" ng-click="ok()">{{ isNew ? 'Voeg toe' : 'Wijzig'}}</button>
         </div>
     </div>
 
-<!--- MAP --->
-
-<div class="col-sm-6  col-md-6 col-lg-7">
-      <leaflet id="map1" defaults='defaults' center='initcenter' height="400px" width="40%" layers='layers' ></leaflet>
+    <!--- MAP --->
+    <div class="col-sm-6  col-md-6 col-lg-7">
+        <div class="list-group-item">
+            <h5 class="list-group-item-heading text-primary">Locatie</h5>
+            <leaflet id="map1" defaults='defaults' center='initcenter' height="500px" width="100%" layers='layers' ></leaflet>
+        </div>
+    </div>
 </div>
-
-</div>
-</div>
-
