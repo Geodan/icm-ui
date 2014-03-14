@@ -1,3 +1,6 @@
+.leaflet-top, .leaflet-bottom {
+  z-index:100 !important;
+}
 .klik {
   cursor:pointer;
 }

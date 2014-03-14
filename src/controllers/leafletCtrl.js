@@ -5,6 +5,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     if(!Core.project()) {
         //return false;
     }
+    $scope.radioModel = 'pan';
     var core = Core;
     $scope.core = core;
     /** Some time functionality **/
