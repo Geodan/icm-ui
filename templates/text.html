@@ -23,9 +23,9 @@
        <div class="list-group-item-text" text-angular ng-class="{'hidden': !onderdeel.isedit}" ng-model="onderdeel.contentedit" ></div>
     </div>
     <div ng-show="!filteredItems.length">
-      <h5 class="list-group-item-heading text-primary"><span  ng-click="editItem(onderdeel.isedit,false,true)">{{onderdeel.title}}</span>
-       <a class="pull-right glyphicon" ng-click="editItem(onderdeel.isedit)" ng-class="{'glyphicon-pencil': !onderdeel.isedit, 'glyphicon-ok': onderdeel.isedit, 'text-success': onderdeel.isedit}"></a>
-        <a class="pull-right glyphicon text-danger" ng-click="cancelEdit()" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a>
+      <h5 class="list-group-item-heading text-primary"><span class="klik"  ng-click="editItem(onderdeel.isedit,false,true)">{{onderdeel.title}}</span>
+       <a class="pull-right glyphicon klik" ng-click="editItem(onderdeel.isedit)" ng-class="{'glyphicon-pencil': !onderdeel.isedit, 'glyphicon-ok': onderdeel.isedit, 'text-success': onderdeel.isedit}"></a>
+        <a class="pull-right glyphicon text-danger klik" ng-click="cancelEdit()" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a>
      </h5>
       <hr class="small"/>
      <div class="alert alert-warning alert-dismissable" ng-class="{'hidden':onderdeel.zeker}">
