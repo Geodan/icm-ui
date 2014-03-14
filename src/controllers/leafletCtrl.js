@@ -38,15 +38,19 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.leafletService = LeafletService;
     $scope.leafletData = leafletData;
     
-    
-    
+    var initcenter = {
+        lat: 52.752087, //Approx HHNK
+        lng: 4.896941,
+        zoom: 5
+    };
+    var incidentlocation = Core.project().data('incidentlocation') || initcenter;
     angular.extend($scope, {
         extralayers: LeafletService.layers,
         layers: {
             baselayers: LeafletService.definedLayers,
             overlays: LeafletService.definedOverlays
         },
-        initcenter: LeafletService.center(),
+        initcenter: LeafletService.center() || incidentlocation,
         defaults: {
             crs: LeafletService.projection()
         }
@@ -450,7 +454,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     **/
     
     var initmap = function(){
-      leafletData.getMap().then(function(map) {
+      leafletData.getMap('mainmap').then(function(map) {
         $scope.map = map;
        
         //Set correct projection for map
