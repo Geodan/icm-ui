@@ -6,8 +6,9 @@
                 <input type="text" ng-model="data.user" typeahead="user.name for user in data.users | filter:$viewValue | limitTo:8" typeahead-editable='false' typeahead-on-select="onSelect($item)" class="form-control">
                 <p/>
                 <div class="btn-group pull-right">
-                <button type="button" class="btn btn-danger" ng-click="data.user=''">Annuleer</button><button type="button" class="btn btn-success" ui-sref="incidenten">Login</button>
-            </div>
+                    <button type="button" class="btn btn-danger" ng-click="data.user=''">Annuleer</button>
+                    <button type="button" class="btn btn-success" ui-sref="incidenten" ng-disabled="noUser">Login</button>
+                </div>
            </div>
        </div>
    </div>
