@@ -77,6 +77,11 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
         $scope.isPlanned = false;
         $scope.incident.type = $scope.projectTypes[1];
         $scope.isNew = true;
+        $scope.initcenter = {
+                lat: 52.752087, //Approx HHNK
+                lng: 4.896941,
+                zoom: 5
+            };
     } else {
         $scope.id = project.id();
         $scope.incident.name = project.data('name');

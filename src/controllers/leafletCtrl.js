@@ -454,7 +454,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     **/
     
     var initmap = function(){
-      leafletData.getMap().then(function(map) {
+      leafletData.getMap('mainmap').then(function(map) {
         $scope.map = map;
        
         //Set correct projection for map
