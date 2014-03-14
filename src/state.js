@@ -1,7 +1,7 @@
 var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",'ngSanitize', 'textAngular'])
     .run(
-      [        '$rootScope', '$state', '$stateParams','Utils',
-      function ($rootScope,   $state,   $stateParams, Utils) {
+      [        '$rootScope', '$state', '$stateParams','Utils', '$location',
+      function ($rootScope,   $state,   $stateParams, Utils, $location) {
 
         // It's very handy to add references to $state and $stateParams to the $rootScope
         // so that you can access them from any scope within your applications.For example,
@@ -9,11 +9,21 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
         // 'contacts.list' or one of its decendents is active.
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+
+        $rootScope.$on('$stateChangeStart', function(e, to) {
+              if (!angular.isFunction(to.data.rule)) return;
+              var notLoggedIn = to.data.rule(Utils.user);
+
+              if (notLoggedIn) {
+                  $location.path("/login");
+              }
+          });
+
       }])
     .config(
         ['$stateProvider', '$urlRouterProvider',function ($stateProvider, $urlRouterProvider) {
-  
-  
+
+
       $urlRouterProvider
         //bij foute url stuur naar het begin
         .otherwise("/");
@@ -33,8 +43,6 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
                     templateUrl: "templates/login.html",
                     controller: "LoginCtrl"
                 }
-
-
             },
             data: {
               title: 'Home'
@@ -64,12 +72,17 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
                   templateUrl: "templates/header.html"
                 },
                  'sidebar':{
-                    templateUrl: "templates/sidebar/incidenten.html",
+                    templateUrl: "templates/sidebar/incidenten.html"
                 }
             },
             data: {
               title: 'Incidenten',
-              type: 0
+              type: 0,
+              rule: function(user) {
+                //prevent users that are not logged in
+                //this counts for all underlying URL's (incidenten.*)
+                return user === '';
+              }
             }
         })
 
