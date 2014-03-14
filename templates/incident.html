@@ -1,19 +1,21 @@
 <div class="row" >
     <!--TEXT -->
+    <div>
+        <h2>{{ isNew ? 'Nieuw' : 'Wijzig'}} incident</h2>
+    </div>
     <div class="col-sm-6 col-md-6 col-lg-5">
+     <div class="row">
         <div class="list-group">
             <div>
-                <h2>{{ isNew ? 'Nieuw' : 'Wijzig'}} incident</h2>
-            </div>
-            <div>
                 <div class="list-group-item" >
-                    <h5 class="list-group-item-heading text-primary">Incidentnaam</h5><a class="pull-right glyphicon" ng-click="setEditable()" ng-class="{'glyphicon-pencil': true}" ng-hide="isEditable"></a>
+                    <a class="pull-right glyphicon" ng-click="setEditable()" ng-class="{'glyphicon-pencil': true}" ng-hide="isEditable"></a>
+                    <h5 class="list-group-item-heading text-primary">Incidentnaam</h5>
                     <input type="text" ng-model="incident.name" class="form-control" placeholder="voer een naam in" ng-disabled="!isEditable">
                     <p>Vul hier de naam van het incident in</p>
                 </div>
                 <div class="list-group-item" >
-                    <h5 class="list-group-item-heading text-primary">Type</h5>
                     <a class="pull-right glyphicon" ng-click="setEditable()" ng-class="{'glyphicon-pencil': true}" ng-hide="isEditable"></a>
+                    <h5 class="list-group-item-heading text-primary">Type</h5>
                     <select data-ng-model="incident.type" ng-disabled="!isEditable"
                         data-ng-options="type.name for type in projectTypes" class="form-control">
                     </select>
@@ -43,10 +45,25 @@
                     <p>Kies hier de datum en tijd van het incident</p>
                 </div>
             </div>
-            <div >
-                <button class="btn btn-danger" ui-sref="incidenten">Annuleer</button>
-                <button class="btn btn-success" ng-click="ok()">{{ isNew ? 'Voeg toe' : 'Wijzig'}}</button>
+
+        </div>
+         </div>
+        <div class="row" ng-hide="showDeleteConfirm">
+            <button class="btn btn-danger" ui-sref="incidenten">Annuleer</button>
+            <button class="btn btn-success" ng-click="ok()">{{ isNew ? 'Voeg toe' : 'Wijzig'}}</button>
+        </div>
+        <div class="row">
+            <br>
             </div>
+        <div class="row" ng-hide="showDeleteConfirm">
+            <button class="btn btn-danger" ng-click="deletePreview()" ng-hide="isNew">Verwijder incident</button>
+        </div>
+        <div class="row alert alert-warning alert-dismissable"  ng-hide="!showDeleteConfirm">
+            <h3>Weet u het zeker?</h3>
+            <p>Wilt u dit incident definitief verwijderen?</p>
+            <br>
+            <button class="btn" ng-click="deleteCancel()">Annuleer</button>
+            <button class="btn btn-danger" ng-click="delete()" ng-hide="isNew">Verwijder incident definitief</button>
         </div>
     </div>
 
@@ -56,5 +73,6 @@
       <leaflet id="map1" defaults='defaults' center='initcenter' height="400px" width="40%" layers='layers' ></leaflet>
 </div>
 
+</div>
 </div>
 
