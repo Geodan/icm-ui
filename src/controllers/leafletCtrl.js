@@ -205,7 +205,11 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     return proj4(toproj,coordinate);
                 });
                 var geom = Terraformer.WKT.convert(geojson.geometry);
-                d3.xml('/service/bridgis/geowebservice/populatoranalyze.asmx/RetrieveWKT?sUser=kylbv.test_1&sPassword=leclesuros&sWKTArea=' + geom + '&eAnalyzeTypes=MAXIMUM&sActivityList=totaal',populator_callback);
+                var user = 'kylbv.test_1';
+                var pass = 'leclesuros';
+                var analysetypes = '&eAnalyzeTypes=MAXIMUM';
+                var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=jstinr&sActivityList=asielz&sActivityList=uitvrt&sActivityList=zorgin&sActivityList=zieken&sActivityList=dagrec&sActivityList=zalena&sActivityList=beurze&sActivityList=evenem&sActivityList=prkcmp&sActivityList=sporta&sActivityList=hotels&sActivityList=nieuwb&sActivityList=totaal&sActivityList=totstr&sActivityList=tottyd';
+                d3.xml('/service/bridgis/geowebservice/populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
             });
             menu.on('edit.text', function(d){
                 var feat = d.layer;
