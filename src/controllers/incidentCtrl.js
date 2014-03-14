@@ -36,6 +36,7 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
     $scope.incident = {};
     $scope.isNew = true;
     $scope.isEditable = true;
+    $scope.showDeleteConfirm = false;
     $scope.projectTypes =
         [
             { id: 0, name: "LIVE" },
@@ -151,5 +152,23 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
                 .sync();
             $location.path('/incidenten');
         });
+
+        coreProject.data('name',$scope.incident.name)
+            .data('status',$scope.incident.status)
+            .data('type',$scope.incident.type)
+            .sync();
+        $location.path('/incidenten');
     };
+
+    $scope.deletePreview = function() {
+        $scope.showDeleteConfirm = true;
+    }
+    $scope.deleteCancel = function() {
+        $scope.showDeleteConfirm = false;
+    }
+    $scope.delete = function() {
+        coreProject = Core.projects(  $scope.id + '');
+        coreProject.deleted(true).sync();
+        $location.path('/incidenten');
+    }
 }]);
