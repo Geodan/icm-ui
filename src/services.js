@@ -1,7 +1,7 @@
 icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
     var instance = {};
     var core = Core;
-    var _center;
+    var _center = null;
     var _projection;
     instance.layers = {};
     
@@ -39,12 +39,13 @@ icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
              
         }
         
-        var initcenter = {
-            lat: 52.752087, //Approx HHNK
-            lng: 4.896941,
-            zoom: 5
-        };
-        instance.center(initcenter);
+        //var initcenter = {
+        //    lat: 52.752087, //Approx HHNK
+        //    lng: 4.896941,
+        //    zoom: 5
+        //};
+        //var initcenter = Core.project().data('incidentlocation');
+        //instance.center(initcenter);
         
         instance.definedLayers = {
             brt: {
