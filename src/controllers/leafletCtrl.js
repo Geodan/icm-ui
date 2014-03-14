@@ -38,6 +38,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.leafletService = LeafletService;
     $scope.leafletData = leafletData;
     
+    
     var initcenter = {
         lat: 52.752087, //Approx HHNK
         lng: 4.896941,
@@ -213,39 +214,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     });
     $scope.featureLayer = featureLayer;
     
-    /* Initiate the marker icons */
-    //$http({method: 'GET', url: './images/mapicons/imoov_list_subset.js'}).
-    $http({method: 'GET', url: './images/mapicons/progideon_list.js'}).
-        success(function(data, status, headers, config) {
-            _(data.icons).each(function(d){
-                $scope.icontypes[d.url] = d;
-            });
-                
-        }).
-        error(function(data, status, headers, config) {
-            console.log(status);
-        });
-    /* Initiate the line icons */
-    $scope.linestyles = [
-        {stroke: '#000'},
-        {stroke: '#f57900'},
-        {stroke: '#204a87'},
-        {stroke: '#cc0000'},
-        {stroke: '#5c3566'},
-        {stroke: '#4e9a06'}];
-    $scope.polygonstyles = [
-        {stroke: '#000'   ,fill: '#000'  },
-        {stroke: '#f57900',fill: '#f57900'},
-        {stroke: '#204a87',fill: '#204a87'},
-        {stroke: '#cc0000',fill: '#cc0000'},
-        {stroke: '#5c3566',fill: '#5c3566'},
-        {stroke: '#4e9a06',fill: '#4e9a06'}];
-    /* Set an init style */
-    $scope.currentstyle = {
-        icon: {url: 'imoov/s0110_A10---g.png'},
-        line: {stroke: '#000'},
-        polygon: {stroke: '#000',fill: '#000'}
-    };
+    $scope.icontypes = LeafletService.icontypes;
+    $scope.linestyles = LeafletService.icontypes;
+    $scope.polygonstyles = LeafletService.polygonstyles;
+    $scope.currentstyle = LeafletService.currentstyle;
     
     //Identify ESRI features
     var identify = function(event){
