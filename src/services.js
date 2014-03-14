@@ -23,7 +23,19 @@ icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
         }
         return instance._center = center || instance._center;
     };
-    
+    //TODO: working on icons
+    /*
+    $http({method: 'GET', url: './images/mapicons/progideon_list.js'}).
+        success(function(data, status, headers, config) {
+            _(data.icons).each(function(d){
+                $scope.icontypes[d.url] = d;
+            });
+                
+        }).
+        error(function(data, status, headers, config) {
+            console.log(status);
+        });
+    */
     /** Default baselayer **/
     instance.reset = function(){
         if (core.project()){
@@ -38,12 +50,13 @@ icm.factory('LeafletService',['$rootScope','Core',function($rootScope, Core) {
              instance.layers.overlays = _.groupBy(mapped, function(d){return d.category;});
              
         }
-        
-        //var initcenter = {
-        //    lat: 52.752087, //Approx HHNK
-        //    lng: 4.896941,
-        //    zoom: 5
-        //};
+        /*
+        var initcenter = {
+            lat: 52.752087, //Approx HHNK
+            lng: 4.896941,
+            zoom: 5
+        };
+        */
         //var initcenter = Core.project().data('incidentlocation');
         //instance.center(initcenter);
         
