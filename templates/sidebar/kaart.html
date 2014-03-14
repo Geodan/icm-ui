@@ -5,18 +5,18 @@
     
 </div>
 <div class="list-group" >
-    <a class="list-group-item active" ng-class="{'list-group-item-danger':nieuwBericht&&isCollapsed}"  ng-click="isCollapsed = !isCollapsed">Berichten <span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon"></span>  <span  ng-class="{ 'hidden':!nieuwBericht}" class="pull-right badge text-danger strong">{{nieuwBericht}}</span> <span class="clearfix"></span></a>
+    <a class="list-group-item active klik" ng-class="{'list-group-item-danger':nieuwBericht&&isCollapsed}"  ng-click="isCollapsed = !isCollapsed">Berichten <span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon"></span>  <span  ng-class="{ 'hidden':!nieuwBericht}" class="pull-right badge text-danger strong">{{nieuwBericht}}</span> <span class="clearfix"></span></a>
     <div class="list-group"  collapse="isCollapsed">
-       <div ng-class="{'hidden':gesprek,'list-group-item-danger': user.updated}" class="list-group-item" ng-click="getBerichten(user)"  ng-repeat="user in data.users | orderBy:'online':true">
+       <div ng-class="{'hidden':gesprek,'list-group-item-danger': user.updated}" class="list-group-item klik" ng-click="getBerichten(user)"  ng-repeat="user in data.users | orderBy:'online':true">
             {{user.name}} 
             <span class="pull-right" >
-                <span class="glyphicon" ng-class="{'glyphicon-ok-sign': user.online, 'glyphicon-minus-sign': !user.online,'text-danger':!user.online, 'text-success':user.online}"></span><span class="glyphicon" ng-class="{'glyphicon-bell': user.updated}"></span>
+                <span class="glyphicon klik" ng-class="{'glyphicon-ok-sign': user.online, 'glyphicon-minus-sign': !user.online,'text-danger':!user.online, 'text-success':user.online}"></span><span class="glyphicon" ng-class="{'glyphicon-bell': user.updated}"></span>
             </span>
         </div>
         
         <div class="panel-primary" ng-class="{'hidden':!gesprek}">
             <div class="panel-heading">
-                <span class="glyphicon glyphicon-chevron-left" ng-click="gesprek=false"></span>
+                <span class="glyphicon glyphicon-chevron-left klik" ng-click="gesprek=false"></span>
                  {{discussie}} 
                 <span class="clearfix"></span>
             </div>   
