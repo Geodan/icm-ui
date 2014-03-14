@@ -4,6 +4,15 @@
 .klik {
   cursor:pointer;
 }
+.kaartlagen {
+    display: block;
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background:white;
+    z-index:1001;
+}
 
 .navbar.header {
     min-height: 0px;

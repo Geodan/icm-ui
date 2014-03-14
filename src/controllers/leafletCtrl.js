@@ -273,13 +273,13 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         var baselayers = $scope.layers.baselayers;
         var layerName = val.layer.name;
         if (baselayers.hasOwnProperty(layerName)) {
+            val.buttonclass = false;
             delete baselayers[layerName];
             map.removeLayer(val.layer);
-            val.buttonclass = 'btn-default';
         } else {
+            val.buttonclass = true;
             baselayers[layerName] = val.layer;
             map.addLayer(val.layer);
-            val.buttonclass = 'btn-primary';
         }
     };
     //Toggle overlays
@@ -288,10 +288,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         var overlayName = val.layer.name;
         if (overlays.hasOwnProperty(overlayName)) {
             delete overlays[overlayName];
-            val.buttonclass = 'btn-default';
+            val.buttonclass = false;
         } else {
             overlays[overlayName] = val.layer;
-            val.buttonclass = 'btn-primary';
+            val.buttonclass = true;
         }
     };
     /** END OF SECTION EXTRA LAYERS **/
