@@ -43,7 +43,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var initcenter = {
         lat: 52.752087, //Approx HHNK
         lng: 4.896941,
-        zoom: 5
+        zoom: 9
     };
     var incidentlocation = Core.project().data('incidentlocation') || initcenter;
     angular.extend($scope, {
