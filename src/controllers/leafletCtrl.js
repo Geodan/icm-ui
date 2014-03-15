@@ -152,7 +152,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                         .style('left', function(){return bbox.x + 35 + 'px';})
                         .style('top', function(){return bbox.y + 35 + 'px';})
                         .style("width", '400px')
-                        //.style("height", '200px')
+                        .style('height','180px')
+                        .style('max-height','180px')
                         .on('click', function(){
                             d3.event.stopPropagation();//Prevent the map from firing click event as well
                         });
@@ -178,9 +179,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     var editdiv = scontent.append('div')
                         .attr('contenteditable','true')
                         .attr('id','descfield')
-                        //.classed('well well-sm', true)
                         .style('overflow','scroll')
-                        .style('height','80px')
+                        .style('height','180px')
                         .style('max-height','180px')
                         .html(desc);
                     var html = '<small>Gemaakt door: ' + creator + ' op ' +  created + '<br> Bewerkt door: ' + owner + ' op ' + updated + '</small>'; 
@@ -220,7 +220,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 var item = $scope.core.project().items(fid);
                 var entity = d.obj;
                 var bbox = entity.getBBox();
-                var fe = d3.select('.leaflet-popup-pane')
+                var fe = d3
+                    .select('.leaflet-popup-pane')
                     .attr('draggable',"true")
                     .append('div')
                     .classed('popup panel panel-primary',true)
@@ -244,7 +245,14 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 
                 var sheader = fe.append('div')
                     .classed('panel-heading', true)
-                    .attr('contenteditable','true')
+                    //.attr('contenteditable','true')
+                    .on('click', function(){
+                        this.contentEditable=true;
+                        this.focus();
+                    })
+                    .on('blur', function(){
+                        this.contentEditable=false;
+                    })
                     .html(name);
     
                 var scontent = fe.append('div')
@@ -252,12 +260,19 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 
                 
                 var editdiv = scontent.append('div')
-                    .attr('contenteditable','true')
+                    //.attr('contenteditable','true')
                     .attr('id','descfield')
                     //.classed('well well-sm', true)
                     .style('overflow','scroll')
-                    .style('height','80px')
+                    .style('height','180px')
                     .style('max-height','180px')
+                    .on('click', function(){
+                        this.contentEditable=true;
+                        this.focus();
+                    })
+                    .on('blur', function(){
+                        this.contentEditable=false;
+                    })
                     .html(desc);
                 var html = '<small>Gemaakt door: ' + creator + ' op ' +  created + '<br> Bewerkt door: ' + owner + ' op ' + updated + '</small>'; 
                 scontent.append('div').html(html);
@@ -343,7 +358,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         handleNewExtent(e.leafletEvent); 
     });
     $scope.$on('leafletDirectiveMap.click', function(event,e){
-        d3.selectAll('.popup').remove();//Remove all popups on map
+        //d3.selectAll('.popup').remove();//Remove all popups on map
         controls.editcontrol.save();
         controls.editcontrol.disable();
         identify(e);
