@@ -1,4 +1,4 @@
-//var tmp; //DEBUG
+var tmp; //DEBUG
 
 
 icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils', "leafletData",'leafletEvents','LeafletService',function($scope, $http, $timeout, Core, Utils,  leafletData, leafletEvents, LeafletService) {
@@ -178,8 +178,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     var editdiv = scontent.append('div')
                         .attr('contenteditable','true')
                         .attr('id','descfield')
-                        .classed('well well-sm', true)
+                        //.classed('well well-sm', true)
+                        .style('overflow','scroll')
                         .style('height','80px')
+                        .style('max-height','180px')
                         .html(desc);
                     var html = '<small>Gemaakt door: ' + creator + ' op ' +  created + '<br> Bewerkt door: ' + owner + ' op ' + updated + '</small>'; 
                     scontent.append('div').html(html);
@@ -252,8 +254,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 var editdiv = scontent.append('div')
                     .attr('contenteditable','true')
                     .attr('id','descfield')
-                    .classed('well well-sm', true)
+                    //.classed('well well-sm', true)
+                    .style('overflow','scroll')
                     .style('height','80px')
+                    .style('max-height','180px')
                     .html(desc);
                 var html = '<small>Gemaakt door: ' + creator + ' op ' +  created + '<br> Bewerkt door: ' + owner + ' op ' + updated + '</small>'; 
                 scontent.append('div').html(html);
@@ -513,13 +517,101 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var initmap = function(){
       leafletData.getMap('mainmap').then(function(map) {
         $scope.map = map;
-       
+        tmp = map;
         //Set correct projection for map
         map.options.crs = LeafletService.projection();
         
         /** ADD LAYERS **/
         map.addLayer(extentLayer);
         map.addLayer(featureLayer);
+        
+        /* Floodlayer */
+        var data = [];
+        var floodlayer = new L.geoJson(data, {
+            style: function (feature) {
+                var style = {};
+                if (feature.properties.tijdstip == 'na 4 uur'){
+                    style.opacity  = 0.2;
+                }
+                else if (feature.properties.tijdstip == 'na 8 uur'){
+                    style.opacity  = 0.4;
+                }
+                else if (feature.properties.tijdstip == 'na 12 uur'){
+                    style.opacity  = 0.6;
+                }
+                else if (feature.properties.tijdstip == 'na 16 uur'){
+                    style.opacity  = 0.8;
+                }
+                //style.fillOpacity = 0;
+                style.fillColor = "None";
+                return style;
+            },
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.tijdstip);
+            }
+        }).addTo(map);
+        //self.layercontrol.addOverlay(floodlayer,"Inundatie");
+        d3.json('./data/flood_merged.geojson',function(data){
+               var collection = {"type":"FeatureCollection","features":[]};
+                collection.features = data.features;
+                floodlayer.addData(collection);
+        });
+        /*Kwetsbare objecten*/
+        var geojsonMarkerOptions = {
+            radius: 8,
+            fillColor: "#ff7800",
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        };
+        var kwetsbareobjectenlayer = new L.geoJson(data, {
+            pointToLayer: function(feature, latlng){
+                return L.circleMarker(latlng, geojsonMarkerOptions);
+            },
+            style: function (feature) {
+                if (feature.properties.PRIORITEIT == 1){
+                    return {fillColor: 'red'}
+                }
+                else if (feature.properties.PRIORITEIT == 2){
+                    return {fillColor: 'orange'}
+                }
+                else if (feature.properties.PRIORITEIT == 3){
+                    return {fillColor: 'yellow'}
+                }
+                else if (feature.properties.PRIORITEIT == 4){
+                    return {fillColor: 'blue'}
+                }
+                else{
+                    return {fillColor: 'blue'}
+                }
+            },
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.ROT_NAAM + "<br>" + feature.properties.OMSCHRI5);
+            }
+        });
+        //self.layercontrol.addOverlay(kwetsbareobjectenlayer,"Kwetsbare objecten");
+        d3.json('./data/kwetsbareobjecten.geojson',function(data){
+               var collection = {"type":"FeatureCollection","features":[]};
+                collection.features = data.features;
+                kwetsbareobjectenlayer.addData(collection);
+        });
+        /* Opvanglocaties */
+        var opvanglocatieslayer = new L.geoJson(data, {
+            style: function (feature) {
+                return {color: 'red',weight: 1}
+            },
+            onEachFeature: function (feature, layer) {
+                layer.bindLabel(feature.properties.gebruiksdoelverblijfsobject,{ noHide: true });
+                layer.bindPopup(feature.properties.gebruiksdoelverblijfsobject);
+            }
+        });
+        //self.layercontrol.addOverlay(opvanglocatieslayer,"Openbare functies");
+        d3.json('./data/publieke_functie.geojson',function(data){
+               var collection = {"type":"FeatureCollection","features":[]};
+                collection.features = data.features;
+                opvanglocatieslayer.addData(collection);
+        });
 
 
         /** SETUP DRAWING FUNCTIONALITY **/
