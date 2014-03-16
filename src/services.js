@@ -72,6 +72,7 @@ icm.factory('LeafletService',['$rootScope','$http','Core',function($rootScope, $
              var mapped = _.map(items, function(d){return d.data()});
              instance.layers.overlays = _.groupBy(mapped, function(d){return d.category;});
              
+             instance.layers.icmlayers = {};
         }
         /*
         var initcenter = {

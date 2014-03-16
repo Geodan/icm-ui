@@ -84,13 +84,18 @@
         <li class="list-group-item klik" ng-init="isCollapsed=true" ng-click="isCollapsed = !isCollapsed">Kaartlagen<span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon klik"></span> </li>
         </ul>
         <div collapse="isCollapsed">
+        <!-- Baselayers -->
         <div class="list-group"  ng-repeat="(group, layers) in leafletService.layers.baselayers">
           <a class="list-group-item active" ng-init="isCollapsed=true" ng-click="isCollapsed = !isCollapsed">{{group}} <span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon klik"></span> <span class="badge">{{layers.length}}</span>  <span class="clearfix"></span></a>
             <div class="list-group"  collapse="isCollapsed">
              <a class="list-group-item" ng-class="{'list-group-item-success':val.buttonclass}" ng-repeat="(key, val) in layers" ng-click="toggleLayer(val)">{{val.layer.name}}</a>
             </div>
         </div>
-
+        <!-- ICM layers -->
+        <div class="list-group">
+         <a class="list-group-item klik" ng-class="{'list-group-item-success':val.buttonclass}" ng-repeat="(key, val) in leafletService.layers.icmlayers" ng-click="toggleIcmLayer(val)">{{val.name}}</a>
+        </div>
+        <!-- Overlays -->
         <div class="list-group" >
           <div ng-repeat="(group, layers) in leafletService.layers.overlays">
             <a class="list-group-item active"   ng-init="isCollapsed=true" ng-click="isCollapsed = !isCollapsed">

@@ -61,6 +61,7 @@
     "HHNK101a": {"type": "baselayer", "category": "Achtergrond", "layer": {"type": "esri_map", "visible": true, "name": "Luchtfoto 2013", "url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/tiled/luchtfoto_2013/MapServer", "layerOptions": {"layers": "show:10"}}},
     "HHNK102": {"type": "baselayer", "category": "Achtergrond", "layer": {"type": "esri_map", "visible": true, "name": "AHN2 gefilterd", "url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/extra_tiled/ahn2_gefilterd/MapServer", "layerOptions": {"layers":"show:0"}}},
     "brp":     {"type": "overlay", "category": "Extern", "layer": {"type": "betterwms","visible": true, "name": "Gewaspercelen","url": "http://research.geodan.nl/service/ngr/brpgewaspercelen/wms","layerOptions": {"layers": "brpgewaspercelen","format": "image/png","transparent": true}}},
+    "kwetsbaar":     {"type": "overlay", "category": "Extern", "layer": {"type": "betterwms","visible": true, "name": "Kwetsb. objecten","url": "http://research.geodan.nl/service/risicokaart/rk_services_pub/services/WMS-risicokaart","layerOptions": {"layers": "kwetsbare_objecten","format": "image/png","transparent": true}}},
     "kunstwerken": {"type": "overlay", "category": "Extern", "layer": {"name": "Kunstwerken",
             "type": "betterwms",
 "url":"http://research.geodan.nl/service/hhnk/geoserver/wms",

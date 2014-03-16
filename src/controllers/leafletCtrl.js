@@ -5,6 +5,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     if(!Core.project()) {
         //return false;
     }
+    
     $scope.radioModel = 'pan';
     var core = Core;
     $scope.core = core;
@@ -37,8 +38,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var drawControl;
     $scope.icontypes = {};
     $scope.leafletService = LeafletService;
-    $scope.leafletData = leafletData;
+    //$scope.leafletData = leafletData;
     
+    $scope.icmlayers = [];
     
     var initcenter = {
         lat: 52.752087, //Approx HHNK
@@ -47,6 +49,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     };
     var incidentlocation = Core.project().data('incidentlocation') || initcenter;
     angular.extend($scope, {
+        markers: {},
         extralayers: LeafletService.layers,
         layers: {
             baselayers: LeafletService.definedLayers,
@@ -106,6 +109,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 textlocation: "ul"
         }
     });
+    //LeafletService.layers.icmlayers.locationLayer = locationLayer;
     
     var editmenu = function(feat,container, element, event){
         if ($scope.chronos){
@@ -296,7 +300,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     };
     var textbox = function(feat,container, element, event){
         //TODO
-    }
+    };
     var featureLayer = new L.GeoJSON.d3(dummyCollection, {
         //core: Core,
         onClick: editmenu,
@@ -317,6 +321,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         }
     });
     $scope.featureLayer = featureLayer;
+    //LeafletService.layers.icmlayers.featureLayer = featureLayer;
     
     $scope.icontypes = LeafletService.icontypes;
     $scope.linestyles = LeafletService.icontypes;
@@ -378,11 +383,11 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         if (baselayers.hasOwnProperty(layerName)) {
             val.buttonclass = false;
             delete baselayers[layerName];
-            map.removeLayer(val.layer);
+            //map.removeLayer(val.layer);
         } else {
             val.buttonclass = true;
             baselayers[layerName] = val.layer;
-            map.addLayer(val.layer);
+            //map.addLayer(val.layer);
         }
     };
     //Toggle overlays
@@ -397,6 +402,19 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             val.buttonclass = true;
         }
     };
+    //Toggle icm layers
+    $scope.toggleIcmLayer = function(val) {
+        console.log(val); //TODO
+        if ($scope.map.hasLayer(val)){
+            $scope.map.removeLayer(val);
+            val.buttonclass = false;
+        }
+        else{
+            $scope.map.addLayer(val);
+            val.buttonclass = true;
+        }
+    };
+    
     /** END OF SECTION EXTRA LAYERS **/
     
     
@@ -532,7 +550,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var initmap = function(){
       leafletData.getMap('mainmap').then(function(map) {
         $scope.map = map;
-        tmp = map;
+        
         //Set correct projection for map
         map.options.crs = LeafletService.projection();
         
@@ -565,6 +583,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 layer.bindPopup(feature.properties.tijdstip);
             }
         }).addTo(map);
+        floodlayer.name = 'Model uitvoer';
+        floodlayer.buttonclass = true;
+        LeafletService.layers.icmlayers.floodlayer = floodlayer;
         //self.layercontrol.addOverlay(floodlayer,"Inundatie");
         d3.json('./data/flood_merged.geojson',function(data){
                var collection = {"type":"FeatureCollection","features":[]};
@@ -580,50 +601,63 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             opacity: 1,
             fillOpacity: 0.8
         };
+        
         var kwetsbareobjectenlayer = new L.geoJson(data, {
             pointToLayer: function(feature, latlng){
                 return L.circleMarker(latlng, geojsonMarkerOptions);
             },
             style: function (feature) {
                 if (feature.properties.PRIORITEIT == 1){
-                    return {fillColor: 'red'}
+                    return {fillColor: 'red'};
                 }
                 else if (feature.properties.PRIORITEIT == 2){
-                    return {fillColor: 'orange'}
+                    return {fillColor: 'orange'};
                 }
                 else if (feature.properties.PRIORITEIT == 3){
-                    return {fillColor: 'yellow'}
+                    return {fillColor: 'yellow'};
                 }
                 else if (feature.properties.PRIORITEIT == 4){
-                    return {fillColor: 'blue'}
+                    return {fillColor: 'blue'};
                 }
                 else{
-                    return {fillColor: 'blue'}
+                    return {fillColor: 'blue'};
                 }
             },
             onEachFeature: function (feature, layer) {
-                layer.bindPopup(feature.properties.ROT_NAAM + "<br>" + feature.properties.OMSCHRI5);
+                layer.bindLabel(feature.properties.ROT_NAAM + "<br>" + (feature.properties.OMSCHRI5 || ''),{ noHide: false });
+                layer.bindPopup(feature.properties.ROT_NAAM + "<br>" + (feature.properties.OMSCHRI5 || ''));
             }
         });
+        kwetsbareobjectenlayer.buttonclass = false;
+        kwetsbareobjectenlayer.name = 'Kwetsbare objecten';
+        LeafletService.layers.icmlayers.kwetsbareobjectenlayer = kwetsbareobjectenlayer;
         //self.layercontrol.addOverlay(kwetsbareobjectenlayer,"Kwetsbare objecten");
         d3.json('./data/kwetsbareobjecten.geojson',function(data){
                var collection = {"type":"FeatureCollection","features":[]};
                 collection.features = data.features;
                 kwetsbareobjectenlayer.addData(collection);
         });
+        
         /* Opvanglocaties */
         var opvanglocatieslayer = new L.geoJson(data, {
+            pointToLayer: function(feature, latlng){
+                return L.circleMarker(latlng, geojsonMarkerOptions);
+            },
             style: function (feature) {
-                return {color: 'red',weight: 1}
+                return {color: 'red',weight: 1};
             },
             onEachFeature: function (feature, layer) {
-                layer.bindLabel(feature.properties.gebruiksdoelverblijfsobject,{ noHide: true });
-                layer.bindPopup(feature.properties.gebruiksdoelverblijfsobject);
+                layer.bindLabel(feature.properties.naam,{ noHide: false });
+                layer.bindPopup(feature.properties.omschrijvi);
             }
         });
+        opvanglocatieslayer.name = 'Opvanglocaties';
+        opvanglocatieslayer.buttonclass = false;
+        LeafletService.layers.icmlayers.opvanglocatieslayer = opvanglocatieslayer;
         //self.layercontrol.addOverlay(opvanglocatieslayer,"Openbare functies");
-        d3.json('./data/publieke_functie.geojson',function(data){
-               var collection = {"type":"FeatureCollection","features":[]};
+        //d3.json('./data/publieke_functie.geojson',function(data){
+        d3.json('./data/opvanglocaties.geojson',function(data){
+                var collection = {"type":"FeatureCollection","features":[]};
                 collection.features = data.features;
                 opvanglocatieslayer.addData(collection);
         });
