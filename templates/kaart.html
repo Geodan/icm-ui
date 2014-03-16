@@ -64,8 +64,8 @@
             </div>
           </li>
         </ul>
-      </div> 
-
+      </div>
+      
      
 
 <!--
@@ -78,12 +78,13 @@
     <button class="btn btn-default" ng-click="setNow()" ng-show="chronos">Huidig</button>
 -->
 
-      <leaflet id="mainmap" center="initcenter" defaults="defaults" height="600px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
-    
+      <div style="padding-top: 20px">
+       <leaflet id="mainmap" center="initcenter" defaults="defaults" height="600px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
+      </div>
 
       <div class="kaartlagen col-sm-4 col-md-3 col-lg-3">
-       <ul class="list-group">
-        <li class="list-group-item klik" ng-init="isCollapsed=true" ng-click="isCollapsed = !isCollapsed">Kaartlagen<span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon klik"></span> </li>
+        <ul class="list-group">
+         <li class="list-group-item btn klik" ng-init="isCollapsed=true" ng-click="isCollapsed = !isCollapsed">Kaartlagen<span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon klik"></span> </li>
         </ul>
         <div collapse="isCollapsed">
         <!-- ICM layers -->
