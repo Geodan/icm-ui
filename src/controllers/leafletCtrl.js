@@ -324,7 +324,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     //LeafletService.layers.icmlayers.featureLayer = featureLayer;
     
     $scope.icontypes = LeafletService.icontypes;
-    $scope.linestyles = LeafletService.icontypes;
+    $scope.linestyles = LeafletService.linestyles;
     $scope.polygonstyles = LeafletService.polygonstyles;
     $scope.currentstyle = LeafletService.currentstyle;
     
