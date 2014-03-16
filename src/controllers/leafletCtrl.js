@@ -136,6 +136,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             
             menu.on('model.populator', function(d){
                 var populator_callback = function(xml){
+                    $scope.map.spin(false);
                     var acts = d3.select(xml).selectAll('PopulationPerActivity');
                     var text = '';
                     acts.each(function(d){
@@ -156,8 +157,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                         .style('left', function(){return bbox.x + 35 + 'px';})
                         .style('top', function(){return bbox.y + 35 + 'px';})
                         .style("width", '400px')
-                        .style('height','180px')
-                        .style('max-height','180px')
                         .on('click', function(){
                             d3.event.stopPropagation();//Prevent the map from firing click event as well
                         });
@@ -170,7 +169,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     var updated = new Date(item.timestamp()).toLocaleString();
                     desc = desc.replace(/\r\n?|\n/g, '<br />');
                     desc = desc + '<h4>Populatie:</h4><br>' + text;
-                    nam = '(Populatie) ' + name;
+                    name = '(Populatie) ' + name;
                     var sheader = fe.append('div')
                         .classed('panel-heading', true)
                         .attr('contenteditable','true')
@@ -215,7 +214,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 var user = 'kylbv.test_1';
                 var pass = 'leclesuros';
                 var analysetypes = '&eAnalyzeTypes=MAXIMUM';
-                var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=jstinr&sActivityList=asielz&sActivityList=uitvrt&sActivityList=zorgin&sActivityList=zieken&sActivityList=dagrec&sActivityList=zalena&sActivityList=beurze&sActivityList=evenem&sActivityList=prkcmp&sActivityList=sporta&sActivityList=hotels&sActivityList=nieuwb&sActivityList=totaal&sActivityList=totstr&sActivityList=tottyd';
+                //var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=jstinr&sActivityList=asielz&sActivityList=uitvrt&sActivityList=zorgin&sActivityList=zieken&sActivityList=dagrec&sActivityList=zalena&sActivityList=beurze&sActivityList=evenem&sActivityList=prkcmp&sActivityList=sporta&sActivityList=hotels&sActivityList=nieuwb&sActivityList=totaal&sActivityList=totstr&sActivityList=tottyd';
+                var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=zorgin&sActivityList=zieken&sActivityList=hotels&sActivityList=totaal';
+                $scope.map.spin(true);
                 d3.xml('/service/bridgis/geowebservice/populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
             });
             menu.on('edit.text', function(d){
@@ -233,7 +234,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     .style('left', function(){return bbox.x + 35 + 'px';})
                     .style('top', function(){return bbox.y + 35 + 'px';})
                     .style("width", '400px')
-                    //.style("height", '200px')
                     .on('click', function(){
                         d3.event.stopPropagation();//Prevent the map from firing click event as well
                     });
