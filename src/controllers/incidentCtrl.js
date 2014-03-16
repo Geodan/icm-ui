@@ -18,21 +18,7 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
             }
     });
     $scope.layers = {
-        baselayers: {
-            osm: {
-                name: "Openstreetmap",
-                url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                type: 'xyz'
-            }
-            //brt: {
-            //    name: 'BRT',
-            //    url: 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{y}.png',
-            //    type: 'xyz',
-            //    layerOptions: {
-            //        tms: true
-            //    }
-            //}
-        }
+        baselayers: icmconfig.definedlayers
     };
     $scope.incident = {};
     $scope.isNew = true;
@@ -122,6 +108,14 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
             coreProject = Core.projects({_id: Date.now()});
             coreProject.itemStore().loaded.then(function () {
                 //load all mapLayers
+                var layers = icmconfig.layers;
+                _.each(layers, function(d,k){
+                    coreProject.items({
+                        _id:k,
+                        data: d
+                    }).deleted(false).sync();
+                });
+                /*
                 $http.get('./config/kaartlagen.json')
                     .then(function(res){
                         var layers = res.data;
@@ -132,6 +126,7 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
                             }).deleted(false).sync();
                         });
                     });
+                    */
             });
         } else {
             coreProject = Core.projects(  $scope.id + '');

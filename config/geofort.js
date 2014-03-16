@@ -44,5 +44,6 @@ var icmconfig = {
   },
   "layers":
   {
+      "ahn1": {"type": "overlay", "category": "Terrein", "layer": {"type":"betterwms","visible":true,"name":"Hoogtekaart","url":"http://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map","layerOptions":{"layers":"hoogtes","format":"image/png","transparent":true,"opacity":0.8}}}
   }
 };
