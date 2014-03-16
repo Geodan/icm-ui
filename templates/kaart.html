@@ -20,7 +20,7 @@
          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
             <li role="presentation">
             <div style="z-index:1001">
-              <span ng-repeat="(key, icon) in icontypes" ng-click="drawPoint(icon)">
+              <span ng-repeat="(key, icon) in icontypes" ng-click="drawPoint(icon)" title="{{icon.text}}">
                 <img alt="{{icon.text}}" width="29" ng-src="./images/mapicons/{{icon.url}}"/>
               </span>
             </div>
