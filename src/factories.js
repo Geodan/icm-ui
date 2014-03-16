@@ -1,45 +1,14 @@
+
 // De definities van de verschillende beelden inclusief hun onderdelen
 icm.factory('Beelden', ['$rootScope', function( $rootScope ) {
-    
-    
     return {
       reset: function(time) {
         time = time?time:0;
-        this.beelden = [
-            { beeld: 'summary', title: 'Samenvatting', timestamp: time, beeldonderdeel: 
-              [ {id:'situatie', title: 'Situatie', isedit: false, zeker: true}
-              ]}          
-            ,{ beeld: 'populatie', title: 'Populatie', timestamp: time, beeldonderdeel: 
-              [ {title:'Samenvatting',id:'samenvatting', isedit: false, zeker: true},
-                {title:'Gebiedsoverzicht',id:'gebied', isedit: false, zeker: true},
-                {title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
-                {title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
-                {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},               
-                {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
-            ]}
-            ,{ beeld: 'evacuatie', title: 'Evacutatie', timestamp: time, beeldonderdeel:
-              [ {title:'Samenvatting',id:'samenvatting', isedit: false, zeker: true},
-                {title:'Routeoverzicht',id:'routes', isedit: false, zeker: true},                                
-                {title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
-                {title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
-                {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},          
-                {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
-            ]}        
-            ,{ beeld: 'opvang', title: 'Opvang', timestamp: time, beeldonderdeel: 
-              [ {title:'Samenvatting',id:'samenvatting', isedit: false, zeker: true},
-                {title:'Locatie overzicht',id:'locaties', isedit: false, zeker: true},                
-                {title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
-                {title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
-                {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},          
-                {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
-            ]}         
-            ,{ beeld: 'comms', title: 'Communicatie', timestamp: time, beeldonderdeel: 
-              [ {title:'Kernboodschap',id:'kernboodschap', isedit: false, zeker: true},
-                {title:'Omgevingsbeeld',id:'omgevingsbeeld', isedit: false, zeker: true},
-                {title:'Communicatie extern',id:'extern', isedit: false, zeker: true},
-                {title:'Communicatie intern',id:'intern', isedit: false, zeker: true}
-            ]}
-        ]
+        /* TT: config comes from ./config/xx.json */
+        this.beelden = icmconfig.beelden;
+        _(this.beelden).each(function(d){
+                d.beeld.timestamp = time;
+        });
         return this.beelden;
       },
       beelden: []

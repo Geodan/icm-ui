@@ -127,7 +127,7 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
             coreProject = Core.projects({_id: Date.now()});
             coreProject.itemStore().loaded.then(function () {
                 //load all mapLayers
-                $http.get('./data/kaartlagen.json')
+                $http.get('./config/kaartlagen.json')
                     .then(function(res){
                         var layers = res.data;
                         _.each(layers, function(d,k){
