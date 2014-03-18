@@ -5,6 +5,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     if(!Core.project()) {
         //return false;
     }
+    $scope.radioModel = 'pan';
     var core = Core;
     $scope.core = core;
     /** Some time functionality **/
@@ -37,6 +38,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.icontypes = {};
     $scope.leafletService = LeafletService;
     $scope.leafletData = leafletData;
+    
     
     var initcenter = {
         lat: 52.752087, //Approx HHNK
@@ -213,39 +215,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     });
     $scope.featureLayer = featureLayer;
     
-    /* Initiate the marker icons */
-    //$http({method: 'GET', url: './images/mapicons/imoov_list_subset.js'}).
-    $http({method: 'GET', url: './images/mapicons/progideon_list.js'}).
-        success(function(data, status, headers, config) {
-            _(data.icons).each(function(d){
-                $scope.icontypes[d.url] = d;
-            });
-                
-        }).
-        error(function(data, status, headers, config) {
-            console.log(status);
-        });
-    /* Initiate the line icons */
-    $scope.linestyles = [
-        {stroke: '#000'},
-        {stroke: '#f57900'},
-        {stroke: '#204a87'},
-        {stroke: '#cc0000'},
-        {stroke: '#5c3566'},
-        {stroke: '#4e9a06'}];
-    $scope.polygonstyles = [
-        {stroke: '#000'   ,fill: '#000'  },
-        {stroke: '#f57900',fill: '#f57900'},
-        {stroke: '#204a87',fill: '#204a87'},
-        {stroke: '#cc0000',fill: '#cc0000'},
-        {stroke: '#5c3566',fill: '#5c3566'},
-        {stroke: '#4e9a06',fill: '#4e9a06'}];
-    /* Set an init style */
-    $scope.currentstyle = {
-        icon: {url: 'imoov/s0110_A10---g.png'},
-        line: {stroke: '#000'},
-        polygon: {stroke: '#000',fill: '#000'}
-    };
+    $scope.icontypes = LeafletService.icontypes;
+    $scope.linestyles = LeafletService.icontypes;
+    $scope.polygonstyles = LeafletService.polygonstyles;
+    $scope.currentstyle = LeafletService.currentstyle;
     
     //Identify ESRI features
     var identify = function(event){
@@ -300,13 +273,13 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         var baselayers = $scope.layers.baselayers;
         var layerName = val.layer.name;
         if (baselayers.hasOwnProperty(layerName)) {
+            val.buttonclass = false;
             delete baselayers[layerName];
             map.removeLayer(val.layer);
-            val.buttonclass = 'btn-default';
         } else {
+            val.buttonclass = true;
             baselayers[layerName] = val.layer;
             map.addLayer(val.layer);
-            val.buttonclass = 'btn-primary';
         }
     };
     //Toggle overlays
@@ -315,10 +288,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         var overlayName = val.layer.name;
         if (overlays.hasOwnProperty(overlayName)) {
             delete overlays[overlayName];
-            val.buttonclass = 'btn-default';
+            val.buttonclass = false;
         } else {
             overlays[overlayName] = val.layer;
-            val.buttonclass = 'btn-primary';
+            val.buttonclass = true;
         }
     };
     /** END OF SECTION EXTRA LAYERS **/
