@@ -720,6 +720,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 feature.properties.stroke = $scope.currentstyle.line.stroke;
             }
             feature.properties.fill = $scope.currentstyle.polygon.fill;
+            feature.properties['stroke-width'] = 3;
             
             var id = core.peerid() + "_" + timestamp;
             var mygroups = core.project().myGroups();
