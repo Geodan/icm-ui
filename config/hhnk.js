@@ -1,4 +1,73 @@
-{
+var icmconfig = {
+  "crs": new L.Proj.CRS.TMS(
+     'EPSG:28992',
+     '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs',
+     [-285401.92,22598.08,595401.9199999999,903401.9199999999], {
+     resolutions: [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420]
+  }),
+  "beelden":[
+        { beeld: 'summary', title: 'Situatie', timestamp: 0, beeldonderdeel: 
+          [ {id:'situatie', title: 'Situatie', isedit: false, zeker: true}
+          ]}    
+        ,{ beeld: 'meldingen', title: 'Meldingen', timestamp: 0, beeldonderdeel: 
+          [ {title:'Tijdlijn',id:'Tijdlijn', isedit: false, zeker: true},
+            {title:'Meldingen beeld',id:'meldingen' , isedit: false, zeker: true},
+            {title: 'Acute meldingen', id:'acuut', isedit: false, zeker: true},
+            {title: 'Situatie Plaats Incident',id: 'spi', isedit: false, zeker: true} ,
+            {title: 'Genomen acties',id:'acties' , isedit: false, zeker: true}
+        ]}
+        ,{ beeld: 'wat', title: 'Operationeel (WAT)', timestamp: 0, beeldonderdeel: 
+          [ {title:'Tijdlijn',id:'tijdlijn', isedit: false, zeker: true},
+            {title:'Beeldvorming',id:'beeldvorming', isedit: false, zeker: true},
+            {title:'Oordeelsvorming',id:'oordeelsvorming', isedit: false, zeker: true},
+            {title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
+            {title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
+            {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},
+            {title:'Veiligheid medewerkers',id:'veiligheid', isedit: false, zeker: true},
+            {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
+        ]}
+        ,{ beeld: 'wot', title: 'Tactisch (WOT)', timestamp: 0, beeldonderdeel:
+          [ {title:'Tijdlijn',id:'tijdlijn', isedit: false, zeker: true},
+            {title:'Beeldvorming',id:'beeldvorming', isedit: false, zeker: true},
+            {title:'Oordeelsvorming',id:'oordeelsvorming', isedit: false, zeker: true},
+            {title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
+            {title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
+            {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},          
+            {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
+        ]}        
+        ,{ beeld: 'wbt', title: 'Strategisch (WBT)', timestamp: 0, beeldonderdeel: 
+          [ {title:'Tijdlijn',id:'tijdlijn', isedit: false, zeker: true},
+            {title:'Beeldvorming',id:'beeldvorming', isedit: false, zeker: true},
+            {title:'Oordeelsvorming',id:'oordeelsvorming', isedit: false, zeker: true},
+            {title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
+            {title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
+            {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},          
+            {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
+        ]}
+        ,{ beeld: 'scenarios', title: 'Scenario\'s', timestamp: 0, beeldonderdeel: 
+          [ {title:'Meest waarschijnlijk',id:'meest', isedit: false, zeker: true},
+            {title:'Minder waarschijnlijk',id:'minder', isedit: false, zeker: true},
+            {title:'Minst waarschijnlijk',id:'minst', isedit: false, zeker: true}
+        ]}
+        ,{ beeld: 'communicatie', title: 'Communicatie', timestamp: 0, beeldonderdeel: 
+          [ {title:'Kernboodschap',id:'kernboodschap', isedit: false, zeker: true},
+            {title:'Omgevingsbeeld',id:'omgevingsbeeld', isedit: false, zeker: true},
+            {title:'Communicatie vanuit het waterschap',id:'extern', isedit: false, zeker: true},
+            {title:'Communicatie intern het waterschap',id:'intern', isedit: false, zeker: true}
+        ]}
+   ],
+  "definedlayers":{
+      brt: {
+                name: 'BRT',
+                url: 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{y}.png',
+                type: 'xyz',
+                layerOptions: {
+                    tms: true
+                }
+      }
+  },
+  "layers":
+  {
     "HHNK001a": {"type": "overlay", "category": "AWZ-Leidingen", "layer": {"type": "betterwms","visible": true,"name": "Risicopunten Afvalwaterzuivering ","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer/WmsServer", "layerOptions": {"layers":7, "format": "img/png", "transparent": true}}},
     "HHNK001b": {"type": "overlay", "category": "AWZ-Leidingen", "layer": {"type": "betterwms","visible": true,"name": "Overnamepunten","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer/WMSServer", "layerOptions": {"layers":6, "format": "img/png", "transparent": true}}},
     "HHNK001c": {"type": "overlay", "category": "AWZ-Leidingen", "layer": {"type": "betterwms","visible": true,"name": "Rioolgemalen","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer/WMSServer", "layerOptions": {"layers":5, "format": "img/png", "transparent": true}}},
@@ -60,16 +129,6 @@
     "HHNK012f": {"type": "overlay", "category": "Zoneringen", "layer": {"type": "betterwms","visible": true,"name": "Zoneringen, Zandige kust","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/zoneringen/MapServer/WMSServer", "layerOptions": {"layers":0, "format": "img/png", "transparent": true}}},
     "HHNK101a": {"type": "baselayer", "category": "Achtergrond", "layer": {"type": "esri_map", "visible": true, "name": "Luchtfoto 2013", "url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/tiled/luchtfoto_2013/MapServer", "layerOptions": {"layers": "show:10"}}},
     "HHNK102": {"type": "baselayer", "category": "Achtergrond", "layer": {"type": "esri_map", "visible": true, "name": "AHN2 gefilterd", "url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/extra_tiled/ahn2_gefilterd/MapServer", "layerOptions": {"layers":"show:0"}}},
-    "brp":     {"type": "overlay", "category": "Extern", "layer": {"type": "betterwms","visible": true, "name": "Gewaspercelen","url": "http://research.geodan.nl/service/ngr/brpgewaspercelen/wms","layerOptions": {"layers": "brpgewaspercelen","format": "image/png","transparent": true}}},
-    "kunstwerken": {"type": "overlay", "category": "Extern", "layer": {"name": "Kunstwerken",
-            "type": "betterwms",
-"url":"http://research.geodan.nl/service/hhnk/geoserver/wms",
-            "visible": true,
-            "layerOptions": {
-                "layers": "GeoData:LW_2012_Kunstwerken_Legger",
-                "format": "image/png",
-                "transparent": true
-            }
-        }
-    }
-}
+    "brp":     {"type": "overlay", "category": "Extern", "layer": {"type": "betterwms","visible": true, "name": "Gewaspercelen","url": "http://research.geodan.nl/service/ngr/brpgewaspercelen/wms","layerOptions": {"layers": "brpgewaspercelen","format": "image/png","transparent": true}}}
+  }
+};
