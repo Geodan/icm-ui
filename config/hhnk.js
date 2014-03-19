@@ -294,6 +294,32 @@ var icmconfig = {
           }
        }
     },
-    "brp":     {"type": "overlay", "category": "Extern", "layer": {"type": "betterwms","visible": true, "name": "Gewaspercelen","url": "http://research.geodan.nl/service/ngr/brpgewaspercelen/wms","layerOptions": {"layers": "brpgewaspercelen","format": "image/png","transparent": true}}}
+    "brp":     {"type": "overlay", "category": "Extern", "layer": {"type": "betterwms","visible": true, "name": "Gewaspercelen","url": "http://research.geodan.nl/service/ngr/brpgewaspercelen/wms","layerOptions": {"layers": "brpgewaspercelen","format": "image/png","transparent": true}}},
+    zwemwater:{type: 'overlay', category: 'Extern', layer: {type: 'betterwms',visible: true, name: "Zwemwater locatie",url: 'http://www.zwemwater.nl/zwr-ogc/services/zwr-wms',layerOptions: {layers: 'zwemwaterlocatie',format: 'image/png',transparent: true}}},
+    zw_gebied:{type: 'overlay', category: 'Extern', layer: {type: 'betterwms',visible: true, name: "Zwemwater gebied",url: 'http://www.zwemwater.nl/zwr-ogc/services/zwr-wms',layerOptions: {layers: 'gebied',format: 'image/png',transparent: true}}},
+    golffront: {type: 'overlay', category: '3Di', layer:{ 
+            name: "Golffront",
+            type:  'betterwms',
+            url:"http://research.geodan.nl/service/lizard/geoserver/floodapp/wms", 
+            visible: true,
+            layerOptions: {
+                layers: 'floodapp:golffront_shp',
+                format: 'image/png',
+                transparent: true
+            }
+        }
+    },
+    waterdepth: {type: 'overlay', category: '3Di', layer:{ 
+            name: "Waterdiepte",
+            type:  'betterwms',
+            url:"http://research.geodan.nl/service/lizard/geoserver/floodapp/wms", 
+            visible: true,
+            layerOptions: {
+                layers: 'floodapp:Waterdepth_petten',
+                format: 'image/png',
+                transparent: true
+            }
+        }
+    }
   }
 };
