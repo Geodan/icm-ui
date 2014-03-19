@@ -57,6 +57,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         },
         initcenter: LeafletService.center() || incidentlocation,
         defaults: {
+            maxZoom: 11,
             crs: LeafletService.projection()
         }
     });

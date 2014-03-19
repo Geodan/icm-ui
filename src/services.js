@@ -21,6 +21,8 @@ icm.factory('LeafletService',['$rootScope','$http','Core',function($rootScope, $
     };
     
     /* Initiate the marker icons */
+    instance.icontypes = icmconfig.drawstyles.icontypes;
+    /*OBS
     $http({method: 'GET', url: './images/mapicons/progideon_list.js'}).
         success(function(data, status, headers, config) {
             _(data.icons).each(function(d){
@@ -31,7 +33,10 @@ icm.factory('LeafletService',['$rootScope','$http','Core',function($rootScope, $
         error(function(data, status, headers, config) {
             console.log(status);
         });
-    
+    */
+    instance.linestyles = icmconfig.drawstyles.linestyles;
+    instance.polygonstyles = icmconfig.drawstyles.polygonstyles;
+    /* OBS
     instance.linestyles = [
         {stroke: '#000'},
         {stroke: '#f57900'},
@@ -46,6 +51,7 @@ icm.factory('LeafletService',['$rootScope','$http','Core',function($rootScope, $
         {stroke: '#cc0000',fill: '#cc0000'},
         {stroke: '#5c3566',fill: '#5c3566'},
         {stroke: '#4e9a06',fill: '#4e9a06'}];
+        */
     /* Set an init style */
     instance.currentstyle = {
         icon: {url: 'imoov/s0110_A10---g.png'},

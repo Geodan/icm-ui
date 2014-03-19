@@ -14,7 +14,8 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
                 zoom: 5
             },
             defaults: {
-                crs: $scope.projection
+                crs: $scope.projection,
+                maxZoom: 10
             }
     });
     $scope.layers = {
