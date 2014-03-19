@@ -20,7 +20,7 @@
          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
             <li role="presentation">
             <div style="z-index:1001">
-              <span ng-repeat="(key, icon) in icontypes" ng-click="drawPoint(icon)" title="{{icon.text}}">
+              <span ng-repeat="icon in icontypes" ng-click="drawPoint(icon)" title="{{icon.text}}">
                 <img alt="{{icon.text}}" width="29" ng-src="./images/mapicons/{{icon.url}}"/>
               </span>
             </div>
@@ -95,7 +95,7 @@
 -->
 
       <div style="padding-top: 20px">
-       <leaflet id="mainmap" center="initcenter" defaults="defaults" height="100%" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
+       <leaflet id="mainmap" center="initcenter" defaults="defaults" height="600px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
       </div>
 
       <div class="kaartlagen col-sm-4 col-md-3 col-lg-3">
