@@ -20,7 +20,7 @@ icm.controller('UserCtrl', ['$scope', '$stateParams', '$location', 'Core', 'Util
   };
 
   $scope.newUser = function () {
-      var user = Core.user({id: $scope.loginName, name: $scope.loginName});
+      var user = Core.users({_id: $scope.loginName});
       setUser(user);
   };
 
@@ -30,6 +30,7 @@ icm.controller('UserCtrl', ['$scope', '$stateParams', '$location', 'Core', 'Util
   };
 
   function setUser(user) {
+    Core.user(user.id());
     $scope.data.user = user.data('name');
     $scope.data.userlist = Core.users();
     $location.path('/incidenten');
