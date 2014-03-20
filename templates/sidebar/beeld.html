@@ -10,7 +10,7 @@
        <div ng-class="{'hidden':gesprek,'list-group-item-danger': user.updated}" class="list-group-item klik" ng-click="getBerichten(user)"  ng-repeat="user in data.users | orderBy:'online':true">
             {{user.name}} 
             <span class="pull-right" >
-                <span class="glyphicon klik" ng-class="{'glyphicon-ok-sign': user.online, 'glyphicon-minus-sign': !user.online,'text-danger':!user.online, 'text-success':user.online}"></span><span class="glyphicon" ng-class="{'glyphicon-bell': user.updated}"></span>
+                <span class="glyphicon klik" ng-class="{'glyphicon-ok-sign': user.inProject, 'glyphicon-minus-sign': !user.inProject,'glyphicon-remove-sign': !user.online,'text-danger':!user.inProject && user.online, 'text-muted': !user.online,'text-success':user.online}"></span><span class="glyphicon" ng-class="{'glyphicon-bell': user.updated}"></span>
             </span>
         </div>
         
@@ -21,11 +21,12 @@
                 <span class="clearfix"></span>
             </div>   
             <div class="panel-body" >
+                
                 <p ng-repeat="item in filteredItems = (data.itemlist | filter:data.nondeleted | berichtfilter:data.user:discussie ) " ng-class="{'text-right':item.data('naar')==discussie,'text-success':item.data('naar')==discussie,'text-info':item.data('naar')!=discussie}">{{item.data('bericht')}}</p>
             </div>
             <div class="panel-footer">
                 <div class="input-group">
-                  <input type="text" class="form-control" ng-model="chat" >
+                  <input type="text" class="form-control" ng-model="chat" ng-keypress="checkEnter($event)">
                   <span class="input-group-addon btn" ng-click="sendMessage()"><span class="glyphicon glyphicon-comment"></span></span>
                 </div>
             </div> 
