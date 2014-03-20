@@ -20,7 +20,7 @@ icm.controller('UserCtrl', ['$scope', '$stateParams', '$location', 'Core', 'Util
   };
 
   $scope.newUser = function () {
-      var user = Core.users({_id: $scope.loginName});
+      var user = Core.users({_id: $scope.loginName}).sync();
       setUser(user);
   };
 
