@@ -49,6 +49,31 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
             }
         })
 
+
+          ////////////////
+          // Logout //
+          ////////////////
+          .state("logout", {
+              url: "/user",
+              views: {
+                  'nav': {
+                      templateUrl: "templates/nav.html",
+                      controller: "HeaderCtrl"
+
+                  },
+                  'main': {
+                      templateUrl: "templates/logout.html",
+                      controller: "LogoutCtrl"
+                  }
+              },
+              data: {
+                  title: 'Uitloggen',
+                  rule: function(user) {
+                      //prevent users that are not logged in
+                      return user === '';
+                  }
+              }
+          })
           ////////////////
           // Incidenten //
           ////////////////
@@ -187,7 +212,8 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
                 templateUrl: "templates/kaart.html"
                 },
                'sidebar@': {
-                templateUrl: "templates/sidebar/kaart.html"
+                templateUrl: "templates/sidebar/kaart.html",
+                   controller: 'BeeldSideCtrl'
                 }
             }
         })

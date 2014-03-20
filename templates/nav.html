@@ -7,7 +7,7 @@
         </a>
       </li>
       <li>
-        <p ng-if="data.user!=''"  class="navbar-text"><span class="glyphicon glyphicon-ok-sign text-success" title="online"></span> Gebruiker: {{data.user}}</p>
+        <p ng-if="data.user!=''"  class="navbar-text"><a ui-sref="logout"><span class="glyphicon glyphicon-ok-sign text-success" title="online"></span> Gebruiker: {{data.user}}</a></p>
         <p ng-if="data.user==''"  class="navbar-text"><a ui-sref="login"><span class="glyphicon glyphicon glyphicon-remove-sign text-danger" title="online"></span><strong class="text-danger"> U bent niet ingelogd</strong></a></p>
       </li>
     </ul>
