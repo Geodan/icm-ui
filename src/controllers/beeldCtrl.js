@@ -26,7 +26,7 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
             if(item) {
                 //er is al een item, we gaan hem aanpassen
                 item
-                    .data('beeldcontent',onderdeel.contentedit)
+                    .data('beeldcontent',onderdeel.contentedit || ' ')
                     .sync();
             }
             else {
@@ -36,6 +36,7 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
                     return false; //er is geen content dus ook niet gaan syncen
                 }
                 var id = $scope.beeldType + '_' + onderdeel.id;
+
                 var item = Core.project().items({_id:id})
                     .data('beeld',$scope.beeldType)
                     .data('beeldonderdeel',onderdeel.id)
