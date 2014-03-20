@@ -2,12 +2,22 @@
     <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-5">
             <div class='container-fluid' ng-controller="UserCtrl">
-                <h4>Login op het ICMs </h4>
-                <input type="text" ng-model="data.user" typeahead="user.name for user in data.users | filter:$viewValue | limitTo:8" typeahead-editable='false' typeahead-on-select="onSelect($item)" class="form-control">
-                <p/>
-                <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-danger" ng-click="data.user=''">Annuleer</button>
-                    <button type="button" class="btn btn-success" ui-sref="incidenten" ng-disabled="noUser">Login</button>
+                <div class="row">
+                    <h4>Login op het ICMs </h4>
+                    <input type="text" ng-model="loginName" typeahead="user.name for user in data.users | filter:$viewValue | limitTo:8" typeahead-editable='true' typeahead-on-select="onSelect($item)" class="form-control">
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-danger" ng-click="data.user=''">Annuleer</button>
+                        <button type="button" class="btn btn-success" ng-click="login()" ng-disabled="loginName === ''">Login</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row alert alert-warning alert-dismissable"  ng-hide="!confirmNewUser">
+                        <h3>Gebruiker toevoegen?</h3>
+                        <p>Wilt u de gebruiker '{{loginName}}' toevoegen?</p>
+                        <br>
+                        <button class="btn" ng-click="newUserCancel()">Annuleer</button>
+                        <button class="btn btn-success" ng-click="newUser()" >Maak nieuw user aan</button>
+                    </div>
                 </div>
            </div>
        </div>
