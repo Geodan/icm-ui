@@ -153,7 +153,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     var fe = d3
                         //.select('.leaflet-popup-pane')
                         .select('body')
-                        .attr('draggable',"true")
                         .append('div')
                         .classed('popup panel panel-primary',true)
                         .style('position', 'absolute')
@@ -246,7 +245,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 var fe = d3
                     //.select('.leaflet-popup-pane')
                     .select('body')
-                    .attr('draggable',"true")
                     .append('div')
                     .classed('popup panel panel-primary',true)
                     .style('position', 'absolute')
@@ -293,9 +291,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     .style('overflow','scroll')
                     .style('height','180px')
                     .style('max-height','180px')
-                    .on('mousemove', function(){
-                           d3.event.stopPropagation(); 
-                    })
                     .on('click', function(){
                         if (this.contentEditable != true){
                             this.contentEditable=true;
