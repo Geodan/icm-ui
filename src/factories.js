@@ -120,7 +120,7 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
             //console.log(d.id(),user);
         });
         return onlineUsers;
-        /*  
+        /* OBS 
         var activeUsers = _.pluck(_.filter(users,function(d){return !d.deleted()}),'_id');
         var onlinePeers = _.map( _.filter(peers,function(d){return !d.deleted()}),function(d){return d.data('userid')})
         var onlineUsers = [];        
