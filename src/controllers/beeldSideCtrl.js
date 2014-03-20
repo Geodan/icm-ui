@@ -70,7 +70,12 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
                     .data('bericht',$scope.chat)
                     .sync();
         $scope.chat='';
-    }
+    };
+    $scope.checkEnter = function(event){
+        if (event.which==13){
+            $scope.sendMessage();
+        }
+    };
 
 }]);
 

@@ -98,6 +98,29 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
       user: "",
       incident: "",
       onlineUsers: function (users,peers) {
+        var onlineUsers = [];
+        var activeUsers = _(cow.users()).filter(function(d){return !d.deleted();});
+        var onlinePeers = _(cow.peers()).filter(function(d){return !d.deleted();});
+        var peersByUser = _.groupBy(onlinePeers, function(d){ return d.data('userid');});
+        _.each(activeUsers, function(d){
+            var user = {};
+            user.name = d.id();
+            user.timestamp = 0;
+            var peers = peersByUser[d.id()];
+            user.online = false;
+            user.inProject = false;
+            if (peers){
+                user.online = true;
+                var peersProjects = _.map(peers,function(d){return d.data('activeproject');});
+                if (cow.project()){
+                    user.inProject = _.contains(peersProjects,cow.project().id());
+                }
+            }
+            onlineUsers.push(user);
+            //console.log(d.id(),user);
+        });
+        return onlineUsers;
+        /*  
         var activeUsers = _.pluck(_.filter(users,function(d){return !d.deleted()}),'_id');
         var onlinePeers = _.map( _.filter(peers,function(d){return !d.deleted()}),function(d){return d.data('userid')})
         var onlineUsers = [];        
@@ -109,6 +132,7 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
           onlineUsers.push(user)
         });
         return onlineUsers;
+        */
       },            
       project: {},
       projectlist: [],

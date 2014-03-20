@@ -14,7 +14,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.timeDisplay = 'none';
     $scope.mytime = new Date();
     $scope.hstep = 1;
-    $scope.mstep = 15;
+    $scope.mstep = 1;
     $scope.ismeridian = true;
     $scope.time = Date.now();
     $scope.timechanged = function () {
@@ -141,8 +141,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     var acts = d3.select(xml).selectAll('PopulationPerActivity');
                     var text = '';
                     acts.each(function(d){
-                        text = text + d3.select(this).select('sActivity').html() + ': ';
-                        text = text + d3.select(this).select('sPopulation').html();
+                        text = text + d3.select(this).select('sActivity')[0][0].textContent + ': ';
+                        text = text + d3.select(this).select('sPopulation')[0][0].textContent;
                         text = text + '<br>';
                     });
                     var feat = d.layer;
@@ -150,13 +150,17 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     var item = $scope.core.project().items(fid);
                     var entity = d.obj;
                     var bbox = entity.getBBox();
-                    var fe = d3.select('.leaflet-popup-pane')
+                    var fe = d3
+                        //.select('.leaflet-popup-pane')
+                        .select('body')
                         .attr('draggable',"true")
                         .append('div')
                         .classed('popup panel panel-primary',true)
                         .style('position', 'absolute')
-                        .style('left', function(){return bbox.x + 35 + 'px';})
-                        .style('top', function(){return bbox.y + 35 + 'px';})
+                        //.style('left', function(){return bbox.x + 35 + 'px';})
+                        //.style('top', function(){return bbox.y + 35 + 'px';})
+                        .style('right', '20px')
+                        .style('bottom','20px')
                         .style("width", '400px')
                         .on('click', function(){
                             d3.event.stopPropagation();//Prevent the map from firing click event as well
@@ -173,7 +177,14 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     name = '(Populatie) ' + name;
                     var sheader = fe.append('div')
                         .classed('panel-heading', true)
-                        .attr('contenteditable','true')
+                        //.attr('contenteditable','true')
+                        .on('click', function(){
+                            this.contentEditable=true;
+                            this.focus();
+                        })
+                        .on('blur', function(){
+                            this.contentEditable=false;
+                        })
                         .html(name);
         
                     var scontent = fe.append('div')
@@ -181,11 +192,17 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     
                     
                     var editdiv = scontent.append('div')
-                        .attr('contenteditable','true')
                         .attr('id','descfield')
                         .style('overflow','scroll')
                         .style('height','180px')
                         .style('max-height','180px')
+                         .on('click', function(){
+                            this.contentEditable=true;
+                            this.focus();
+                        })
+                        .on('blur', function(){
+                            this.contentEditable=false;
+                        })
                         .html(desc);
                     var html = '<small>Gemaakt door: ' + creator + ' op ' +  created + '<br> Bewerkt door: ' + owner + ' op ' + updated + '</small>'; 
                     scontent.append('div').html(html);
@@ -227,13 +244,16 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 var entity = d.obj;
                 var bbox = entity.getBBox();
                 var fe = d3
-                    .select('.leaflet-popup-pane')
+                    //.select('.leaflet-popup-pane')
+                    .select('body')
                     .attr('draggable',"true")
                     .append('div')
                     .classed('popup panel panel-primary',true)
                     .style('position', 'absolute')
-                    .style('left', function(){return bbox.x + 35 + 'px';})
-                    .style('top', function(){return bbox.y + 35 + 'px';})
+                    //.style('left', function(){return bbox.x + 35 + 'px';})
+                    //.style('top', function(){return bbox.y + 35 + 'px';})
+                    .style('right', '20px')
+                    .style('bottom','20px')
                     .style("width", '400px')
                     .on('click', function(){
                         d3.event.stopPropagation();//Prevent the map from firing click event as well
@@ -262,23 +282,31 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     
                 var scontent = fe.append('div')
                     .classed('panel-body', true);
-                
-                
+                /*
+                var editdiv = scontent.append('textarea')
+                    .attr('cols',10)
+                    .attr('rows',10)
+                    .val(desc);
+                  */  
                 var editdiv = scontent.append('div')
-                    //.attr('contenteditable','true')
                     .attr('id','descfield')
-                    //.classed('well well-sm', true)
                     .style('overflow','scroll')
                     .style('height','180px')
                     .style('max-height','180px')
+                    .on('mousemove', function(){
+                           d3.event.stopPropagation(); 
+                    })
                     .on('click', function(){
-                        this.contentEditable=true;
-                        this.focus();
+                        if (this.contentEditable != true){
+                            this.contentEditable=true;
+                            this.focus();
+                        }
                     })
                     .on('blur', function(){
-                        this.contentEditable=false;
+                        //this.contentEditable=false;
                     })
                     .html(desc);
+                    
                 var html = '<small>Gemaakt door: ' + creator + ' op ' +  created + '<br> Bewerkt door: ' + owner + ' op ' + updated + '</small>'; 
                 scontent.append('div').html(html);
                 scontent.append('span')
@@ -364,7 +392,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         handleNewExtent(e.leafletEvent); 
     });
     $scope.$on('leafletDirectiveMap.click', function(event,e){
-        //d3.selectAll('.popup').remove();//Remove all popups on map
+        d3.selectAll('.popup').remove();//Remove all popups on map
         controls.editcontrol.save();
         controls.editcontrol.disable();
         identify(e);
