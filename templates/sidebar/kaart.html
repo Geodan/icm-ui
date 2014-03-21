@@ -1,6 +1,6 @@
 <div  ng-controller='BeeldSideCtrl'>
 <div class="list-group">
-    <a  ui-sref-active="active" class="list-group-item "  ng-class="{'list-group-item-danger': beeld.updated}" ng-repeat="beeld in beelden"  ng-click="setRead(beeld)" ui-sref="incidenten.incident.beeld.kaart({beeldType:beeld.beeld})">{{beeld.title}}<span class="badge " ng-class="{hidden: !beeld.updated}" ng-click="setRead(beeld)"><span class=" glyphicon glyphicon-bell"></span></span><span class="clearfix"></span></a>
+    <a  ui-sref-active="active" class="list-group-item "  ng-class="{'list-group-item-danger': beeld.updated}" ng-repeat="beeld in beelden"  ng-click="setRead(beeld)" >{{beeld.title}}<span class="badge " ng-class="{hidden: !beeld.updated}" ng-click="setRead(beeld)"><span class=" glyphicon glyphicon-bell"></span></span><span class="clearfix"></span></a>
         
     
 </div>
