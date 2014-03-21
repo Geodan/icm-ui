@@ -1,8 +1,12 @@
-icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils', function  ($scope, $stateParams, Beelden, Core, Utils) {    
+icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils', function  ($scope, $stateParams, Beelden, Core, Utils) {
     $scope.beeldType = $stateParams.beeldType;
     $scope.beelden = Beelden.beelden;
-    $scope.data =Utils;
+    $scope.data = Utils;
     $scope.discussie = '';
+
+    //if only text is shown (no map), then show only text when you click on another Beeld
+    var source = $scope.$state.$current.url.source;
+    $scope.fullText = source.substring (source.lastIndexOf('/'), source.length) == '/text';
 
      if(!Core.project()) {
         //TODO: hier moet je of terug gestuurd worden naar incidenten of netjes met een promise oid alsnog alle gegevens zetten
@@ -15,8 +19,8 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
 
         _(users).each(function(d){
             if(d.updated) updated++;
-        })
-        $scope.nieuwBericht =updated;
+        });
+        $scope.nieuwBericht = updated;
 
     }, true);
     //functie om het huidige beeld op te halen
@@ -35,7 +39,7 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
                     updated = true;                 
                 }
 
-             })
+             });
              b.updated = updated;
              
         });
@@ -48,9 +52,9 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
                 b.timestamp = new Date().getTime();
                 b.updated = false;
             }
-        })
-        return false;
-    }
+        });
+        $scope.$stateParams.beeldType = bld;
+    };
     //berichten:
     //van
     //naar
@@ -60,16 +64,17 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
         $scope.gesprek = true;
         user.timestamp = new Date().getTime();
         user.updated = false;
-    }
+    };
     $scope.sendMessage = function() {
-        if($scope.chat == '') return false;
-        var id = $scope.data.user + '_' + $scope.discussie + '_' + new Date().getTime();
-         var item = Core.project().items({_id:id})
-                    .data('van',$scope.data.user)
-                    .data('naar',$scope.discussie)
-                    .data('bericht',$scope.chat)
-                    .sync();
-        $scope.chat='';
+        if($scope.chat !== '') {
+            var id = $scope.data.user + '_' + $scope.discussie + '_' + new Date().getTime();
+            var item = Core.project().items({_id:id})
+                        .data('van',$scope.data.user)
+                        .data('naar',$scope.discussie)
+                        .data('bericht',$scope.chat)
+                        .sync();
+            $scope.chat = '';
+        }
     };
     $scope.checkEnter = function(event){
         if (event.which==13){
