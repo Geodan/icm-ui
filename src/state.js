@@ -185,15 +185,14 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
         .state('incidenten.incident.beeld', {
             url: "/:beeldType",
             views: {
-
-              // So this one is targeting the unnamed view within the parent state's template.
-              'main@': {
-                templateUrl: "templates/beeld.html",
-                controller: 'BeeldCtrl'
+                // So this one is targeting the unnamed view within the parent state's template.
+                'main@': {
+                    templateUrl: "templates/beeld.html",
+                    controller: 'BeeldCtrl'
                 },
-               'sidebar@': {
-                templateUrl: "templates/sidebar/beeld.html",
-                controller: 'BeeldSideCtrl'
+                'sidebar@': {
+                    templateUrl: "templates/sidebar/beeld.html",
+                    controller: 'BeeldSideCtrl'
                 }
             }
         })
@@ -206,14 +205,13 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
         .state('incidenten.incident.beeld.kaart', {
             url: "/kaart",
             views: {
-
-              // So this one is targeting the unnamed view within the parent state's template.
-              'main@': {
-                templateUrl: "templates/kaart.html"
+                // So this one is targeting the unnamed view within the parent state's template.
+                'main@': {
+                    templateUrl: "templates/kaart.html"
                 },
-               'sidebar@': {
-                templateUrl: "templates/sidebar/kaart.html",
-                   controller: 'BeeldSideCtrl'
+                'sidebar@': {
+                    templateUrl: "templates/sidebar/beeld.html",
+                    controller: 'BeeldSideCtrl'
                 }
             }
         })
@@ -227,14 +225,14 @@ var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",
             url: "/text",
             views: {
 
-              // So this one is targeting the unnamed view within the parent state's template.
-              'main@': {
-                templateUrl: "templates/text.html",
-                controller: 'BeeldCtrl'
+                // So this one is targeting the unnamed view within the parent state's template.
+                'main@': {
+                    templateUrl: "templates/text.html",
+                    controller: 'BeeldCtrl'
                 },
-               'sidebar@': {
-                templateUrl: "templates/sidebar/text.html",
-                controller: 'BeeldSideCtrl'
+                'sidebar@': {
+                    templateUrl: "templates/sidebar/beeld.html",
+                    controller: 'BeeldSideCtrl'
                 }
             }
         });       
