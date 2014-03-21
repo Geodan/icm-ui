@@ -115,7 +115,7 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 		    }
 		    d3.select(this)
 		        .transition().duration(100)
-		        .style('opacity',d.origopac * 0.2);
+		        .style('opacity',d.origopac * 0.6);
 		    
 		    if (mouseoverContent){
 		        /*
@@ -138,6 +138,7 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 		    d3.select(this)
 		        .transition().duration(100)
 		        .style('opacity',d.origopac);
+		    d3.selectAll('.mouseovertext').remove();
 		    if (mouseoverContent){
 		        /*
 		        tooltipdiv.transition()        

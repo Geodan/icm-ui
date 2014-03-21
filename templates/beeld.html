@@ -6,7 +6,7 @@
     <a ui-sref="incidenten.incident.beeld.kaart" class="pull-left btn btn-info">&lt; kaart</a>
   </div>
 </div>
-<div class="row" >
+<div class="row fill" >
 <!--TEXT -->
   <div class="col-sm-6 col-md-6 col-lg-5">
     <div class="list-group">
@@ -48,8 +48,8 @@
   </div>
   <!--- MAP -->
   
-  <div class="col-sm-6  col-md-6 col-lg-7"   ng-controller="LeafletController">
-      <leaflet id="mainmap" center="initcenter" defaults="defaults" height="800px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
+  <div class="col-sm-6  col-md-6 col-lg-7 fill"   ng-controller="LeafletController">
+      <leaflet id="mainmap" center="initcenter" defaults="defaults" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
       
   </div>
 </div>
