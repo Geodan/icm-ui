@@ -6,7 +6,9 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', '$state'
     $scope.data.project = Core.project(); //Get current project
     var store = Core.projectStore(); //Get projectstore    
 
-    //zet de 
+    $scope.firstBeeld = icmconfig.beelden[0].beeld; //set first beeld as default beeld
+
+    //zet de
     $scope.data.projectlist = Core.projects();
     //Bind storechange to angular DOM
     store.bind('datachange', function () {

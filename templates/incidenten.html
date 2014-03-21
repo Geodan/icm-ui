@@ -1,10 +1,10 @@
 <div class="row">
   <table class="table table-hover">
     <tr  class="klik" ng-repeat="project in data.projectlist | filter:data.nondeleted | filterIncident:$state.current.data.type | orderBy:['data(\'type\').id','data(\'status\').id','-date']"  ng-click="setProject(project)" ng-class="{'success':project.data('status').id==0,'active':project.data('status').id==2}">
-      <td  ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType:"summary"})' >{{project.data('name') || project.id()}} </td>
-      <td  ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType:"summary"})'> {{project.data('type').name}} </td>
-      <td  ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType:"summary"})'> {{project.data('status').name}} </td>
-      <td  ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType:"summary"})'> {{project.data('date') | date:'yyyy-MM-dd HH:mm'}} </td>
+      <td  ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType: firstBeeld})' >{{project.data('name') || project.id()}} </td>
+      <td  ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType: firstBeeld})'> {{project.data('type').name}} </td>
+      <td  ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType: firstBeeld})'> {{project.data('status').name}} </td>
+      <td  ui-sref='incidenten.incident.beeld({incidentID:project.id(),beeldType: firstBeeld})'> {{project.data('date') | date:'yyyy-MM-dd HH:mm'}} </td>
       <td><a class="pull-right glyphicon" ui-sref="incidenten.incident.wijzig({incidentID:project.id()})" ng-class="{'glyphicon-pencil': true}"></a></td>
     </tr>
   </table>   
