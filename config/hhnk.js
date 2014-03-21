@@ -203,22 +203,6 @@ var icmconfig = {
           layerOptions: {
               tms: true
           }
-      },
-      nachtkaart: {
-          name: 'Grijstinten',
-          url: 'http://services.geodan.nl/tms/1.0.0/nachtkaart_EPSG28992/{z}/{x}/{y}.png',
-          type: 'xyz',
-          layerOptions: {
-              tms: true
-          }
-      },
-      top10nl:{
-          name:  'Top10',
-          url: 'http://services.geodan.nl/tms/1.0.0/topokaart_EPSG28992/{z}/{x}/{y}.png',
-          type: 'xyz',
-          layerOptions:{
-              tms:true
-          }
       }
   },
   layers:{
@@ -283,17 +267,16 @@ var icmconfig = {
     "HHNK012f": {"type": "overlay", "category": "Zoneringen", "layer": {"type": "betterwms","visible": true,"name": "Zoneringen, Zandige kust","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/zoneringen/MapServer/WMSServer", "layerOptions": {"layers":0, "format": "img/png", "transparent": true}}},
     "HHNK101a": {"type": "baselayer", "category": "Achtergrond", "layer": {"type": "wms", "visible": true, "name": "Luchtfoto 2013", "url": "http://geoweb.hhnk.nl:6080/arcgis/services/tiled/luchtfoto_2013/MapServer/WMSServer", "layerOptions": {"layers": "show:10"}}},
     "HHNK102": {"type": "baselayer", "category": "Achtergrond", "layer": {"type": "wms", "visible": true, "name": "AHN2 gefilterd", "url": "http://geoweb.hhnk.nl:6080/arcgis/services/extra_tiled/ahn2_gefilterd/MapServer/WMSServer", "layerOptions": {"layers":"show:0"}}},
-    "HHNK103": {"type": "baselayer", "category": "Achtergrond", "layer":
-        {"type": "baselayer", "category": "Achtergrond", "layer": {
+    "HHNK103": {"type": "baselayer", "category": "Achtergrond", "layer": {
               name:  'Top10NL',
               url: 'http://geoweb.hhnk.nl:6080/arcgis/rest/services/tiled/topo_vlak_256_exploded/MapServer/WMTS/tile/1.0.0/topo_vlak_256_exploded/{z}/{x}/{y}.png',
               type: 'xyz',
               layerOptions:{
                   tms:false
               }
-          }
        }
     },
+    
     "brp":     {"type": "overlay", "category": "Extern", "layer": {"type": "betterwms","visible": true, "name": "Gewaspercelen","url": "http://research.geodan.nl/service/ngr/brpgewaspercelen/wms","layerOptions": {"layers": "brpgewaspercelen","format": "image/png","transparent": true}}},
     zwemwater:{type: 'overlay', category: 'Extern', layer: {type: 'betterwms',visible: true, name: "Zwemwater locatie",url: 'http://www.zwemwater.nl/zwr-ogc/services/zwr-wms',layerOptions: {layers: 'zwemwaterlocatie',format: 'image/png',transparent: true}}},
     zw_gebied:{type: 'overlay', category: 'Extern', layer: {type: 'betterwms',visible: true, name: "Zwemwater gebied",url: 'http://www.zwemwater.nl/zwr-ogc/services/zwr-wms',layerOptions: {layers: 'gebied',format: 'image/png',transparent: true}}},
@@ -321,5 +304,25 @@ var icmconfig = {
             }
         }
     }
+    ,"nachtkaart": {"type": "baselayer", "category": "Achtergrond", "layer": {
+          name: 'Grijstinten',
+          url: 'http://services.geodan.nl/tms/1.0.0/nachtkaart_EPSG28992/{z}/{x}/{y}.png',
+          type: 'xyz',
+          visible: 'true',
+          layerOptions: {
+              tms: true
+          }
+      }
+    }
+    ,"top10nl": {"type": "baselayer", "category": "Achtergrond", "layer": {
+          name:  'Top10',
+          url: 'http://services.geodan.nl/tms/1.0.0/topokaart_EPSG28992/{z}/{x}/{y}.png',
+          type: 'xyz',
+          visible: 'true',
+          layerOptions:{
+              tms:true
+          }
+      }
   }
+   } 
 };

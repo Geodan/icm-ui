@@ -244,7 +244,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 var bbox = entity.getBBox();
                 var fe = d3
                     //.select('.leaflet-popup-pane')
-                    .select('body')
+                    .select('#map')
                     .append('div')
                     .classed('popup panel panel-primary',true)
                     .style('position', 'absolute')
