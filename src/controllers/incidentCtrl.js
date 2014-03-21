@@ -164,13 +164,13 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
 
     $scope.deletePreview = function() {
         $scope.showDeleteConfirm = true;
-    }
+    };
     $scope.deleteCancel = function() {
         $scope.showDeleteConfirm = false;
-    }
-    $scope.delete = function() {
-        coreProject = Core.projects(  $scope.id + '');
+    };
+    $scope.deleteIncident = function() {
+        var coreProject = Core.projects(  $scope.id + '');
         coreProject.deleted(true).sync();
         $location.path('/incidenten');
-    }
+    };
 }]);
