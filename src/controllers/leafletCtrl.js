@@ -323,7 +323,34 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         }
     };
     var textbox = function(feat,container, element, event){
-        //TODO
+        var self = this;
+        var fid = feat.id;
+        var feature = feat;
+        var g, svg;
+        var loc = d3.mouse(element); //Wrong on firefox
+        var center = {x: event.layerX, y: event.layerY};
+        var fe = d3         
+            .select('.leaflet-popup-pane')
+            .selectAll('.textbox').data([feat]);
+       fe.enter()
+            .append('div')
+            .style('position','absolute')
+            .classed('textbox',true)
+            .classed('mouseovertext',true)
+            .style('background','rgba(255, 255, 255, 0.5)')
+            .style('padding','5px')
+            .style('max-width','300px')
+            .html(feat.properties.desc);
+            
+            
+       fe.style('left', function(){return loc[0] + 10 + 'px';})
+            .style('top', function(){return loc[1] + 10 + 'px';})
+            .style("width", '400px');
+
+       //d3.select(element).on('mouseout', function(d){
+       //     fe.remove();
+       //});
+        
     };
     var featureLayer = new L.GeoJSON.d3(dummyCollection, {
         //core: Core,
