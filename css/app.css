@@ -1,12 +1,12 @@
 /*
 * Leaflet default 
 */
-html, body, #mainmap, #map {
+html, body{
     height: 100%;
 }
 
-#mainmap, #map {
-    position: absolute;
+.angular-leaflet-map {
+    height: 100%;
 }
 
 .leaflet-top, .leaflet-bottom {
@@ -89,6 +89,7 @@ hr.small {
     overflow: auto;
 
 }
+/*OBS
 .kaart {
   min-height: 400px;
   top: 140px;
@@ -101,7 +102,7 @@ hr.small {
     bottom: 0;
     z-index: 1000;
     display: block;
-}
+}*/
 
 /* Sidebar navigation */
 .nav-sidebar {
@@ -128,6 +129,8 @@ padding: 5px;
 
 .main {
   padding: 10px;
+  height: 100%;
+  min-height: 100%;
 }
 @media (min-width: 768px) {
   .main {
@@ -142,7 +145,11 @@ padding: 5px;
 .beeldcontent div {
   margin-bottom: 5px;
 }
-
+/** TT: added this to set the bootstraps row height in order to set the map height to 100%**/
+.fill {
+    height: 90%;
+    min-height: 90%;
+}
 
 /*
  * Placeholder dashboard ideas

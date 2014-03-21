@@ -1,11 +1,11 @@
 <div class="row">
     <a ui-sref="incidenten.incident.beeld" class="pull-left btn btn-info">&gt; tekst</a>
 </div>
-<div class="row">
+<div class="row fill">
   <!--- MAP -->
   
-  <div class="col-sm-12  col-md-12 col-lg-12"   ng-controller="LeafletController">
-    <div class="row">
+  <div class="col-sm-12  col-md-12 col-lg-12 fill"   ng-controller="LeafletController">
+   
       
       <div class="btn-group">
         <button ng-model="radioModel" type="button" class="btn btn-default btn-lg" title="Beweeg de kaart" btn-radio="'pan'">
@@ -97,9 +97,8 @@
 
     
 
-      <div style="padding-top: 20px">
-       <leaflet id="mainmap" center="initcenter" defaults="defaults" height="600px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
-      </div>
+      
+      <leaflet id="mainmap" center="initcenter" defaults="defaults" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
 
       <div class="kaartlagen col-sm-4 col-md-3 col-lg-3">
         <ul class="list-group">
@@ -133,6 +132,6 @@
         </div>  
       </div> 
       </div>   
-    </div>
+   
   </div>
 </div>
