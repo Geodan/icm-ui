@@ -332,14 +332,25 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         var fe = d3         
             .select('.leaflet-popup-pane')
             .selectAll('.textbox').data([feat]);
-       fe.enter()
+        var textbox  = fe.enter()
             .append('div')
             .style('position','absolute')
             .classed('textbox',true)
             .classed('mouseovertext',true)
-            .style('background','rgba(255, 255, 255, 0.5)')
-            .style('padding','5px')
-            .style('max-width','300px')
+            .classed('panel panel-primary',true)
+            //.style('background','rgba(255, 255, 255, 0.5)')
+            .style('max-width','300px');
+        textbox.append('div')
+            .classed('panel-heading',true)
+            //.style('background','rgba(200, 200, 200, 0.8)')
+            //.style('padding','5px')
+            .append('h4')
+            .classed('panel-title',true)
+            .html(feat.properties.name);
+        textbox.append('div')
+            .classed('panel-body',true)
+            //.style('background','rgba(255, 255, 255, 0.8)')
+            //.style('padding','5px')
             .html(feat.properties.desc);
             
             
