@@ -100,7 +100,10 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
     
     $scope.ok = function () {
         var coreProject;
+        if ($scope.incident.name === '') {
 
+            return false;
+        }
         if ($scope.id === null) {
             coreProject = Core.projects({_id: Date.now()});
             coreProject.itemStore().loaded.then(function () {
@@ -156,6 +159,7 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
             .data('type',$scope.incident.type)
             .sync();
         $location.path('/incidenten');
+        return true;
     };
 
     $scope.deletePreview = function() {
