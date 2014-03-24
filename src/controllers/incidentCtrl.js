@@ -132,7 +132,7 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
             coreProject = Core.projects(  $scope.id + '');
         }
 
-        if ($scope.isNew || $scope.isPlanned) {
+        if (($scope.isNew || $scope.isPlanned) && coreProject.data('date') !== $scope.incident.date ) {
             coreProject.data('date', $scope.incident.date.toISOString());
         }
         
