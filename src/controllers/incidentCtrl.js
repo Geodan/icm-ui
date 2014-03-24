@@ -8,11 +8,7 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
     $scope.projection =  icmconfig.crs;
     
     angular.extend($scope, {
-            center: {
-                lat: 52.752087, //Approx HHNK
-                lng: 4.896941,
-                zoom: 5
-            },
+            center: icmconfig.center,
             defaults: {
                 crs: $scope.projection,
                 maxZoom: 10
@@ -66,9 +62,9 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
         $scope.incident.type = $scope.projectTypes[1];
         $scope.isNew = true;
         $scope.initcenter = {
-                lat: 52.752087, //Approx HHNK
-                lng: 4.896941,
-                zoom: 5
+                lat: icmconfig.center.lat,  //52.752087, //Approx HHNK
+                lng: icmconfig.center.lng,  //4.896941,
+                zoom: icmconfig.center.zoom //5
             };
     } else {
         $scope.id = project.id();
@@ -80,9 +76,9 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
         $scope.isNew = false;
         $scope.isEditable = false;
         $scope.initcenter = project.data('incidentlocation') || {
-                lat: 52.752087, //Approx HHNK
-                lng: 4.896941,
-                zoom: 5
+                lat: icmconfig.center.lat,    //52.752087, //Approx HHNK
+                lng: icmconfig.center.lng,    //4.896941,
+                zoom: icmconfig.center.zoom   //5
             };
     }
 
@@ -104,7 +100,10 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
     
     $scope.ok = function () {
         var coreProject;
+        if ($scope.incident.name === '') {
 
+            return false;
+        }
         if ($scope.id === null) {
             coreProject = Core.projects({_id: Date.now()});
             coreProject.itemStore().loaded.then(function () {
@@ -133,7 +132,7 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
             coreProject = Core.projects(  $scope.id + '');
         }
 
-        if ($scope.isNew || $scope.isPlanned) {
+        if (($scope.isNew || $scope.isPlanned) && coreProject.data('date') !== $scope.incident.date ) {
             coreProject.data('date', $scope.incident.date.toISOString());
         }
         
@@ -160,6 +159,7 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
             .data('type',$scope.incident.type)
             .sync();
         $location.path('/incidenten');
+        return true;
     };
 
     $scope.deletePreview = function() {
