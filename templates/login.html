@@ -1,4 +1,4 @@
-<div class="container" ng-controller="UserCtrl">
+<div ng-controller="UserCtrl" class="col-sm-12 col-md-12 col-lg-12">
     <div class="row">
         <h4>Login op het ICMs </h4>
         <input type="text" ng-model="loginName" autofocus="true" typeahead="user.name for user in data.users | filter:$viewValue | limitTo:8" typeahead-editable='true' typeahead-on-select="onSelect($item)" class="form-control">
