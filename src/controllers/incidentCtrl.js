@@ -101,9 +101,9 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
     $scope.ok = function () {
         var coreProject;
         if ($scope.incident.name === '') {
-
             return false;
         }
+
         if ($scope.id === null) {
             coreProject = Core.projects({_id: Date.now()});
             coreProject.itemStore().loaded.then(function () {
@@ -135,7 +135,9 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
         if (($scope.isNew || $scope.isPlanned) && coreProject.data('date') !== $scope.incident.date ) {
             coreProject.data('date', $scope.incident.date.toISOString());
         }
-        
+
+        var locationPath = $scope.incident.type.id === 1 ? '/incidenten/oefening' : '/incidenten';
+
         /* TT: For some reason the controller cannot keep track of the map-object
         therefore we have to get it again from the leafletdata-directive */
         leafletData.getMap('map1').then(function(map) {
@@ -151,14 +153,14 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
                 .data('type',$scope.incident.type)
                 .data('incidentlocation',incidentlocation)
                 .sync();
-            $location.path('/incidenten');
+            $location.path(locationPath);
         });
 
         coreProject.data('name',$scope.incident.name)
             .data('status',$scope.incident.status)
             .data('type',$scope.incident.type)
             .sync();
-        $location.path('/incidenten');
+        $location.path(locationPath);
         return true;
     };
 

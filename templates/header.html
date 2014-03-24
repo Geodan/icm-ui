@@ -1,15 +1,16 @@
-       <ol class="breadcrumb">
-            <!--li ng-repeat="state in $state.$current.path">
-                <a href="#{{state.url.format($stateParams)}}">{{state.data.title}}</a>
-                <span ng-hide="$last" class="divider">/</span>
-            </li-->
-            <li >
-                <a ui-sref="login">Home</a>
-                <span ng-hide="$last" class="divider"></span>
-            </li>
-            <li >
-                <a ui-sref="incidenten">Incidenten</a>
-                <span ng-hide="$last" class="divider"></span>
-            </li>
-            
-        </ol>
+<div class="row" ng-controller="HeaderCtrl">
+    <ol class="breadcrumb">
+        <!--li ng-repeat="state in $state.$current.path">
+            <a href="#{{state.url.format($stateParams)}}">{{state.data.title}}</a>
+            <span ng-hide="$last" class="divider">/</span>
+        </li-->
+        <li >
+            <a ui-sref="login">Home</a>
+            <span ng-hide="$last" class="divider"></span>
+        </li>
+        <li >
+            <a ng-click="goToIncidents()">Incidenten</a>
+            <span ng-hide="$last" class="divider"></span>
+        </li>
+    </ol>
+</div>
