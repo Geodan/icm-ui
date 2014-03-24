@@ -1,10 +1,11 @@
-//var tmp; //DEBUG
+var tmp; //DEBUG
 
 
 icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils', "leafletData",'leafletEvents','LeafletService',function($scope, $http, $timeout, Core, Utils,  leafletData, leafletEvents, LeafletService) {
     if(!Core.project()) {
         //return false;
     }
+    
     $scope.radioModel = 'pan';
     var core = Core;
     $scope.core = core;
@@ -13,7 +14,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.timeDisplay = 'none';
     $scope.mytime = new Date();
     $scope.hstep = 1;
-    $scope.mstep = 15;
+    $scope.mstep = 1;
     $scope.ismeridian = true;
     $scope.time = Date.now();
     $scope.timechanged = function () {
@@ -37,16 +38,18 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var drawControl;
     $scope.icontypes = {};
     $scope.leafletService = LeafletService;
-    $scope.leafletData = leafletData;
+    //$scope.leafletData = leafletData;
     
+    $scope.icmlayers = [];
     
     var initcenter = {
         lat: 52.752087, //Approx HHNK
         lng: 4.896941,
-        zoom: 5
+        zoom: 9
     };
     var incidentlocation = Core.project().data('incidentlocation') || initcenter;
     angular.extend($scope, {
+        markers: {},
         extralayers: LeafletService.layers,
         layers: {
             baselayers: LeafletService.definedLayers,
@@ -54,6 +57,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         },
         initcenter: LeafletService.center() || incidentlocation,
         defaults: {
+            maxZoom: 11,
             crs: LeafletService.projection()
         }
     });
@@ -106,6 +110,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 textlocation: "ul"
         }
     });
+    //LeafletService.layers.icmlayers.locationLayer = locationLayer;
     
     var editmenu = function(feat,container, element, event){
         if ($scope.chronos){
@@ -128,21 +133,126 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 drawControl.options.edit.featureGroup.addData(d.layer);
                 controls.editcontrol.enable();
              });
+            
+            
+            menu.on('model.populator', function(d){
+                var populator_callback = function(xml){
+                    $scope.map.spin(false);
+                    var acts = d3.select(xml).selectAll('PopulationPerActivity');
+                    var text = '';
+                    acts.each(function(d){
+                        text = text + d3.select(this).select('sActivity')[0][0].textContent + ': ';
+                        text = text + d3.select(this).select('sPopulation')[0][0].textContent;
+                        text = text + '<br>';
+                    });
+                    var feat = d.layer;
+                    var fid = d.fid;
+                    var item = $scope.core.project().items(fid);
+                    var entity = d.obj;
+                    var bbox = entity.getBBox();
+                    var fe = d3
+                        //.select('.leaflet-popup-pane')
+                        .select('body')
+                        .append('div')
+                        .classed('popup panel panel-primary',true)
+                        .style('position', 'absolute')
+                        //.style('left', function(){return bbox.x + 35 + 'px';})
+                        //.style('top', function(){return bbox.y + 35 + 'px';})
+                        .style('right', '20px')
+                        .style('bottom','20px')
+                        .style("width", '400px')
+                        .on('click', function(){
+                            d3.event.stopPropagation();//Prevent the map from firing click event as well
+                        });
+                        
+                    var desc = feat.properties.desc || "";
+                    var name = feat.properties.name || "";
+                    var creator = feat.properties.creator || "";
+                    var owner = feat.properties.owner || "";
+                    var created = new Date(item.created()).toLocaleString();
+                    var updated = new Date(item.timestamp()).toLocaleString();
+                    desc = desc.replace(/\r\n?|\n/g, '<br />');
+                    desc = desc + '<h4>Populatie:</h4><br>' + text;
+                    name = '(Populatie) ' + name;
+                    var sheader = fe.append('div')
+                        .classed('panel-heading', true)
+                        //.attr('contenteditable','true')
+                        .on('click', function(){
+                            this.contentEditable=true;
+                            this.focus();
+                        })
+                        .on('blur', function(){
+                            this.contentEditable=false;
+                        })
+                        .html(name);
+        
+                    var scontent = fe.append('div')
+                        .classed('panel-body', true);
+                    
+                    
+                    var editdiv = scontent.append('div')
+                        .attr('id','descfield')
+                        .style('overflow','scroll')
+                        .style('height','180px')
+                        .style('max-height','180px')
+                         .on('click', function(){
+                            this.contentEditable=true;
+                            this.focus();
+                        })
+                        .on('blur', function(){
+                            this.contentEditable=false;
+                        })
+                        .html(desc);
+                    var html = '<small>Gemaakt door: ' + creator + ' op ' +  created + '<br> Bewerkt door: ' + owner + ' op ' + updated + '</small>'; 
+                    scontent.append('div').html(html);
+                    scontent.append('span')
+                        .html('Opslaan')
+                        .classed('btn btn-success', true)
+                        .on('click',function(z){
+                            feat.properties.name = sheader.html();
+                            feat.properties.desc = editdiv.html();
+                            $scope.core.project().items(fid).data('feature',feat).sync();
+                            fe.remove();
+                    });
+                    scontent.append('span')
+                        .html('Annuleren')
+                        .classed('btn btn-danger pull-right', true)
+                        .on('click',function(z){
+                            fe.remove();
+                        });
+                };
+                // take a primitive and convert it into a WKT representation
+                var toproj = proj4.Proj('+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs ');
+                var geojson = JSON.parse(JSON.stringify(d.layer)); //Clone object
+                Terraformer.Tools.applyConverter(geojson, function(coordinate){
+                    return proj4(toproj,coordinate);
+                });
+                var geom = Terraformer.WKT.convert(geojson.geometry);
+                var user = 'kylbv.test_1';
+                var pass = 'leclesuros';
+                var analysetypes = '&eAnalyzeTypes=MAXIMUM';
+                //var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=jstinr&sActivityList=asielz&sActivityList=uitvrt&sActivityList=zorgin&sActivityList=zieken&sActivityList=dagrec&sActivityList=zalena&sActivityList=beurze&sActivityList=evenem&sActivityList=prkcmp&sActivityList=sporta&sActivityList=hotels&sActivityList=nieuwb&sActivityList=totaal&sActivityList=totstr&sActivityList=tottyd';
+                var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=zorgin&sActivityList=zieken&sActivityList=hotels&sActivityList=totaal';
+                $scope.map.spin(true);
+                d3.xml('/service/bridgis/geowebservice/populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
+            });
             menu.on('edit.text', function(d){
                 var feat = d.layer;
                 var fid = d.fid;
                 var item = $scope.core.project().items(fid);
                 var entity = d.obj;
                 var bbox = entity.getBBox();
-                var fe = d3.select('.leaflet-popup-pane')
-                    .attr('draggable',"true")
+                var fe = d3
+                    //.select('.leaflet-popup-pane')
+                    .select('#map')
                     .append('div')
                     .classed('popup panel panel-primary',true)
                     .style('position', 'absolute')
-                    .style('left', function(){return bbox.x + 35 + 'px';})
-                    .style('top', function(){return bbox.y + 35 + 'px';})
+                    //.style('left', function(){return bbox.x + 35 + 'px';})
+                    //.style('top', function(){return bbox.y + 35 + 'px';})
+                    .style('right', '20px')
+                    .style('bottom','20px')
                     .style("width", '400px')
-                    //.style("height", '200px')
                     .on('click', function(){
                         d3.event.stopPropagation();//Prevent the map from firing click event as well
                     });
@@ -158,19 +268,40 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 
                 var sheader = fe.append('div')
                     .classed('panel-heading', true)
-                    .attr('contenteditable','true')
+                    //.attr('contenteditable','true')
+                    .on('click', function(){
+                        this.contentEditable=true;
+                        this.focus();
+                    })
+                    .on('blur', function(){
+                        this.contentEditable=false;
+                    })
                     .html(name);
     
                 var scontent = fe.append('div')
                     .classed('panel-body', true);
-                
-                
+                /*
+                var editdiv = scontent.append('textarea')
+                    .attr('cols',10)
+                    .attr('rows',10)
+                    .val(desc);
+                  */  
                 var editdiv = scontent.append('div')
-                    .attr('contenteditable','true')
                     .attr('id','descfield')
-                    .classed('well well-sm', true)
-                    .style('height','80px')
+                    .style('overflow','scroll')
+                    .style('height','180px')
+                    .style('max-height','180px')
+                    .on('click', function(){
+                        if (this.contentEditable != true){
+                            this.contentEditable=true;
+                            this.focus();
+                        }
+                    })
+                    .on('blur', function(){
+                        //this.contentEditable=false;
+                    })
                     .html(desc);
+                    
                 var html = '<small>Gemaakt door: ' + creator + ' op ' +  created + '<br> Bewerkt door: ' + owner + ' op ' + updated + '</small>'; 
                 scontent.append('div').html(html);
                 scontent.append('span')
@@ -192,8 +323,46 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         }
     };
     var textbox = function(feat,container, element, event){
-        //TODO
-    }
+        var self = this;
+        var fid = feat.id;
+        var feature = feat;
+        var g, svg;
+        var loc = d3.mouse(element); //Wrong on firefox
+        var center = {x: event.layerX, y: event.layerY};
+        var fe = d3         
+            .select('.leaflet-popup-pane')
+            .selectAll('.textbox').data([feat]);
+        var textbox  = fe.enter()
+            .append('div')
+            .style('position','absolute')
+            .classed('textbox',true)
+            .classed('mouseovertext',true)
+            .classed('panel panel-primary',true)
+            //.style('background','rgba(255, 255, 255, 0.5)')
+            .style('max-width','300px');
+        textbox.append('div')
+            .classed('panel-heading',true)
+            //.style('background','rgba(200, 200, 200, 0.8)')
+            //.style('padding','5px')
+            .append('h4')
+            .classed('panel-title',true)
+            .html(feat.properties.name);
+        textbox.append('div')
+            .classed('panel-body',true)
+            //.style('background','rgba(255, 255, 255, 0.8)')
+            //.style('padding','5px')
+            .html(feat.properties.desc);
+            
+            
+       fe.style('left', function(){return loc[0] + 10 + 'px';})
+            .style('top', function(){return loc[1] + 10 + 'px';})
+            .style("width", '400px');
+
+       //d3.select(element).on('mouseout', function(d){
+       //     fe.remove();
+       //});
+        
+    };
     var featureLayer = new L.GeoJSON.d3(dummyCollection, {
         //core: Core,
         onClick: editmenu,
@@ -214,9 +383,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         }
     });
     $scope.featureLayer = featureLayer;
+    //LeafletService.layers.icmlayers.featureLayer = featureLayer;
     
     $scope.icontypes = LeafletService.icontypes;
-    $scope.linestyles = LeafletService.icontypes;
+    $scope.linestyles = LeafletService.linestyles;
     $scope.polygonstyles = LeafletService.polygonstyles;
     $scope.currentstyle = LeafletService.currentstyle;
     
@@ -275,11 +445,11 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         if (baselayers.hasOwnProperty(layerName)) {
             val.buttonclass = false;
             delete baselayers[layerName];
-            map.removeLayer(val.layer);
+            //map.removeLayer(val.layer);
         } else {
             val.buttonclass = true;
             baselayers[layerName] = val.layer;
-            map.addLayer(val.layer);
+            //map.addLayer(val.layer);
         }
     };
     //Toggle overlays
@@ -294,6 +464,19 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             val.buttonclass = true;
         }
     };
+    //Toggle icm layers
+    $scope.toggleIcmLayer = function(val) {
+        console.log(val); //TODO
+        if ($scope.map.hasLayer(val)){
+            $scope.map.removeLayer(val);
+            val.buttonclass = false;
+        }
+        else{
+            $scope.map.addLayer(val);
+            val.buttonclass = true;
+        }
+    };
+    
     /** END OF SECTION EXTRA LAYERS **/
     
     
@@ -429,14 +612,13 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var initmap = function(){
       leafletData.getMap('mainmap').then(function(map) {
         $scope.map = map;
-       
+        
         //Set correct projection for map
         map.options.crs = LeafletService.projection();
         
         /** ADD LAYERS **/
         map.addLayer(extentLayer);
         map.addLayer(featureLayer);
-
 
         /** SETUP DRAWING FUNCTIONALITY **/
         // Use a geoJson object for the drawnItems instead of featureGroup
@@ -495,6 +677,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 feature.properties.stroke = $scope.currentstyle.line.stroke;
             }
             feature.properties.fill = $scope.currentstyle.polygon.fill;
+            feature.properties['stroke-width'] = 3;
             
             var id = core.peerid() + "_" + timestamp;
             var mygroups = core.project().myGroups();

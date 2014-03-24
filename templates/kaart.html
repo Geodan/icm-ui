@@ -1,18 +1,20 @@
-<a ui-sref="incidenten.incident.beeld">tekst</a>
-
 <div class="row">
-  <!--- MAP -->
-  
-  <div class="col-sm-12  col-md-12 col-lg-12"   ng-controller="LeafletController">
-    <div class="row">
-      
+    <a ui-sref="incidenten.incident.beeld.text" class="pull-left btn btn-info">&gt;&gt; tekst</a>
+    <a ui-sref="incidenten.incident.beeld" class="pull-left btn btn-info">&gt;tekst en kaart</a>
+</div>
+<div class="row fill">
+  <div class="col-sm-12  col-md-12 col-lg-12 fill"   ng-controller="LeafletController">
+    <div class="row fill">
+    
+     <div class="col-sm-9  col-md-9 col-lg-9 fill">
+     <!--- MAP EDIT MENU -->
       <div class="btn-group">
         <button ng-model="radioModel" type="button" class="btn btn-default btn-lg" title="Beweeg de kaart" btn-radio="'pan'">
           <Span class="glyphicon glyphicon-hand-up"></span>
         </button>
       </div>
       <div class="btn-group">
-        <button ng-model="radioModel" type="button" class="btn btn-default" ng-click="drawPoint(currentstyle.icon)" btn-radio="'point'" title="Teken een punt"><img alt="" height="32" ng-src="./images/mapicons/{{currentstyle.icon.url}}"/></button>
+        <button ng-model="radioModel" type="button" class="btn btn-default btn-lg" ng-click="drawPoint(currentstyle.icon)" btn-radio="'point'" title="Teken een punt"><img alt="" height="20" ng-src="./images/mapicons/{{currentstyle.icon.url}}"/></button>
         <button type="button" class="btn btn-default dropdown-toggle btn-lg" id="dropdownMenu1" data-toggle="dropdown">
           <span class="caret"></span>
           <span class="sr-only">Toggle Dropdown</span>
@@ -20,7 +22,7 @@
          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
             <li role="presentation">
             <div style="z-index:1001">
-              <span ng-repeat="(key, icon) in icontypes" ng-click="drawPoint(icon)">
+              <span ng-repeat="icon in icontypes" ng-click="drawPoint(icon)" title="{{icon.text}}">
                 <img alt="{{icon.text}}" width="29" ng-src="./images/mapicons/{{icon.url}}"/>
               </span>
             </div>
@@ -29,7 +31,12 @@
       </div>
       
       <div class="btn-group">
-        <button ng-model="radioModel" type="button" class="btn btn-default"  ng-click="drawLine(currentstyle.line)" btn-radio="'line'" title="Teken een lijn"> <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1" width="27" height="27"><g  transform="translate(-27.086869,-417.52882)"><path   transform="translate(27.086869,429.63625)" d="M 7.3188002,12.071144 23.749999,2.4282866 10.267857,-1.9467135 20.401786,-5.8306419" style="stroke:{{currentstyle.line.stroke}};stroke-width:2;fill:none;" /></g></svg>
+        <button ng-model="radioModel" type="button" class="btn btn-default btn-lg"  ng-click="drawLine(currentstyle.line)" btn-radio="'line'" title="Teken een lijn"> 
+            <svg viewBox="0 0 27 27" width="18" height="18" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1">
+                <g transform="translate(-27.086869,-417.52882)">
+                    <path ng-style="{'stroke':currentstyle.line.stroke,'stroke-width':2,'fill':'none'}" transform="translate(27.086869,429.63625)" d="M 7.3188002,12.071144 23.749999,2.4282866 10.267857,-1.9467135 20.401786,-5.8306419"  />
+                </g>
+            </svg>
         </button>
         <button type="button" class="btn btn-default dropdown-toggle btn-lg" id="dropdownMenu2" data-toggle="dropdown">
           <span class="caret"></span>
@@ -39,7 +46,11 @@
             <li role="presentation">
             <div>
               <span ng-repeat="(key, line) in linestyles" ng-click="drawLine(line)">
-                <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1" width="27" height="27"><g  transform="translate(-27.086869,-417.52882)"><path   transform="translate(27.086869,429.63625)" d="M 7.3188002,12.071144 23.749999,2.4282866 10.267857,-1.9467135 20.401786,-5.8306419" style="stroke:{{line.stroke}};stroke-width:2;fill:none;" /></g></svg>
+                <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1" width="27" height="27">
+                    <g transform="translate(-27.086869,-417.52882)">
+                        <path ng-style="{'stroke':line.stroke,'stroke-width':2,'fill':'none'}" transform="translate(27.086869,429.63625)" d="M 7.3188002,12.071144 23.749999,2.4282866 10.267857,-1.9467135 20.401786,-5.8306419"  />
+                    </g>
+                </svg>
               </span>
             </div>
             </li>
@@ -47,7 +58,12 @@
       </div> 
 
       <div class="btn-group">
-        <button ng-model="radioModel" type="button" class="btn btn-default " ng-click="drawPolygon(currentstyle.polygon)" btn-radio="'polygon'" title="Teken een vlak">  <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1" width="27" height="27"><g  transform="translate(-27.086869,-417.52882)"><path d="M 2.7731138,5.3788833 14.252526,11.064017 26.527918,3.1859009 20.874459,-6.2398619 7.3960719,-3.9366059 z" transform="translate(27.086869,429.63625)"      style="fill:{{currentstyle.polygon.fill}};fill-opacity:0.7;stroke:{{currentstyle.polygon.stroke}};stroke-width:1;" /></g></svg>
+        <button ng-model="radioModel" type="button" class="btn btn-default btn-lg" ng-click="drawPolygon(currentstyle.polygon)" btn-radio="'polygon'" title="Teken een vlak">  
+            <svg viewBox="0 0 27 27" width="18" height="18" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1">
+                <g transform="translate(-27.086869,-417.52882)">
+                    <path ng-style="{'fill':currentstyle.polygon.fill,'fill-opacity':0.7,'stroke':currentstyle.polygon.stroke,'stroke-width':1}" d="M 2.7731138,5.3788833 14.252526,11.064017 26.527918,3.1859009 20.874459,-6.2398619 7.3960719,-3.9366059 z" transform="translate(27.086869,429.63625)" />
+                </g>
+           </svg>
         </button>
         <button type="button" class="btn btn-default dropdown-toggle btn-lg" id="dropdownMenu3" data-toggle="dropdown">
           <span class="caret"></span>
@@ -57,55 +73,64 @@
           <li role="presentation">
             <div>
               <span ng-repeat="(key, poly) in polygonstyles" ng-click="drawPolygon(poly)">
-                <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1" width="27" height="27"><g  transform="translate(-27.086869,-417.52882)"><path d="M 2.7731138,5.3788833 14.252526,11.064017 26.527918,3.1859009 20.874459,-6.2398619 7.3960719,-3.9366059 z" transform="translate(27.086869,429.63625)"      style="fill:{{poly.fill}};fill-opacity:0.7;stroke:{{poly.stroke}};stroke-width:1;" /></g></svg>
+                <svg viewBox="0 0 27 27" width="27" height="27" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"    xmlns="http://www.w3.org/2000/svg" version="1.1">
+                  <g transform="translate(-27.086869,-417.52882)">
+                    <path ng-style="{'fill':poly.fill,'fill-opacity':0.7,'stroke':poly.stroke,'stroke-width':1}" d="M 2.7731138,5.3788833 14.252526,11.064017 26.527918,3.1859009 20.874459,-6.2398619 7.3960719,-3.9366059 z" transform="translate(27.086869,429.63625)"  />
+                  </g>
+                </svg>
               </span>
             </div>
           </li>
         </ul>
-      </div> 
-
-     
-
-<!--
-    <button type="button" class="btn btn-primary" ng-model="chronos" ng-change="toggleChronos()" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-      Chronologie
-    </button>
-    <span ng-model="mytime" ng-change="timechanged()" ng-show="chronos" style="display:inline-block;">
-      <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-    </span>
-    <button class="btn btn-default" ng-click="setNow()" ng-show="chronos">Huidig</button>
--->
-
-      <leaflet id="mainmap" center="initcenter" defaults="defaults" height="800px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
-    
-
-      <div class="kaartlagen col-sm-4 col-md-3 col-lg-3">
-       <ul class="list-group">
-        <li class="list-group-item klik" ng-init="isCollapsed=true" ng-click="isCollapsed = !isCollapsed">Kaartlagen<span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon klik"></span> </li>
+        <!--
+         <button type="button" class="btn btn-primary" ng-model="chronos" ng-change="toggleChronos()" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+          Chronologie
+        </button>
+        <span ng-model="mytime" ng-change="timechanged()" ng-show="chronos" style="display:inline-block;">
+          <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+        </span>
+        <button class="btn btn-default" ng-click="setNow()" ng-show="chronos">Huidig</button>
+      -->
+      </div>
+     <!--- MAP -->
+     <div id="map" class='fill'><!-- extra map container for overlaying divs -->
+      <leaflet id="mainmap" center="initcenter" defaults="defaults" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
+     </div>
+       
+   </div>
+   <!-- Map layer menu -->
+   <div class="kaartlagen col-sm-3 col-md-3 col-lg-3">
+        <ul class="list-group">
+         <li class="list-group-item btn klik" ng-init="isCollapsed=false" ng-click="isCollapsed = !isCollapsed">Kaartlagen<span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon klik"></span> </li>
         </ul>
         <div collapse="isCollapsed">
+        <!-- ICM layers -->
+        <div class="list-group">
+         <a class="list-group-item klik" ng-class="{'list-group-item-success':val.buttonclass}" ng-repeat="(key, val) in leafletService.layers.icmlayers" ng-click="toggleIcmLayer(val)">{{val.name}}</a>
+        </div>
+        <!-- Baselayers -->
         <div class="list-group"  ng-repeat="(group, layers) in leafletService.layers.baselayers">
-          <a class="list-group-item active" ng-init="isCollapsed=true" ng-click="isCollapsed = !isCollapsed">{{group}} <span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon klik"></span> <span class="badge">{{layers.length}}</span>  <span class="clearfix"></span></a>
+          <a class="list-group-item active klik" ng-init="isCollapsed=true" ng-click="isCollapsed = !isCollapsed">{{group}} <span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon klik"></span> <span class="badge">{{layers.length}}</span>  <span class="clearfix"></span></a>
             <div class="list-group"  collapse="isCollapsed">
-             <a class="list-group-item" ng-class="{'list-group-item-success':val.buttonclass}" ng-repeat="(key, val) in layers" ng-click="toggleLayer(val)">{{val.layer.name}}</a>
+             <a class="list-group-item klik" ng-class="{'list-group-item-success':val.buttonclass}" ng-repeat="(key, val) in layers" ng-click="toggleLayer(val)">{{val.layer.name}}</a>
             </div>
         </div>
-
+        <!-- Overlays -->
         <div class="list-group" >
           <div ng-repeat="(group, layers) in leafletService.layers.overlays">
-            <a class="list-group-item active"   ng-init="isCollapsed=true" ng-click="isCollapsed = !isCollapsed">
+            <a class="list-group-item active klik"   ng-init="isCollapsed=true" ng-click="isCollapsed = !isCollapsed">
               {{group}}
               <span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon klik"></span> 
                <span class="badge">{{layers.length}}</span>  
               <span class="clearfix"></span>
             </a>
             <div class="list-group"  collapse="isCollapsed">
-              <a class="list-group-item" ng-class="{'list-group-item-success':val.buttonclass}" ng-repeat="(key, val) in layers" ng-click="toggleOverlay(val)">{{val.layer.name}}</a>
+              <a class="list-group-item klik" ng-class="{'list-group-item-success':val.buttonclass}" ng-repeat="(key, val) in layers" ng-click="toggleOverlay(val)">{{val.layer.name}}</a>
            </div>
           </div>
         </div>  
       </div> 
-      </div>   
-    </div>
+      </div>  
+   </div>
   </div>
 </div>

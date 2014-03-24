@@ -5,11 +5,11 @@ Cow_utils = {};
 Cow_utils.menuconfig = {
      "name": "root",
      "children": [{
-      // "name": "model.population",
-      //    icon: './css/img/users_icon.png',
-      //    label: "Populatie",
-      //    size: 1
-      //},{
+       "name": "model.populator",
+          icon: './css/img/users_icon.png',
+          label: "Populatie",
+          size: 1
+      },{
           "name": "edit.geom",        
           icon: './css/img/pencil_icon.png',
           label: 'Bewerken',
