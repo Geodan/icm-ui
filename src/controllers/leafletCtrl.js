@@ -244,7 +244,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 var bbox = entity.getBBox();
                 var fe = d3
                     //.select('.leaflet-popup-pane')
-                    .select('body')
+                    .select('#map')
                     .append('div')
                     .classed('popup panel panel-primary',true)
                     .style('position', 'absolute')
@@ -323,7 +323,45 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         }
     };
     var textbox = function(feat,container, element, event){
-        //TODO
+        var self = this;
+        var fid = feat.id;
+        var feature = feat;
+        var g, svg;
+        var loc = d3.mouse(element); //Wrong on firefox
+        var center = {x: event.layerX, y: event.layerY};
+        var fe = d3         
+            .select('.leaflet-popup-pane')
+            .selectAll('.textbox').data([feat]);
+        var textbox  = fe.enter()
+            .append('div')
+            .style('position','absolute')
+            .classed('textbox',true)
+            .classed('mouseovertext',true)
+            .classed('panel panel-primary',true)
+            //.style('background','rgba(255, 255, 255, 0.5)')
+            .style('max-width','300px');
+        textbox.append('div')
+            .classed('panel-heading',true)
+            //.style('background','rgba(200, 200, 200, 0.8)')
+            //.style('padding','5px')
+            .append('h4')
+            .classed('panel-title',true)
+            .html(feat.properties.name);
+        textbox.append('div')
+            .classed('panel-body',true)
+            //.style('background','rgba(255, 255, 255, 0.8)')
+            //.style('padding','5px')
+            .html(feat.properties.desc);
+            
+            
+       fe.style('left', function(){return loc[0] + 10 + 'px';})
+            .style('top', function(){return loc[1] + 10 + 'px';})
+            .style("width", '400px');
+
+       //d3.select(element).on('mouseout', function(d){
+       //     fe.remove();
+       //});
+        
     };
     var featureLayer = new L.GeoJSON.d3(dummyCollection, {
         //core: Core,

@@ -2,12 +2,12 @@
     <a ui-sref="incidenten.incident.beeld.text" class="pull-left btn btn-info">&gt;&gt; tekst</a>
     <a ui-sref="incidenten.incident.beeld" class="pull-left btn btn-info">&gt;tekst en kaart</a>
 </div>
-<div class="row">
-  <!--- MAP -->
-  
-  <div class="col-sm-12  col-md-12 col-lg-12"   ng-controller="LeafletController">
-    <div class="row">
-      
+<div class="row fill">
+  <div class="col-sm-12  col-md-12 col-lg-12 fill"   ng-controller="LeafletController">
+    <div class="row fill">
+    
+     <div class="col-sm-9  col-md-9 col-lg-9 fill">
+     <!--- MAP EDIT MENU -->
       <div class="btn-group">
         <button ng-model="radioModel" type="button" class="btn btn-default btn-lg" title="Beweeg de kaart" btn-radio="'pan'">
           <Span class="glyphicon glyphicon-hand-up"></span>
@@ -82,27 +82,26 @@
             </div>
           </li>
         </ul>
-        <button type="button" class="btn btn-primary" ng-model="chronos" ng-change="toggleChronos()" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-      Chronologie
-    </button>
-    <span ng-model="mytime" ng-change="timechanged()" ng-show="chronos" style="display:inline-block;">
-      <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-    </span>
-    <button class="btn btn-default" ng-click="setNow()" ng-show="chronos">Huidig</button>
+        <!--
+         <button type="button" class="btn btn-primary" ng-model="chronos" ng-change="toggleChronos()" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+          Chronologie
+        </button>
+        <span ng-model="mytime" ng-change="timechanged()" ng-show="chronos" style="display:inline-block;">
+          <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+        </span>
+        <button class="btn btn-default" ng-click="setNow()" ng-show="chronos">Huidig</button>
+      -->
       </div>
-      
-     
-
-
-    
-
-      <div style="padding-top: 20px">
-       <leaflet id="mainmap" center="initcenter" defaults="defaults" height="600px" width="100%" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
-      </div>
-
-      <div class="kaartlagen col-sm-4 col-md-3 col-lg-3">
+     <!--- MAP -->
+     <div id="map" class='fill'><!-- extra map container for overlaying divs -->
+      <leaflet id="mainmap" center="initcenter" defaults="defaults" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
+     </div>
+       
+   </div>
+   <!-- Map layer menu -->
+   <div class="kaartlagen col-sm-3 col-md-3 col-lg-3">
         <ul class="list-group">
-         <li class="list-group-item btn klik" ng-init="isCollapsed=true" ng-click="isCollapsed = !isCollapsed">Kaartlagen<span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon klik"></span> </li>
+         <li class="list-group-item btn klik" ng-init="isCollapsed=false" ng-click="isCollapsed = !isCollapsed">Kaartlagen<span  ng-class="{ 'glyphicon-chevron-up':!isCollapsed,  'glyphicon-chevron-down':isCollapsed}" class="pull-right glyphicon klik"></span> </li>
         </ul>
         <div collapse="isCollapsed">
         <!-- ICM layers -->
@@ -131,7 +130,7 @@
           </div>
         </div>  
       </div> 
-      </div>   
-    </div>
+      </div>  
+   </div>
   </div>
 </div>
