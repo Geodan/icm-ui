@@ -1,5 +1,10 @@
 var icmconfig = {
   "crs": L.CRS.EPSG3857,
+  "center": {
+        lat: 52.752087, //Approx HHNK
+        lng: 4.896941,
+        zoom: 5
+  },
   "beelden":[
         { beeld: 'summary', title: 'Samenvatting', timestamp: 0, beeldonderdeel: 
           [ {id:'situatie', title: 'Situatie', isedit: false, zeker: true}

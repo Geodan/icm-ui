@@ -7,7 +7,7 @@
         <div class="row">
             <div class="list-group">
                 <div>
-                    <div class="list-group-item" >
+                    <div class="list-group-item " ng-class="{'list-group-item-danger': incident.name === ''} ">
                         <a class="pull-right glyphicon" ng-click="setEditable()" ng-class="{'glyphicon-pencil': true}" ng-hide="isEditable"></a>
                         <h5 class="list-group-item-heading text-primary">Incidentnaam</h5>
                         <input type="text" ng-model="incident.name" class="form-control" placeholder="voer een naam in" ng-disabled="!isEditable">
