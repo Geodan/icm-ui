@@ -140,7 +140,7 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 		        .transition().duration(100)
 		        .style('opacity',d.origopac);
 		    d3.select(this.parentNode).selectAll('text').style('opacity',1);
-		    d3.selectAll('.mouseovertext').remove();
+		    d3.selectAll('.textbox').remove();
 		    if (mouseoverContent){
 		        /*
 		        tooltipdiv.transition()        
