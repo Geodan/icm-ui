@@ -8,11 +8,7 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
     $scope.projection =  icmconfig.crs;
     
     angular.extend($scope, {
-            center: {
-                lat: 52.752087, //Approx HHNK
-                lng: 4.896941,
-                zoom: 5
-            },
+            center: icmconfig.center,
             defaults: {
                 crs: $scope.projection,
                 maxZoom: 10
@@ -66,9 +62,9 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
         $scope.incident.type = $scope.projectTypes[1];
         $scope.isNew = true;
         $scope.initcenter = {
-                lat: 52.752087, //Approx HHNK
-                lng: 4.896941,
-                zoom: 5
+                lat: icmconfig.center.lat,  //52.752087, //Approx HHNK
+                lng: icmconfig.center.lng,  //4.896941,
+                zoom: icmconfig.center.zoom //5
             };
     } else {
         $scope.id = project.id();
@@ -80,9 +76,9 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
         $scope.isNew = false;
         $scope.isEditable = false;
         $scope.initcenter = project.data('incidentlocation') || {
-                lat: 52.752087, //Approx HHNK
-                lng: 4.896941,
-                zoom: 5
+                lat: icmconfig.center.lat,    //52.752087, //Approx HHNK
+                lng: icmconfig.center.lng,    //4.896941,
+                zoom: icmconfig.center.zoom   //5
             };
     }
 
