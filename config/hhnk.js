@@ -83,9 +83,9 @@ var icmconfig = {
         ,{"cat":"REALITEIT -- RAMPEN / ONGEVALLENRAMPTYPE, INCIDENTLOCATIE","url":"imoov/s0040_R04---g.png","text":"Infrastructuur: tunnels, brand, instorting, uitval"}
         ,{"cat":"REALITEIT -- RAMPEN / ONGEVALLENRAMPTYPE, INCIDENTLOCATIE","url":"imoov/s0050_R05---g.png","text":"Bevolking: paniek, ordeverstoring"}
         ,{"cat":"REALITEIT -- RAMPEN / ONGEVALLENRAMPTYPE, INCIDENTLOCATIE","url":"imoov/s0060_R06---g.png","text":"Natuur: overstroming, natuurbrand, extreem weer"}
-        ,{"cat":"REALITEIT -- RAMPEN / ONGEVALLENRAMPZONES","url":"imoov/s0070---g.png","text":"Brongebied"}
-        ,{"cat":"REALITEIT -- RAMPEN / ONGEVALLENRAMPZONES","url":"imoov/s0080---g.png","text":"Effectgebied, huidige situatie"}
-        ,{"cat":"REALITEIT -- RAMPEN / ONGEVALLENRAMPZONES","url":"imoov/s0090---g.png","text":"Effectgebied, prognose"}
+        //,{"cat":"REALITEIT -- RAMPEN / ONGEVALLENRAMPZONES","url":"imoov/s0070---g.png","text":"Brongebied"}
+        //,{"cat":"REALITEIT -- RAMPEN / ONGEVALLENRAMPZONES","url":"imoov/s0080---g.png","text":"Effectgebied, huidige situatie"}
+        //,{"cat":"REALITEIT -- RAMPEN / ONGEVALLENRAMPZONES","url":"imoov/s0090---g.png","text":"Effectgebied, prognose"}
         ,{"cat":"REALITEIT -- RAMPEN / ONGEVALLENGETROFFEN PERSONEN","url":"imoov/s0100_B15---g.png","text":"Beknelde personen"}
         ,{"cat":"REALITEIT -- RAMPEN / ONGEVALLENGETROFFEN PERSONEN","url":"imoov/s0110_A10---g.png","text":"Aantal gewonden en doden [ rode getallen interactief toevoegen ]"}
         ,{"cat":"REALITEIT -- EXTRA RISICO’Salgemeen","url":"imoov/s0120_E06---g.png","text":"Risicovol object"}
@@ -182,22 +182,22 @@ var icmconfig = {
         ,{"cat":"PREPARATIECOMMANDOCENTRA EN UITGANGSSTELLINGEN","url":"imoov/s1030---g.png","text":"Kazerne Defensie"}
         ,{"cat":"PREPARATIECOMMANDOCENTRA EN UITGANGSSTELLINGEN","url":"imoov/s1040---g.png","text":"Beschikbaar groot gebouw"}
         ,{"cat":"PREPARATIECOMMANDOCENTRA EN UITGANGSSTELLINGEN","url":"imoov/s1050---g.png","text":"Materialendepot RWS, Rijkswaterstaat"}
-        ,{"cat":"REALITEIT -- CONTEXT DYNAMISCHalgemeen","url":"imoov/s1060---g.png","text":"Verkeersvolume"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHBESTUURLIJKE GRENZEN","url":"imoov/s1070---g.png","text":"Rijk"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHBESTUURLIJKE GRENZEN","url":"imoov/s1080---g.png","text":"Provincie"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHBESTUURLIJKE GRENZEN","url":"imoov/s1090---g.png","text":"Gemeente"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHBESTUURLIJKE GRENZEN","url":"imoov/s1100---g.png","text":"Waterschap"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1110---g.png","text":"RD kilometer grid"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1120---g.png","text":"Hoogtelijnen"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1130---g.png","text":"Bruggen en tunnels"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1140---g.png","text":"Gebouwen en bebouwd gebied"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1150---g.png","text":"Bos"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1160---g.png","text":"Hoofdweg"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1170---g.png","text":"Spoorlijn"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1180---g.png","text":"Water (zomerbedding)"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1190---g.png","text":"Dijkring"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1200---g.png","text":"Winterbedding (gewoon hoogwater tot aan de winterdijken)"}
-        ,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1210---g.png","text":"Topografische kaart [ geen symbool maar een kopie van een kaartondergrond ]"}
+        //,{"cat":"REALITEIT -- CONTEXT DYNAMISCHalgemeen","url":"imoov/s1060---g.png","text":"Verkeersvolume"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHBESTUURLIJKE GRENZEN","url":"imoov/s1070---g.png","text":"Rijk"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHBESTUURLIJKE GRENZEN","url":"imoov/s1080---g.png","text":"Provincie"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHBESTUURLIJKE GRENZEN","url":"imoov/s1090---g.png","text":"Gemeente"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHBESTUURLIJKE GRENZEN","url":"imoov/s1100---g.png","text":"Waterschap"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1110---g.png","text":"RD kilometer grid"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1120---g.png","text":"Hoogtelijnen"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1130---g.png","text":"Bruggen en tunnels"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1140---g.png","text":"Gebouwen en bebouwd gebied"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1150---g.png","text":"Bos"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1160---g.png","text":"Hoofdweg"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1170---g.png","text":"Spoorlijn"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1180---g.png","text":"Water (zomerbedding)"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1190---g.png","text":"Dijkring"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1200---g.png","text":"Winterbedding (gewoon hoogwater tot aan de winterdijken)"}
+        //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1210---g.png","text":"Topografische kaart [ geen symbool maar een kopie van een kaartondergrond ]"}
         ]
    },
   definedlayers:{

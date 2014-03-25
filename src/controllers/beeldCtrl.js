@@ -1,7 +1,6 @@
 icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils', function  ($scope, $stateParams, Beelden, Core, Utils) {
     $scope.beeldType = $stateParams.beeldType;
     $scope.data = Utils;
-   
 
     if(!Core.project()) {
         //TODO: hier moet je of terug gestuurd worden naar incidenten of netjes met een promise oid alsnog alle gegevens zetten
@@ -12,7 +11,12 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     //functie om het huidige beeld op te halen
     $scope.currentBeeld = _(Beelden.beelden).filter(function(d){
         return d.beeld == $scope.beeldType;
-    })[0];   
+    })[0];
+
+    //reset isedit on beeldonderdeel from a different incident
+    _($scope.currentBeeld.beeldonderdeel).each(function (onderdeel) {
+        onderdeel.isedit = false;
+    });
 
     $scope.editItem = function(isedit,item,title) {
 
@@ -49,7 +53,7 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
             //we gaan editen, zorg dat de huidige versie opgeslagen is in de scope zodat cancel makkelijk is.
             //hierbij moet de nieuwe string zonder de diff gebruikt worden.
             if(!item)  this.onderdeel.contentedit = '';
-            else this.onderdeel.contentedit =item.data('beeldcontent');
+            else this.onderdeel.contentedit = item.data('beeldcontent');
             
         }
         this.onderdeel.isedit = !isedit;
@@ -62,7 +66,7 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
         else {            
             this.onderdeel.zeker = true;
             this.onderdeel.isedit = false;
-            this.onderdeel.content = item?item.data('beeldcontent'):'';
+            this.onderdeel.content = item ? item.data('beeldcontent'):'';
         }
     }
 
