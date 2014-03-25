@@ -1,11 +1,3 @@
-<div class="row">
-    <div class="col-sm-6 col-md-6 col-lg-5">
-        <a ui-sref="incidenten.incident.beeld.text" class="pull-right btn btn-info">tekst &gt;</a>
-    </div>
-    <div class="col-sm-6  col-md-6 col-lg-7 ">
-        <a ui-sref="incidenten.incident.beeld.kaart" class="pull-left btn btn-info">&lt; kaart</a>
-    </div>
-</div>
 <div class="row fill" >
     <!--TEXT -->
     <div class="col-sm-6 col-md-6 col-lg-5">
@@ -50,5 +42,13 @@
         <div id='map' class='fill'>
             <leaflet id="mainmap" center="initcenter" defaults="defaults" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
         </div>
+    </div>
+</div>
+<div class="row" style="{margin-bottom: 150px;}">
+    <div class="col-sm-6 col-md-6 col-lg-5">
+        <a ui-sref="incidenten.incident.beeld.text" class="pull-right btn btn-default">tekst &gt;</a>
+    </div>
+    <div class="col-sm-6  col-md-6 col-lg-7 ">
+        <a ui-sref="incidenten.incident.beeld.kaart" class="pull-left btn btn-default">&lt; kaart</a>
     </div>
 </div>
