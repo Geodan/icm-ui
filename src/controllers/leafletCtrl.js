@@ -234,6 +234,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 //var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=jstinr&sActivityList=asielz&sActivityList=uitvrt&sActivityList=zorgin&sActivityList=zieken&sActivityList=dagrec&sActivityList=zalena&sActivityList=beurze&sActivityList=evenem&sActivityList=prkcmp&sActivityList=sporta&sActivityList=hotels&sActivityList=nieuwb&sActivityList=totaal&sActivityList=totstr&sActivityList=tottyd';
                 var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=zorgin&sActivityList=zieken&sActivityList=hotels&sActivityList=totaal';
                 $scope.map.spin(true);
+                //FIXME: this should be done via JSONP
                 d3.xml('/service/bridgis/geowebservice/populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
             });
             menu.on('edit.text', function(d){

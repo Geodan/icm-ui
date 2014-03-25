@@ -20,9 +20,11 @@
         <h4>Syncing progress</h4>
         <div ng-controller="SyncCtrl">
             <span>Projects</span>
-            <progressbar max="100" value="syncedprojects"><span style="color:black; white-space:nowrap;">{{curprojects}} (+ {{queuedProjects}})</span></progressbar>
+            <progressbar max="100" value="syncedprojects"><span style="color:black; white-space:nowrap;">{{curprojects}} ( {{queuedProjects}} )</span></progressbar>
             <span>Users</span>
-            <progressbar max="100" value="syncedusers"><span style="color:black; white-space:nowrap;">{{curusers}} (+ {{queuedUsers}})</span></progressbar>
+            <progressbar max="100" value="syncedusers"><span style="color:black; white-space:nowrap;">{{curusers}} ( {{queuedUsers}} )</span></progressbar>
+            <span>Peers</span>
+            <progressbar max="100" value="syncedpeers"><span style="color:black; white-space:nowrap;">{{curpeers}} ( {{queuedPeers}} )</span></progressbar>
         </div>
     </div>
 </div>

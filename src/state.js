@@ -1,4 +1,4 @@
-var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",'ngSanitize', 'textAngular'])
+var icm = angular.module('icm', ["ui.router",'ui.bootstrap',"leaflet-directive",'ngSanitize', 'textAngular', 'AutoExpand-directive'])
     .run(
       [        '$rootScope', '$state', '$stateParams','Utils', '$location',
       function ($rootScope,   $state,   $stateParams, Utils, $location) {
