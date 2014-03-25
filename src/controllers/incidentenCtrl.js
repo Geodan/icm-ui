@@ -4,7 +4,7 @@
 icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', '$state', 'LeafletService', function($scope, Core, Utils, Beelden, $state, LeafletService){
     $scope.data= Utils;    
     $scope.data.project = Core.project(); //Get current project
-    var store = Core.projectStore(); //Get projectstore    
+    var store = Core.projectStore(); //Get projectstore
 
     $scope.firstBeeld = icmconfig.beelden[0].beeld; //set first beeld as default beeld
 
@@ -17,9 +17,17 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', '$state'
         });
     });
 
+    //reset isedit for beelden
+    _(Beelden.beelden).each(function (beeld) {
+        _(beeld.beeldonderdeel).each(function (onderdeel) {
+            onderdeel.isedit = false;
+        })
+    });
+
+
     var newItems = function() {
          _(Beelden.beelden).each(function(b){
-             var items =   _($scope.data.itemlist).filter(function(d){ return d.data('beeld') == b.beeld; });             
+             var items = _($scope.data.itemlist).filter(function(d){ return d.data('beeld') == b.beeld; });
              var updated = false;
              _(items).each(function(item){
                  if (item._updated > b.timestamp) {
