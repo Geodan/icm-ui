@@ -13,11 +13,6 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
         return d.beeld == $scope.beeldType;
     })[0];
 
-    //reset isedit on beeldonderdeel from a different incident
-    _($scope.currentBeeld.beeldonderdeel).each(function (onderdeel) {
-        onderdeel.isedit = false;
-    });
-
     $scope.editItem = function(isedit,item,title) {
 
         var onderdeel = this.onderdeel;
