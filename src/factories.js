@@ -20,10 +20,10 @@ var cow = new Cow.core({
       wsUrl: '/Cow/signalr'
     });   
     cow.userStore().loaded.then(function(){
-    if (!cow.users('1')){
-        cow.users({_id:'1'}).data('name','Anonymous').sync();
-    }
-    cow.user('1'); //set current user
+    //if (!cow.users('1')){
+    //    cow.users({_id:'1'}).data('name','Anonymous').sync();
+    //}
+    //cow.user('1'); //set current user
 });
 icm.factory('Core', ['$rootScope', function($rootScope) {
    /*
@@ -53,7 +53,7 @@ icm.filter('beeldfilter', function() {
     return _(items).filter(function(d){
            return d.data('beeld') == beeld; 
     });
-  }
+  };  
 });
 icm.filter('onderdeelfilter', function() {
   return function(items,onderdeel) {
@@ -63,7 +63,7 @@ icm.filter('onderdeelfilter', function() {
     return _(items).filter(function(d){
            return d.data('beeldonderdeel') == onderdeel; 
     });
-  }
+  };
 });
 icm.filter('berichtfilter', function() {
   return function(items,me,you) {
@@ -72,8 +72,8 @@ icm.filter('berichtfilter', function() {
     }
     return  _.chain(items).filter(function(d){
            return  ((d.data('van') == me &&  d.data('naar') == you) || (d.data('naar') == me && d.data('van') == you)); 
-    }).sortBy('_created').value()
-  }
+    }).sortBy('_created').value();
+  };
 });
 icm.filter('filterIncident', function() {
         return function(items, type){
@@ -81,10 +81,9 @@ icm.filter('filterIncident', function() {
             return [];
           }
           return _(items).filter(function(d){
-            return (d.data('type')!==undefined && d.data('type').id == type)
-          })
-          
-        }
+            return (d.data('type')!==undefined && d.data('type').id == type);
+          });
+        };
       });
 icm.factory('Utils', ['$rootScope', function ($rootScope) {
   return {
@@ -141,7 +140,9 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
       peerlist: [],
       users: [],
       beeldcontentDiff: function(item) {
-        if(!item) return '';
+        if(!item) {
+            return '';
+        }
         var deltas = item.deltas();
         var oldValue = '';
         for (var i =  deltas.length - 2; i >= 0; i--)
@@ -163,7 +164,7 @@ icm.directive('contenteditable', function() {
     restrict: 'A', // only activate on element attribute
     require: '?ngModel', // get a hold of NgModelController
     link: function(scope, element, attrs, ngModel) {
-      if(!ngModel) return; // do nothing if no ng-model
+      if(!ngModel) {return;} // do nothing if no ng-model
        
       // Specify how UI should be updated
       ngModel.$render = function() {
