@@ -1,4 +1,6 @@
-       <ol class="breadcrumb">
+<div class="container-fluid">
+    <div class="row" ng-controller="HeaderCtrl">
+        <ol class="breadcrumb">
             <!--li ng-repeat="state in $state.$current.path">
                 <a href="#{{state.url.format($stateParams)}}">{{state.data.title}}</a>
                 <span ng-hide="$last" class="divider">/</span>
@@ -8,8 +10,9 @@
                 <span ng-hide="$last" class="divider"></span>
             </li>
             <li >
-                <a ui-sref="incidenten">Incidenten</a>
+                <a ng-click="goToIncidents()">Incidenten</a>
                 <span ng-hide="$last" class="divider"></span>
             </li>
-            
         </ol>
+    </div>
+</div>

@@ -25,7 +25,7 @@
       </div>
       
       <p class="list-group-item-text beeldcontent"  ng-class="{'hidden': onderdeel.isedit}" ng-bind-html="data.beeldcontentDiff(item)"  ></p>
-       <div class="list-group-item-text" text-angular ng-class="{'hidden': !onderdeel.isedit}" ng-model="onderdeel.contentedit" ></div>
+       <div class="list-group-item-text" text-angular ta-toolbar="[['bold', 'italics', 'underline', 'ul', 'ol'],['insertLink']]" ng-class="{'hidden': !onderdeel.isedit}" ng-model="onderdeel.contentedit" ></div>
     </div>
     <div ng-show="!filteredItems.length">
       <h5 class="list-group-item-heading text-primary"><span  ng-click="editItem(onderdeel.isedit,false,true)">{{onderdeel.title}}</span>

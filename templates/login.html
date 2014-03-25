@@ -1,4 +1,4 @@
-<div ng-controller="UserCtrl" class="col-sm-12 col-md-12 col-lg-12">
+<div ng-controller="UserCtrl" class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3" >
     <div class="row">
         <h4>Login op het ICMs </h4>
         <input type="text" ng-model="loginName" autofocus="true" typeahead="user.name for user in data.users | filter:$viewValue | limitTo:8" typeahead-editable='true' typeahead-on-select="onSelect($item)" class="form-control">
@@ -16,4 +16,13 @@
             <button class="btn btn-success" ng-click="newUser()" >Maak nieuwe gebruiker aan</button>
         </div>
     </div>
-</div> <!-- /container -->
+    <div class="row">
+        <h4>Syncing progress</h4>
+        <div ng-controller="SyncCtrl">
+            <span>Projects</span>
+            <progressbar max="100" value="syncedprojects"><span style="color:black; white-space:nowrap;">{{curprojects}} (+ {{queuedProjects}})</span></progressbar>
+            <span>Users</span>
+            <progressbar max="100" value="syncedusers"><span style="color:black; white-space:nowrap;">{{curusers}} (+ {{queuedUsers}})</span></progressbar>
+        </div>
+    </div>
+</div>
