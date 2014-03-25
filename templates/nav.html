@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid"  ng-class="{'navbar-inverse':data.peerlist.length==0}">
   <div class="collapse navbar-collapse" ng-controller="HeaderCtrl">
     <ul class="nav navbar-nav">   
       <li>
@@ -11,7 +11,7 @@
         <p ng-if="data.user==''"  class="navbar-text"><a ui-sref="login"><span class="glyphicon glyphicon glyphicon-remove-sign text-danger" title="online"></span><strong class="text-danger"> U bent niet ingelogd</strong></a></p>
          
       </li>
-      <li ng-if="data.peerlist.length==0"> <p class="navbar-text  text-danger"><span class="glyphicon glyphicon-off text-danger" title="offline"></span> De netwerkverbinding is verbroken.</p>
+      <li ng-if="data.peerlist.length==0"> <p class="navbar-text  text-danger"><span class="glyphicon glyphicon-off text-danger" title="offline"></span><strong class="text-danger"> De netwerkverbinding is verbroken.</strong></p>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
