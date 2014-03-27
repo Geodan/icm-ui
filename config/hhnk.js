@@ -1,14 +1,15 @@
 var icmconfig = {
-  "crs": new L.Proj.CRS.TMS(
-     'EPSG:28992',
-     '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs',
-     [-285401.92,22598.08,595401.9199999999,903401.9199999999], {
-     resolutions: [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420]
-  }),
+  "crs": L.CRS.EPSG3857,
+  //"crs": new L.Proj.CRS.TMS(
+  //   'EPSG:28992',
+  //   '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs',
+  //   [-285401.92,22598.08,595401.9199999999,903401.9199999999], {
+  //   resolutions: [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420]
+  //}),
   "center": {
       lat: 52.752087, //Approx HHNK
       lng: 4.896941,
-      zoom: 5
+      zoom: 9
   },
   "beelden":[
         { beeld: 'summary', title: 'Situatie', timestamp: 0, beeldonderdeel: 
@@ -201,14 +202,19 @@ var icmconfig = {
         ]
    },
   definedlayers:{
-      brt: {
-          name: 'BRT',
-          url: 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{y}.png',
-          type: 'xyz',
-          layerOptions: {
-              tms: true
-          }
-      }
+      //brt: {
+      //    name: 'BRT',
+      //    url: 'http://geodata.nationaalgeoregister.nl/tms/1.0.0/brtachtergrondkaart/{z}/{x}/{y}.png',
+      //    type: 'xyz',
+      //    layerOptions: {
+      //        tms: true
+      //    }
+      //}
+      osm: {
+            name: "Openstreetmap",
+            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            type: 'xyz'
+        }
   },
   layers:{
     //"HHNK001a": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "betterwms",visible: true,"name": "Risicopunten Afvalwaterzuivering ","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer/WmsServer", "layerOptions": {"layers":7, "format": "img/png", "transparent": true}}},
@@ -340,7 +346,7 @@ var icmconfig = {
     "HHNK101a": {type: "baselayer", category: "Achtergrond",layer: {type: "dynamic",  visible: true, "name": "Luchtfoto 2013", "url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/tiled/luchtfoto_2013/MapServer", "layerOptions": {"layers": "show:10",position: "back"}}},
     "HHNK102":  {type: "baselayer", category: "Achtergrond", layer: {type: "dynamic", visible: true, "name": "AHN2 gefilterd", "url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/extra_tiled/ahn2_gefilterd/MapServer", "layerOptions": {"layers":"show:0",position: "back"}}},
     "HHNK103":  {type: "baselayer", category: "Achtergrond", layer: {type: 'dynamic', visible: true, name:  'Top10NL',url: 'http://geoweb.hhnk.nl:6080/arcgis/rest/services/tiled/topo_vlak_256_exploded/MapServer',layerOptions:{"layers":"show:0",position: "back"}}},
-    
+    //EIND VAN HHNK LAGEN      
     "brp":     {"type": "overlay", "category": "Extern", "layer": {"type": "betterwms","visible": true, "name": "Gewaspercelen","url": "http://research.geodan.nl/service/ngr/brpgewaspercelen/wms","layerOptions": {"layers": "brpgewaspercelen","format": "image/png","transparent": true}}},
     zwemwater:{type: 'overlay', category: 'Extern', layer: {type: 'betterwms',visible: true, name: "Zwemwater locatie",url: 'http://www.zwemwater.nl/zwr-ogc/services/zwr-wms',layerOptions: {layers: 'zwemwaterlocatie',format: 'image/png',transparent: true}}},
     zw_gebied:{type: 'overlay', category: 'Extern', layer: {type: 'betterwms',visible: true, name: "Zwemwater gebied",url: 'http://www.zwemwater.nl/zwr-ogc/services/zwr-wms',layerOptions: {layers: 'gebied',format: 'image/png',transparent: true}}},
@@ -368,25 +374,25 @@ var icmconfig = {
             }
         }
     }
-    ,"nachtkaart": {"type": "baselayer", "category": "Achtergrond", "layer": {
-          name: 'Grijstinten',
-          url: 'http://services.geodan.nl/tms/1.0.0/nachtkaart_EPSG28992/{z}/{x}/{y}.png',
-          type: 'xyz',
-          visible: 'true',
-          layerOptions: {
-              tms: true
-          }
-      }
-    }
-    ,"top10nl": {"type": "baselayer", "category": "Achtergrond", "layer": {
-          name:  'Top10',
-          url: 'http://services.geodan.nl/tms/1.0.0/topokaart_EPSG28992/{z}/{x}/{y}.png',
-          type: 'xyz',
-          visible: 'true',
-          layerOptions:{
-              tms:true
-          }
-      }
-  }
+    //,"nachtkaart": {"type": "baselayer", "category": "Achtergrond", "layer": {
+    //      name: 'Grijstinten',
+    //      url: 'http://services.geodan.nl/tms/1.0.0/nachtkaart_EPSG28992/{z}/{x}/{y}.png',
+    //      type: 'xyz',
+    //      visible: 'true',
+    //      layerOptions: {
+    //          tms: true
+    //      }
+    //  }
+    //}
+    //,"top10nl": {"type": "baselayer", "category": "Achtergrond", "layer": {
+    //      name:  'Top10',
+    //      url: 'http://services.geodan.nl/tms/1.0.0/topokaart_EPSG28992/{z}/{x}/{y}.png',
+    //      type: 'xyz',
+    //      visible: 'true',
+    //      layerOptions:{
+    //          tms:true
+    //      }
+    //  }
+    //}
    } 
 };
