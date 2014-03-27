@@ -83,8 +83,11 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
     }
 
     $scope.changeStatus = function() {
+        if ($scope.incident.status.id === 0 && $scope.incident.date > new Date()) {
+            //reset date when changeStatus to Active and has a future date
+            $scope.incident.date = new Date();
+        }
         $scope.isPlanned = $scope.incident.status.id === 1;
-        console.log('change: ' + $scope.isPlanned);
     };
 
     $scope.setEditable = function() {
