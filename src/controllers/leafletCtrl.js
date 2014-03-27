@@ -58,7 +58,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         initcenter: LeafletService.center() || incidentlocation,
         defaults: {
             maxZoom: 11,
-            crs: LeafletService.projection()
+            crs: LeafletService.projection(),
+            zoomAnimation: false,
+            fadeAnimation: false
         }
     });
     
@@ -234,6 +236,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 //var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=jstinr&sActivityList=asielz&sActivityList=uitvrt&sActivityList=zorgin&sActivityList=zieken&sActivityList=dagrec&sActivityList=zalena&sActivityList=beurze&sActivityList=evenem&sActivityList=prkcmp&sActivityList=sporta&sActivityList=hotels&sActivityList=nieuwb&sActivityList=totaal&sActivityList=totstr&sActivityList=tottyd';
                 var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=zorgin&sActivityList=zieken&sActivityList=hotels&sActivityList=totaal';
                 $scope.map.spin(true);
+                //FIXME: this should be done via JSONP
                 d3.xml('/service/bridgis/geowebservice/populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
             });
             menu.on('edit.text', function(d){
@@ -389,7 +392,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var identify = function(event){
         var e = event.leafletEvent;
         leafletData.getLayers().then(function(lllayers){
-            var dynamiclayers = _($scope.layers.overlays).filter(function(d){return d.type == 'esri_map';});
+            var dynamiclayers = _($scope.layers.overlays).filter(function(d){return d.type == 'dynamic';});
             _.each(dynamiclayers,function(dynLayer){
                 lllayers.overlays[dynLayer.name].identify(e.latlng, function(data) {
                   if(data.error){
@@ -401,12 +404,11 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     _.each(data.results[0].attributes, function(val,key){
                             popupText =  popupText + "<b>" + key + "</b>:&nbsp;" + val + "<br>";
                     });
-        
                     //Add Popup to the map when the mouse was clicked at
                     var popup = L.popup()
                       .setLatLng(e.latlng)
                       .setContent(popupText)
-                      .openOn(map);
+                      .openOn($scope.map);
                   }
                 });
             });
