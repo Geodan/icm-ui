@@ -10,8 +10,8 @@ icm.controller('IncidentCtrl' ,['$scope', 'Core', '$stateParams', '$location', '
     angular.extend($scope, {
             center: icmconfig.center,
             defaults: {
-                crs: $scope.projection,
-                maxZoom: 10
+                //crs: $scope.projection,
+                //maxZoom: 10
             }
     });
     $scope.layers = {
