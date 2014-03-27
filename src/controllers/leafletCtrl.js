@@ -391,7 +391,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     //Identify ESRI features
     var identify = function(event){
         var e = event.leafletEvent;
-        leafletData.getLayers().then(function(lllayers){
+        leafletData.getLayers('mainmap').then(function(lllayers){
             var dynamiclayers = _($scope.layers.overlays).filter(function(d){return d.type == 'dynamic';});
             _.each(dynamiclayers,function(dynLayer){
                 lllayers.overlays[dynLayer.name].identify(e.latlng, function(data) {
