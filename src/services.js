@@ -74,17 +74,12 @@ icm.factory('LeafletService',['$rootScope','$http','Core',function($rootScope, $
              instance.layers.overlays = _.groupBy(mapped, function(d){return d.category;});
              
              instance.layers.icmlayers = {};
+
+            var initcenter = core.project().data('incidentlocation') || icmconfig.center;
+            if (initcenter) instance.center(initcenter);
+
         }
-        /*
-        var initcenter = {
-            lat: 52.752087, //Approx HHNK
-            lng: 4.896941,
-            zoom: 5
-        };
-        */
-        //var initcenter = Core.project().data('incidentlocation');
-        //instance.center(initcenter);
-        
+
         instance.definedLayers = icmconfig.definedlayers;
         instance.definedOverlays = {};
       
