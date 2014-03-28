@@ -25,8 +25,8 @@ var icmconfig = {
         ,{ beeld: 'wat', title: 'Operationeel (WAT)', timestamp: 0, beeldonderdeel: 
           [ {title:'Tijdlijn',id:'tijdlijn', isedit: false, zeker: true},
             {title:'Beeldvorming',id:'beeldvorming', isedit: false, zeker: true},
-            {title:'Oordeelsvorming',id:'oordeelsvorming', isedit: false, zeker: true},
-            {title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
+            {title:'Oordeelvorming',id:'oordeelsvorming', isedit: false, zeker: true},
+            {title:'Besluitvorming',id:'besluitsvorming', isedit: false, zeker: true},
             {title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
             {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},
             {title:'Veiligheid medewerkers',id:'veiligheid', isedit: false, zeker: true},
@@ -35,8 +35,8 @@ var icmconfig = {
         ,{ beeld: 'wot', title: 'Tactisch (WOT)', timestamp: 0, beeldonderdeel:
           [ {title:'Tijdlijn',id:'tijdlijn', isedit: false, zeker: true},
             {title:'Beeldvorming',id:'beeldvorming', isedit: false, zeker: true},
-            {title:'Oordeelsvorming',id:'oordeelsvorming', isedit: false, zeker: true},
-            {title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
+            {title:'Oordeelvorming',id:'oordeelsvorming', isedit: false, zeker: true},
+            {title:'Besluitvorming',id:'besluitsvorming', isedit: false, zeker: true},
             {title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
             {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},          
             {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
@@ -44,8 +44,8 @@ var icmconfig = {
         ,{ beeld: 'wbt', title: 'Strategisch (WBT)', timestamp: 0, beeldonderdeel: 
           [ {title:'Tijdlijn',id:'tijdlijn', isedit: false, zeker: true},
             {title:'Beeldvorming',id:'beeldvorming', isedit: false, zeker: true},
-            {title:'Oordeelsvorming',id:'oordeelsvorming', isedit: false, zeker: true},
-            {title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
+            {title:'Oordeelvorming',id:'oordeelsvorming', isedit: false, zeker: true},
+            {title:'Besluitvorming',id:'besluitsvorming', isedit: false, zeker: true},
             {title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
             {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},          
             {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
