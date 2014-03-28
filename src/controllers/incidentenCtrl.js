@@ -59,7 +59,7 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', '$state'
             $scope.data.project.itemStore().unbind('datachange');
         }
         Core.project(project.id()); 
-        $scope.data.incident=project.data('name');
+        $scope.data.incident = project.data('name');
         $scope.data.project = project;
         var itemstore = project.itemStore();
         $scope.data.itemlist = project.items();        
