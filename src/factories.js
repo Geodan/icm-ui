@@ -85,9 +85,9 @@ icm.filter('filterIncident', function() {
           });
         };
       });
-icm.factory('Utils', ['$rootScope', function ($rootScope) {
+icm.factory('Utils', ['$rootScope','Core', function ($rootScope,Core) {
+  var cow = Core;
   return {
-   
       nondeleted : function(item) {
         return !item.deleted();
       },      

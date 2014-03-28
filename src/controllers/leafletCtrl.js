@@ -237,7 +237,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=zorgin&sActivityList=zieken&sActivityList=hotels&sActivityList=totaal';
                 $scope.map.spin(true);
                 //FIXME: this should be done via JSONP
-                d3.xml('/service/bridgis/geowebservice/populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
+                //var bridgisroot = "http://services.bridgis.nl";
+                var bridgisroot = "/service/bridgis";
+                d3.xml(bridgisroot + '/geowebservice/populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
             });
             menu.on('edit.text', function(d){
                 var feat = d.layer;
@@ -609,6 +611,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var initmap = function(){
       leafletData.getMap('mainmap').then(function(map) {
         $scope.map = map;
+        //Disable CORS support (due to issue with IE on an intranet)
+        L.esri.get = L.esri.RequestHandlers.JSONP;
         
         //Set correct projection for map
         map.options.crs = LeafletService.projection();
