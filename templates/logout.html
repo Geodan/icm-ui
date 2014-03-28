@@ -1,17 +1,15 @@
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6 col-md-6 col-lg-5">
-            <div class='container-fluid' ng-controller="LogoutCtrl">
-                <p>
-                    Gebruiker: {{data.user}}
-                </p>
-                <p>
-                    <button class="btn btn-info" ui-sref="incidenten" >Ga naar Incidenten</button>
-                </p>
-                <p>
-                    <button class="btn btn-danger" ng-click="logout()" >Uitloggen</button>
-                </p>
-            </div>
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-5">
+        <div class='container-fluid' ng-controller="LogoutCtrl">
+            <p>
+                Gebruiker: {{data.user}}
+            </p>
+            <p>
+                <button class="btn btn-info" ui-sref="incidenten" >Ga naar Incidenten</button>
+            </p>
+            <p>
+                <button class="btn btn-danger" ng-click="logout()" >Uitloggen</button>
+            </p>
         </div>
     </div>
 </div>
