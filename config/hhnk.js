@@ -116,7 +116,7 @@ var icmconfig = {
         ,{"cat":"REALITEIT -- EXTRA RISICO’SKWETSBARE OBJECTEN","url":"imoov/s0360---g.png","text":"Hotel of Pension"}
         ,{"cat":"REALITEIT -- EXTRA RISICO’SKWETSBARE OBJECTEN","url":"imoov/s0370---g.png","text":"Gemaal"}
         ,{"cat":"REALITEIT -- EXTRA RISICO’SKWETSBARE OBJECTEN","url":"imoov/s0380---g.png","text":"Radarpost / Verkeersleiding"}
-        ,{"cat":"REALITEIT -- EXTRA RISICO’SBETROKKEN PERSONEN","url":"imoov/s0390---g.png","text":"Aantal (gezonde) bewoners [ zwart getal interactief toevoegen ]"}
+        //,{"cat":"REALITEIT -- EXTRA RISICO’SBETROKKEN PERSONEN","url":"imoov/s0390---g.png","text":"Aantal (gezonde) bewoners [ zwart getal interactief toevoegen ]"}
         ,{"cat":"REALITEIT -- EXTRA RISICO’SBETROKKEN PERSONEN","url":"imoov/s0400---g.png","text":"Ramptoeristen"}
         ,{"cat":"REALITEIT -- EXTRA RISICO’SBETROKKEN FAUNA","url":"imoov/s0410---g.png","text":"Boerderij met veeteelt"}
         ,{"cat":"REALITEIT -- EXTRA RISICO’SBETROKKEN FAUNA","url":"imoov/s0420---g.png","text":"Viskwekerij"}
@@ -146,10 +146,10 @@ var icmconfig = {
         ,{"cat":"REPRESSIE / RAMPENBESTRIJDINGMAATREGELEN EN INZET","url":"imoov/s0660_D08---g.png","text":"Politie Sporenonderzoek Technische Recherche"}
         ,{"cat":"REPRESSIE / RAMPENBESTRIJDINGMAATREGELEN EN INZET","url":"imoov/s0670_D01-B---g.png","text":"Politie Wegblokkade"}
         ,{"cat":"REPRESSIE / RAMPENBESTRIJDINGMAATREGELEN EN INZET","url":"imoov/s0680_C03---g.png","text":"GHOR Voertuig"}
-        ,{"cat":"REPRESSIE / RAMPENBESTRIJDINGEVACUATIE EN LOGISTIEK","url":"imoov/s0690---g.png","text":"Evacuatiegebied, grens"}
-        ,{"cat":"REPRESSIE / RAMPENBESTRIJDINGEVACUATIE EN LOGISTIEK","url":"imoov/s0700---g.png","text":"Evacuatieroute"}
-        ,{"cat":"REPRESSIE / RAMPENBESTRIJDINGEVACUATIE EN LOGISTIEK","url":"imoov/s0710---g.png","text":"Evacuatie richting"}
-        ,{"cat":"REPRESSIE / RAMPENBESTRIJDINGEVACUATIE EN LOGISTIEK","url":"imoov/s0720---g.png","text":"Extra aanvoerroutes hulpdiensten"}
+        //,{"cat":"REPRESSIE / RAMPENBESTRIJDINGEVACUATIE EN LOGISTIEK","url":"imoov/s0690---g.png","text":"Evacuatiegebied, grens"}
+        //,{"cat":"REPRESSIE / RAMPENBESTRIJDINGEVACUATIE EN LOGISTIEK","url":"imoov/s0700---g.png","text":"Evacuatieroute"}
+        //,{"cat":"REPRESSIE / RAMPENBESTRIJDINGEVACUATIE EN LOGISTIEK","url":"imoov/s0710---g.png","text":"Evacuatie richting"}
+        //,{"cat":"REPRESSIE / RAMPENBESTRIJDINGEVACUATIE EN LOGISTIEK","url":"imoov/s0720---g.png","text":"Extra aanvoerroutes hulpdiensten"}
         ,{"cat":"REPRESSIE / RAMPENBESTRIJDINGEVACUATIE EN LOGISTIEK","url":"imoov/s0730---g.png","text":"Logistiek punt (bijvoorbeeld uitgiftepunt drinkwater)"}
         ,{"cat":"REPRESSIE / RAMPENBESTRIJDINGEVACUATIE EN LOGISTIEK","url":"imoov/s0740_B14---g.png","text":"Brandstofvoorziening voor hulpverleningsvoertuigen"}
         ,{"cat":"REPRESSIE / RAMPENBESTRIJDINGOPVANG VAN SLACHTOFFERS EN DADERS","url":"imoov/s0750_E02---g.png","text":"Gemeente Opvanglocatie"}
