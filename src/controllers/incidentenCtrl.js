@@ -8,7 +8,6 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', '$state'
 
     $scope.firstBeeld = icmconfig.beelden[0].beeld; //set first beeld as default beeld
 
-    //zet de
     $scope.data.projectlist = Core.projects();
     //Bind storechange to angular DOM
     store.bind('datachange', function () {
@@ -71,13 +70,32 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', '$state'
             });
         });
 
-        //$scope.incident = project.data('name')||project.id();
          Beelden.reset(new Date().getTime());
         // Beelden.reset(); 
          LeafletService.reset();
          newItems();
     };
-    
 
+    $scope.hasActiveUsers = function (item) {
+        console.log('ID: ' + item.id() + ', Name:' + item.data('name'));
+        var activeUsers = _(cow.users()).filter(function(d){return !d.deleted();});
+        var onlinePeers = _(cow.peers()).filter(function(d){return !d.deleted();});
+        var peersByUser = _.groupBy(onlinePeers, function(d){ return d.data('userid');});
+
+        var hasActiveUser = 0;
+
+        _.each(activeUsers, function(d){
+            if (d.id() !== $scope.data.username) {
+                var peers = peersByUser[d.id()];
+                if (peers){
+                    var peersProjects = _.map(peers,function(d){return d.data('activeproject');});
+                    if (_.contains(peersProjects,item.id() + '')) {
+                        hasActiveUser++;
+                    }
+                }
+            }
+        });
+        return hasActiveUser;
+    };
 }]);
 
