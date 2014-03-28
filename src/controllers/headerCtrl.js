@@ -1,19 +1,24 @@
-icm.controller('HeaderCtrl', ['$scope', '$location', 'Utils', function  ($scope, $location, Utils) {
+icm.controller('HeaderCtrl', ['$scope', '$location', 'Core', 'Utils', function  ($scope, $location, Core, Utils) {
     $scope.data = Utils;
 
     $scope.goToIncidents = function(){
-        $scope.data.incident = '';
+        clearProject();
         $location.path('/incidenten');
     };
 
     $scope.goToLogout= function(){
-        $scope.data.incident = '';
+        clearProject();
         $location.path('/user');
     };
 
     $scope.goHome = function(){
-        $scope.data.incident = '';
+        clearProject();
         $location.path('/login');
     };
+
+    function clearProject() {
+        Core.peer().data('activeproject', ' ').sync();
+        $scope.data.incident = '';
+    }
 
 }]);
