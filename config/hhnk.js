@@ -214,7 +214,12 @@ var icmconfig = {
             name: "Openstreetmap",
             url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             type: 'xyz'
-        }
+        },
+      osm_grey: {
+          name: 'OSM grey',
+          url: 'http://a.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
+          type: 'xyz'
+      }
   },
   layers:{
     //"HHNK001a": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "betterwms",visible: true,"name": "Risicopunten Afvalwaterzuivering ","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer/WmsServer", "layerOptions": {"layers":7, "format": "img/png", "transparent": true}}},

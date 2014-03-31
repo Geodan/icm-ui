@@ -239,7 +239,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 //FIXME: this should be done via JSONP
                 //var bridgisroot = "http://services.bridgis.nl";
                 var bridgisroot = "/service/bridgis";
-                d3.xml(bridgisroot + '/geowebservice/populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
+                d3.xml(bridgisroot + '/populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
             });
             menu.on('edit.text', function(d){
                 var feat = d.layer;
