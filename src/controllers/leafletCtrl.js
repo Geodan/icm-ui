@@ -465,7 +465,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     };
     //Toggle icm layers
     $scope.toggleIcmLayer = function(val) {
-        console.log(val); //TODO
         if ($scope.map.hasLayer(val)){
             $scope.map.removeLayer(val);
             val.buttonclass = false;
@@ -520,7 +519,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
 			}
 		}
 		if (featureLayer){
-		    console.log('Redrawing features');
 			featureLayer.data(editCollection);
 		    featureLayer.updateData($scope.map);
 		}
@@ -613,7 +611,12 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         $scope.map = map;
         //Disable CORS support (due to issue with IE on an intranet)
         L.esri.get = L.esri.RequestHandlers.JSONP;
-        
+        //Add geosearch plugin
+        new L.Control.GeoSearch({
+            provider: new L.GeoSearch.Provider.Esri(),
+            position: 'topright',
+            showMarker: true
+        }).addTo(map);
         //Set correct projection for map
         map.options.crs = LeafletService.projection();
         
