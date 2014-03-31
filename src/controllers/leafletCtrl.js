@@ -401,7 +401,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                   }
                   if(data.results.length > 0) {
                     //Popup text should be in html format.  Showing all the attributes
-                    popupText = '';
+                    popupText = '<b>' + dynLayer.name + '</b><br>';
                     _.each(data.results[0].attributes, function(val,key){
                             popupText =  popupText + "<b>" + key + "</b>:&nbsp;" + val + "<br>";
                     });
