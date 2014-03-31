@@ -69,7 +69,12 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', '$state'
                 newItems();
             });
         });
-
+        //TT: adding an extra sync for the itemstore and group here when selecting the project.
+        //Just in case the project was recently added from WS and no itemstore was added thereupon
+        //TODO: This is workaround for an outstanding bug (#113) for COW
+        itemstore.sync();
+        project.groupStore().sync(); //we're not using groupstore but just being consistent
+        
          Beelden.reset(new Date().getTime());
         // Beelden.reset(); 
          LeafletService.reset();
