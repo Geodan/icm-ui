@@ -69,7 +69,12 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', '$state'
                 newItems();
             });
         });
-
+        //TT: adding an extra sync for the itemstore and group here when selecting the project.
+        //Just in case the project was recently added from WS and no itemstore was added thereupon
+        //TODO: This is workaround for an outstanding bug (#113) for COW
+        itemstore.sync();
+        project.groupStore().sync(); //we're not using groupstore but just being consistent
+        
          Beelden.reset(new Date().getTime());
         // Beelden.reset(); 
          LeafletService.reset();
@@ -77,7 +82,6 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', '$state'
     };
 
     $scope.hasActiveUsers = function (item) {
-        console.log('ID: ' + item.id() + ', Name:' + item.data('name'));
         var activeUsers = _(cow.users()).filter(function(d){return !d.deleted();});
         var onlinePeers = _(cow.peers()).filter(function(d){return !d.deleted();});
         var peersByUser = _.groupBy(onlinePeers, function(d){ return d.data('userid');});
