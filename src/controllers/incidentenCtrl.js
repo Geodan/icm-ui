@@ -82,7 +82,6 @@ icm.controller('IncidentenCtrl' ,['$scope', 'Core', 'Utils', 'Beelden', '$state'
     };
 
     $scope.hasActiveUsers = function (item) {
-        console.log('ID: ' + item.id() + ', Name:' + item.data('name'));
         var activeUsers = _(cow.users()).filter(function(d){return !d.deleted();});
         var onlinePeers = _(cow.peers()).filter(function(d){return !d.deleted();});
         var peersByUser = _.groupBy(onlinePeers, function(d){ return d.data('userid');});
