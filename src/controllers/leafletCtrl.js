@@ -154,7 +154,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     var bbox = entity.getBBox();
                     var fe = d3
                         //.select('.leaflet-popup-pane')
-                        .select('body')
+                        .select('#map')
                         .append('div')
                         .classed('popup panel panel-primary',true)
                         .style('position', 'absolute')
@@ -236,10 +236,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 //var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=jstinr&sActivityList=asielz&sActivityList=uitvrt&sActivityList=zorgin&sActivityList=zieken&sActivityList=dagrec&sActivityList=zalena&sActivityList=beurze&sActivityList=evenem&sActivityList=prkcmp&sActivityList=sporta&sActivityList=hotels&sActivityList=nieuwb&sActivityList=totaal&sActivityList=totstr&sActivityList=tottyd';
                 var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=zorgin&sActivityList=zieken&sActivityList=hotels&sActivityList=totaal';
                 $scope.map.spin(true);
-                //FIXME: this should be done via JSONP
-                //var bridgisroot = "http://services.bridgis.nl";
-                var bridgisroot = "/service/bridgis";
-                d3.xml(bridgisroot + '/populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
+                //var bridgisroot = "/service/bridgis/geowebservice/";
+                var bridgisroot = "http://research.geodan.nl/sites/bridgis/populator/"; //CORS link
+                d3.xml(bridgisroot + 'populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
             });
             menu.on('edit.text', function(d){
                 var feat = d.layer;
