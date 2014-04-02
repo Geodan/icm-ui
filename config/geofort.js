@@ -10,36 +10,74 @@ var icmconfig = {
           [ {id:'situatie', title: 'Situatie', isedit: false, zeker: true}
           ]}          
         ,{ beeld: 'populatie', title: 'Populatie', timestamp: 0, beeldonderdeel: 
-          [ {title:'Samenvatting',id:'samenvatting', isedit: false, zeker: true},
-            {title:'Gebiedsoverzicht',id:'gebied', isedit: false, zeker: true},
-            {title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
-            {title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
-            {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},               
-            {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
+          [ {title:'Samenvatting',id:'samenvatting', isedit: false, zeker: true}
         ]}
         ,{ beeld: 'evacuatie', title: 'Evacutatie', timestamp: 0, beeldonderdeel:
-          [ {title:'Samenvatting',id:'samenvatting', isedit: false, zeker: true},
-            {title:'Routeoverzicht',id:'routes', isedit: false, zeker: true},                                
-            {title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
-            {title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
-            {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},          
-            {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
+          [ {title:'Samenvatting',id:'samenvatting', isedit: false, zeker: true}
         ]}        
         ,{ beeld: 'opvang', title: 'Opvang', timestamp: 0, beeldonderdeel: 
-          [ {title:'Samenvatting',id:'samenvatting', isedit: false, zeker: true},
-            {title:'Locatie overzicht',id:'locaties', isedit: false, zeker: true},                
-            {title:'Besluitsvorming',id:'besluitsvorming', isedit: false, zeker: true},
-            {title:'Knelpunten',id:'knelpunten', isedit: false, zeker: true},
-            {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},          
-            {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
+          [ {title:'Samenvatting',id:'samenvatting', isedit: false, zeker: true}
         ]}         
         ,{ beeld: 'comms', title: 'Communicatie', timestamp: 0, beeldonderdeel: 
-          [ {title:'Kernboodschap',id:'kernboodschap', isedit: false, zeker: true},
-            {title:'Omgevingsbeeld',id:'omgevingsbeeld', isedit: false, zeker: true},
-            {title:'Communicatie extern',id:'extern', isedit: false, zeker: true},
-            {title:'Communicatie intern',id:'intern', isedit: false, zeker: true}
+          [ {title:'Samenvatting',id:'kernboodschap', isedit: false, zeker: true}
         ]}
    ],
+   drawstyles:{
+      linestyles:  [
+        {stroke: '#000'},
+        {stroke: '#f57900'},
+        {stroke: '#204a87'},
+        {stroke: '#cc0000'},
+        {stroke: '#5c3566'},
+        {stroke: '#4e9a06'}],
+      polygonstyles: [
+        {stroke: '#000'   ,fill: '#000'  },
+        {stroke: '#f57900',fill: '#f57900'},
+        {stroke: '#204a87',fill: '#204a87'},
+        {stroke: '#cc0000',fill: '#cc0000'},
+        {stroke: '#5c3566',fill: '#5c3566'},
+        {stroke: '#4e9a06',fill: '#4e9a06'}],
+      icontypes:[
+         {"cat":"none", "text":"ZW", "url":"mapicons/direction_downleft.png"}
+        ,{"cat":"none", "text":"Z","url":"mapicons/direction_down.png"}
+        ,{"cat":"none", "text":"ZO","url":"mapicons/direction_downright.png"}
+        ,{"cat":"none", "text":"O","url":"mapicons/direction_left.png"}
+        ,{"cat":"none", "text":"W","url":"mapicons/direction_right.png"}
+        ,{"cat":"none", "text":"NW","url":"mapicons/direction_upleft.png"}
+        ,{"cat":"none", "text":"N","url":"mapicons/direction_up.png"}
+        ,{"cat":"none", "text":"NO","url":"mapicons/direction_upright.png"}
+        ,{"cat":"none", "text":"Afgesloten","url":"mapicons/accesdenied.png"}
+        ,{"cat":"none", "text":"Let op!","url":"mapicons/caution.png"}
+        ,{"cat":"none", "text":"Groepsvervoer","url":"mapicons/bus.png"}
+        ,{"cat":"none", "text":"Parkeerplaats","url":"mapicons/parkinggarage.png"}
+        ,{"cat":"none", "text":"EHBO","url":"mapicons/firstaid.png"}
+        ,{"cat":"none", "text":"Noodtelefoon","url":"mapicons/emergencyphone.png"}
+        ,{"cat":"none", "text":"Ambulancepost","url":"mapicons/ambulance.png"}
+        ,{"cat":"none", "text":"Ziekenhuis","url":"mapicons/hospital-building.png"}
+        ,{"cat":"none", "text":"Apotheek","url":"mapicons/medicine.png"}
+        ,{"cat":"none", "text":"School","url":"mapicons/school.png"}
+        ,{"cat":"none", "text":"Zaal","url":"mapicons/communitycentre.png"}
+        ,{"cat":"none", "text":"Verzorgingstehuis","url":"mapicons/seniorsite.png"}
+        ,{"cat":"none", "text":"none","url":"mapicons/family.png"}
+        ,{"cat":"none", "text":"Kinderopvang","url":"mapicons/daycare.png"}
+        ,{"cat":"none", "text":"Calamiteit","url":"mapicons/blast.png"}
+        ,{"cat":"none", "text":"Dodelijke slachtoffers","url":"mapicons/skull.png"}
+        ,{"cat":"none", "text":"Schade aan huis","url":"mapicons/earthquake-3.png"}
+        ,{"cat":"none", "text":"Stroomuitval","url":"mapicons/poweroutage.png"}
+        ,{"cat":"none", "text":"Brand","url":"mapicons/fire.png"}
+        ,{"cat":"none", "text":"Overstroming","url":"mapicons/flood.png"}
+        ,{"cat":"none", "text":"Radio zender","url":"mapicons/radio-station-2.png"}
+        ,{"cat":"none", "text":"Verzamelpunt","url":"mapicons/regroup.png"}
+        ,{"cat":"none", "text":"Netwerk","url":"mapicons/wifi.png"}
+        ,{"cat":"none", "text":"Groep mensen","url":"mapicons/group-2.png"}
+        ,{"cat":"none", "text":"Brandweer","url":"mapicons/firemen.png"}
+        ,{"cat":"none", "text":"Politie","url":"mapicons/police.png"}
+        ,{"cat":"none", "text":"Camera","url":"mapicons/cctv.png"}
+        ,{"cat":"none", "text":"Gemeentehuis","url":"mapicons/moderntower.png"}
+        ,{"cat":"none", "text":"Commentaar","url":"mapicons/comment-map-icon.png"}
+        ,{"cat":"none", "text":"Happy","url":"mapicons/smiley_happy.png"}
+      ]
+   },
   "definedlayers":{
       osm: {
                 name: "Openstreetmap",

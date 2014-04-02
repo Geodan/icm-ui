@@ -17,7 +17,8 @@ icm.factory('Beelden', ['$rootScope', function( $rootScope ) {
 
 /*TT: Cow temporarily moved to a global because signalR breaks from within a factory */
 var cow = new Cow.core({
-      wsUrl: '/Cow/signalr'
+      //wsUrl: '/Cow/signalr'
+      wsUrl: 'wss://websocket.geodan.nl:443/'
     });   
     cow.userStore().loaded.then(function(){
     //if (!cow.users('1')){
