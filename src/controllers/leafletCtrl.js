@@ -623,6 +623,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         map.addLayer(extentLayer);
         map.addLayer(featureLayer);
 
+        /** Add geofort layers **/
+        addGeofortLayers(LeafletService,map);
+        
         /** SETUP DRAWING FUNCTIONALITY **/
         // Use a geoJson object for the drawnItems instead of featureGroup
         var drawnItems = new L.geoJson();

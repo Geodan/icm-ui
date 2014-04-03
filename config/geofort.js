@@ -90,3 +90,111 @@ var icmconfig = {
       "ahn1": {"type": "overlay", "category": "Terrein", "layer": {"type":"betterwms","visible":true,"name":"Hoogtekaart","url":"http://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map","layerOptions":{"layers":"hoogtes","format":"image/png","transparent":true,"opacity":0.8}}}
   }
 };
+
+
+var addGeofortLayers = function(LeafletService,map){
+    /* Floodlayer */
+     var data = [];
+     var floodlayer = new L.geoJson(data, {
+         style: function (feature) {
+             var style = {};
+             if (feature.properties.tijdstip == 'na 4 uur'){
+                 style.opacity  = 0.2;
+             }
+             else if (feature.properties.tijdstip == 'na 8 uur'){
+                 style.opacity  = 0.4;
+             }
+             else if (feature.properties.tijdstip == 'na 12 uur'){
+                 style.opacity  = 0.6;
+             }
+             else if (feature.properties.tijdstip == 'na 16 uur'){
+                 style.opacity  = 0.8;
+             }
+             //style.fillOpacity = 0;
+             style.fillColor = "None";
+             return style;
+         },
+         onEachFeature: function (feature, layer) {
+             layer.bindPopup(feature.properties.tijdstip);
+         }
+     }).addTo(map);
+     floodlayer.name = 'Model uitvoer';
+     floodlayer.buttonclass = true;
+     LeafletService.layers.icmlayers.floodlayer = floodlayer;
+     //self.layercontrol.addOverlay(floodlayer,"Inundatie");
+     d3.json('./data/flood_merged.geojson',function(data){
+            var collection = {"type":"FeatureCollection","features":[]};
+             collection.features = data.features;
+             floodlayer.addData(collection);
+     });
+     /*Kwetsbare objecten*/
+     var geojsonMarkerOptions = {
+         radius: 8,
+         fillColor: "#ff7800",
+         color: "#000",
+         weight: 1,
+         opacity: 1,
+         fillOpacity: 0.8
+     };
+     
+     var kwetsbareobjectenlayer = new L.geoJson(data, {
+         pointToLayer: function(feature, latlng){
+             return L.circleMarker(latlng, geojsonMarkerOptions);
+         },
+         style: function (feature) {
+             if (feature.properties.PRIORITEIT == 1){
+                 return {fillColor: 'red'};
+             }
+             else if (feature.properties.PRIORITEIT == 2){
+                 return {fillColor: 'orange'};
+             }
+             else if (feature.properties.PRIORITEIT == 3){
+                 return {fillColor: 'yellow'};
+             }
+             else if (feature.properties.PRIORITEIT == 4){
+                 return {fillColor: 'blue'};
+             }
+             else{
+                 return {fillColor: 'blue'};
+             }
+         },
+         onEachFeature: function (feature, layer) {
+             layer.bindLabel(feature.properties.ROT_NAAM + "<br>" + (feature.properties.OMSCHRI5 || ''),{ noHide: false });
+             layer.bindPopup(feature.properties.ROT_NAAM + "<br>" + (feature.properties.OMSCHRI5 || ''));
+         }
+     });
+     kwetsbareobjectenlayer.buttonclass = false;
+     kwetsbareobjectenlayer.name = 'Kwetsbare objecten';
+     LeafletService.layers.icmlayers.kwetsbareobjectenlayer = kwetsbareobjectenlayer;
+     //self.layercontrol.addOverlay(kwetsbareobjectenlayer,"Kwetsbare objecten");
+     d3.json('./data/kwetsbareobjecten.geojson',function(data){
+            var collection = {"type":"FeatureCollection","features":[]};
+             collection.features = data.features;
+             kwetsbareobjectenlayer.addData(collection);
+     });
+     
+     /* Opvanglocaties */
+     var opvanglocatieslayer = new L.geoJson(data, {
+         pointToLayer: function(feature, latlng){
+             return L.circleMarker(latlng, geojsonMarkerOptions);
+         },
+         style: function (feature) {
+             return {color: 'red',weight: 1};
+         },
+         onEachFeature: function (feature, layer) {
+             layer.bindLabel(feature.properties.naam,{ noHide: false });
+             layer.bindPopup(feature.properties.omschrijvi);
+         }
+     });
+     opvanglocatieslayer.name = 'Opvanglocaties';
+     opvanglocatieslayer.buttonclass = false;
+     LeafletService.layers.icmlayers.opvanglocatieslayer = opvanglocatieslayer;
+     //self.layercontrol.addOverlay(opvanglocatieslayer,"Openbare functies");
+     //d3.json('./data/publieke_functie.geojson',function(data){
+     d3.json('./data/opvanglocaties.geojson',function(data){
+             var collection = {"type":"FeatureCollection","features":[]};
+             collection.features = data.features;
+             opvanglocatieslayer.addData(collection);
+     });
+};
+
