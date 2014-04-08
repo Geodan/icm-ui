@@ -370,7 +370,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         labelconfig: {
             field: "name",
             style: {
-                'stroke-width': 0.2,
+                'stroke-width': 1,
                 stroke: "#000033"
             }
         },
