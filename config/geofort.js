@@ -83,7 +83,12 @@ var icmconfig = {
                 name: "Openstreetmap",
                 url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 type: 'xyz'
-            }
+            },
+     osm_grey: {
+          name: 'OSM grey',
+          url: 'http://a.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
+          type: 'xyz'
+      }
   },
   "layers":
   {
