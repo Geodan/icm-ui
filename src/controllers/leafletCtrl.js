@@ -370,7 +370,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         labelconfig: {
             field: "name",
             style: {
-                'stroke-width': 0.2,
+                'stroke-width': 1,
                 stroke: "#000033"
             }
         },
@@ -623,6 +623,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         map.addLayer(extentLayer);
         map.addLayer(featureLayer);
 
+        /** Add geofort layers **/
+        addGeofortLayers(LeafletService,map);
+        
         /** SETUP DRAWING FUNCTIONALITY **/
         // Use a geoJson object for the drawnItems instead of featureGroup
         var drawnItems = new L.geoJson();
@@ -680,7 +683,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 feature.properties.stroke = $scope.currentstyle.line.stroke;
             }
             feature.properties.fill = $scope.currentstyle.polygon.fill;
-            feature.properties['stroke-width'] = 3;
+            feature.properties['stroke-width'] = 6;
             
             var id = core.peerid() + "_" + timestamp;
             var mygroups = core.project().myGroups();
