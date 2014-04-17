@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <link rel="stylesheet" href="lib/bootstrap.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="lib/bootstrap.3.1/css/bootstrap.min.css" media="all">
   <link rel="stylesheet" href="lib/diff/font-awesome-4.0.3/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/app.css">
   <!-- indexedDb -->
@@ -15,7 +15,7 @@
   <!-- signalR -->
   <script type="text/javascript" src="./lib/cow/lib/jquery-2.0.3/jquery-2.0.3.js"></script>
   <script type="text/javascript" src="./lib/cow/lib/jquery.signalR/jquery.signalR-2.0.2.js"></script>
-  <!--
+  
   <script type="text/javascript" src="/Cow/signalr/hubs"></script> <!-- CHANGE THIS TO CORRECT SIGNALR SERVER URL -->
   
   <!-- COW -->
@@ -28,10 +28,9 @@
   <script type="text/javascript" src="./lib/cow/src/cow2.group.js" ></script>
   <script type="text/javascript" src="./lib/cow/src/cow2.item.js" ></script>
   <script type="text/javascript" src="./lib/cow/src/cow2.project.js" ></script>
-  <!--
+  
   <script type="text/javascript" src="./lib/cow/src/cow2.signalR.js" ></script>
-  -->
-  <script type="text/javascript" src="./lib/cow/src/cow2.websocket.js" ></script>
+  <!--<script type="text/javascript" src="./lib/cow/src/cow2.websocket.js" ></script>-->
   <script type="text/javascript" src="./lib/cow/src/cow2.core.js" ></script>
   <script type="text/javascript" src="./lib/cow/lib/polyfill-promise/promise-0.1.1.min.js"></script>
   <script type="text/javascript" src="./src/cow.icms.js" ></script>
@@ -39,14 +38,14 @@
   
 </head>
 <body>
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ui-view="nav">
+  <nav class="navbar navbar-default navbar-fixed-top hidden-print" role="navigation" ui-view="nav">
     <!--ICM, user en incident -->
   </nav>
-  <header class="header navbar-fixed-top navbar"  ui-view="header">  
+  <header class="header navbar-fixed-top navbar hidden-print"  ui-view="header">  
     <!--Breadcrumbs -->
   </header>
   <div class="alles">
-    <div class="col-sm-3 col-md-2 col-lg-2 sidebar" ui-view="sidebar">
+    <div class="col-sm-3 col-md-2 col-lg-2 sidebar hidden-print" ui-view="sidebar">
       <!--Sidebar -->
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main" ui-view="main">        
@@ -95,7 +94,7 @@
   <script type="text/javascript" src="lib/ui-bootstrap-tpls-0.10.0.min.js"></script>
   
   <!-- Change the config to the correct project -->
-  <script type="text/javascript" src="./config/geofort.js" ></script>
+  <script type="text/javascript" src="./config/hhnk.js" ></script>
   <script type="text/javascript" src="src/state.js"></script>
   <script type="text/javascript" src="src/services.js"></script>
   <script type="text/javascript" src="src/factories.js"></script>
