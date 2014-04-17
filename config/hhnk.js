@@ -361,11 +361,9 @@ var icmconfig = {
     golffront: {type: 'overlay', category: '3Di', layer:{ 
             name: "Golffront",
             type:  'betterwms',
-            //url:"http://research.geodan.nl/service/lizard/geoserver/floodapp/wms", 
 			url: "http://result.3di.lizard.net/3di/wms",
             visible: true,
             layerOptions: {
-                //layers: 'floodapp:golffront_shp',
 				layers: '61f5a464c35044c19bc7d4b42d7f58cb:arrival',
                 format: 'image/png',
                 transparent: true
@@ -375,11 +373,9 @@ var icmconfig = {
     waterdepth: {type: 'overlay', category: '3Di', layer:{ 
             name: "Waterdiepte",
             type:  'betterwms',
-            //url:"http://research.geodan.nl/service/lizard/geoserver/floodapp/wms", 
 			url: "http://result.3di.lizard.net/3di/wms",
             visible: true,
             layerOptions: {
-                //layers: 'floodapp:Waterdepth_petten',
 				layers: '61f5a464c35044c19bc7d4b42d7f58cb:maxdepth',
                 format: 'image/png',
                 transparent: true
