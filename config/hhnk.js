@@ -12,7 +12,7 @@ var icmconfig = {
       zoom: 9
   },
   "beelden":[
-        { beeld: 'summary', title: 'Situatie', timestamp: 0, beeldonderdeel: 
+        { beeld: 'summary', title: 'Situatiebeeld Water', timestamp: 0, beeldonderdeel: 
           [ {id:'situatie', title: 'Situatie', isedit: false, zeker: true}
           ]}    
         ,{ beeld: 'meldingen', title: 'Meldingen', timestamp: 0, beeldonderdeel: 
@@ -50,7 +50,7 @@ var icmconfig = {
             {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},          
             {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
         ]}
-        ,{ beeld: 'scenarios', title: 'Scenario\'s', timestamp: 0, beeldonderdeel: 
+        ,{ beeld: 'scenarios', title: 'Scenarios\'s\/Maatr.', timestamp: 0, beeldonderdeel: 
           [ {title:'Meest waarschijnlijk',id:'meest', isedit: false, zeker: true},
             {title:'Minder waarschijnlijk',id:'minder', isedit: false, zeker: true},
             {title:'Minst waarschijnlijk',id:'minst', isedit: false, zeker: true}
@@ -351,7 +351,7 @@ var icmconfig = {
     "HHNK015a": {type: "overlay", category: "Hoogspanningsobjecten",   layer: {type: "dynamic",visible: true,"name": "Hoogspanningskabels","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/hoogspannings_objecten/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}},
     "HHNK015b": {type: "overlay", category: "Hoogspanningsobjecten",   layer: {type: "dynamic",visible: true,"name": "Hoogspannings onderstations","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/hoogspannings_objecten/MapServer", "layerOptions": {"layers":"show:1",position: 'back'}}},
     "HHNK016a": {type: "overlay", category: "Kwetsbare objecten",   layer: {type: "dynamic",visible: true,"name": "Kwetsbare objecten","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kwetsbare_objecten/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}},
-    "HHNK101a": {type: "baselayer", category: "Achtergrond",layer: {type: "dynamic",  visible: true, "name": "Luchtfoto 2013", "url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/tiled/luchtfoto_2013/MapServer", "layerOptions": {"layers": "show:10",position: "back"}}},
+    "HHNK101a": {type: "baselayer", category: "Achtergrond",layer: {type: "dynamic",  visible: true, "name": "Luchtfoto 2012", "url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/tiled/luchtfoto_2012/MapServer", "layerOptions": {"layers": "show:10",position: "back"}}},
     "HHNK102":  {type: "baselayer", category: "Achtergrond", layer: {type: "dynamic", visible: true, "name": "AHN2 gefilterd", "url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/extra_tiled/ahn2_gefilterd/MapServer", "layerOptions": {"layers":"show:0",position: "back"}}},
     "HHNK103":  {type: "baselayer", category: "Achtergrond", layer: {type: 'dynamic', visible: true, name:  'Top10NL',url: 'http://geoweb.hhnk.nl:6080/arcgis/rest/services/tiled/topo_vlak_256_exploded/MapServer',layerOptions:{"layers":"show:0",position: "back"}}},
     //EIND VAN HHNK LAGEN      
@@ -361,10 +361,10 @@ var icmconfig = {
     golffront: {type: 'overlay', category: '3Di', layer:{ 
             name: "Golffront",
             type:  'betterwms',
-            url:"http://research.geodan.nl/service/lizard/geoserver/floodapp/wms", 
+			url: "http://result.3di.lizard.net/3di/wms",
             visible: true,
             layerOptions: {
-                layers: 'floodapp:golffront_shp',
+				layers: '61f5a464c35044c19bc7d4b42d7f58cb:arrival',
                 format: 'image/png',
                 transparent: true
             }
@@ -373,10 +373,10 @@ var icmconfig = {
     waterdepth: {type: 'overlay', category: '3Di', layer:{ 
             name: "Waterdiepte",
             type:  'betterwms',
-            url:"http://research.geodan.nl/service/lizard/geoserver/floodapp/wms", 
+			url: "http://result.3di.lizard.net/3di/wms",
             visible: true,
             layerOptions: {
-                layers: 'floodapp:Waterdepth_petten',
+				layers: '61f5a464c35044c19bc7d4b42d7f58cb:maxdepth',
                 format: 'image/png',
                 transparent: true
             }
