@@ -6,18 +6,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <link rel="stylesheet" href="lib/bootstrap.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="lib/bootstrap.3.1/css/bootstrap.min.css" media="all">
   <link rel="stylesheet" href="lib/diff/font-awesome-4.0.3/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
-
   <!-- indexedDb -->
   <script type="text/javascript" src="./lib/cow/lib/IndexedDBShim/IndexedDBShim.min.js" ></script>
   <script type="text/javascript" src="./lib/cow/lib/dbjs/db.js"></script>
   <!-- signalR -->
   <script type="text/javascript" src="./lib/cow/lib/jquery-2.0.3/jquery-2.0.3.js"></script>
   <script type="text/javascript" src="./lib/cow/lib/jquery.signalR/jquery.signalR-2.0.2.js"></script>
+  
   <script type="text/javascript" src="/Cow/signalr/hubs"></script> <!-- CHANGE THIS TO CORRECT SIGNALR SERVER URL -->
+  
   <!-- COW -->
   <script type="text/javascript" src="./lib/cow/lib/underscore/underscore-min.js" ></script>
   <script type="text/javascript" src="./lib/cow/src/cow2.utils.js" ></script>
@@ -28,8 +29,9 @@
   <script type="text/javascript" src="./lib/cow/src/cow2.group.js" ></script>
   <script type="text/javascript" src="./lib/cow/src/cow2.item.js" ></script>
   <script type="text/javascript" src="./lib/cow/src/cow2.project.js" ></script>
+  
   <script type="text/javascript" src="./lib/cow/src/cow2.signalR.js" ></script>
-  <!--script type="text/javascript" src="./lib/cow/src/cow2.websocket.js" ></script-->
+  <!--<script type="text/javascript" src="./lib/cow/src/cow2.websocket.js" ></script>-->
   <script type="text/javascript" src="./lib/cow/src/cow2.core.js" ></script>
   <script type="text/javascript" src="./lib/cow/lib/polyfill-promise/promise-0.1.1.min.js"></script>
   <script type="text/javascript" src="./src/cow.icms.js" ></script>
@@ -37,14 +39,14 @@
   
 </head>
 <body>
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ui-view="nav">
+  <nav class="navbar navbar-default navbar-fixed-top hidden-print" role="navigation" ui-view="nav">
     <!--ICM, user en incident -->
   </nav>
-  <header class="header navbar-fixed-top navbar"  ui-view="header">  
+  <header class="header navbar-fixed-top navbar hidden-print"  ui-view="header">  
     <!--Breadcrumbs -->
   </header>
   <div class="alles">
-    <div class="col-sm-3 col-md-2 col-lg-2 sidebar" ui-view="sidebar">
+    <div class="col-sm-3 col-md-2 col-lg-2 sidebar hidden-print" ui-view="sidebar">
       <!--Sidebar -->
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main" ui-view="main">        
@@ -52,9 +54,10 @@
 
     </div>
   </div>
+<canvas id = 'tmp' height="200" width="200"></canvas>
 
   <script type="text/javascript" src="./lib/d3/d3.v3.min.js"></script>
-  <script type="text/javascript" src="./lib/leaflet-0.7/leaflet.js"></script>
+  <script type="text/javascript" src="./lib/leaflet-0.7/leaflet-src.js"></script>
   <script type="text/javascript" src="./lib/proj4/proj4.js"></script>
   <script type="text/javascript" src="./lib/proj4leaflet/proj4leaflet.js"></script>
   <script type="text/javascript" src="./lib/terraformer/terraformer-1.0.3.min.js"></script>
@@ -64,7 +67,11 @@
   <script type="text/javascript" src="./lib/leaflet_draw/leaflet.draw.js"></script>
   <script type="text/javascript" src="./lib/leaflet_label/leaflet.label.js"></script>
   <script type="text/javascript" src="./lib/leaflet_measure/leaflet.measurecontrol.js"></script>
-  <script type="text/javascript" src="./lib/leaflet_esri/esri-leaflet.js"></script>
+  <script type="text/javascript" src="./lib/leaflet_geosearch/l.control.geosearch.js"></script>
+  <script type="text/javascript" src="./lib/leaflet_geosearch/l.geosearch.provider.esri.js"></script>
+  <link rel="stylesheet" href="./lib/leaflet_geosearch/l.geosearch.css" />
+	
+  <script type="text/javascript" src="./lib/leaflet_esri/esri-leaflet-src.js"></script>
   <script type="text/javascript" src="./lib/spin.js/spin.min.js"></script>
   <script type="text/javascript" src="./lib/leaflet_spinner/leaflet.spin.js"></script>
   <script type="text/javascript" src="./src/leaflet-d3-layer.js" ></script>

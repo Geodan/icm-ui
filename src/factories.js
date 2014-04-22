@@ -86,9 +86,9 @@ icm.filter('filterIncident', function() {
           });
         };
       });
-icm.factory('Utils', ['$rootScope', function ($rootScope) {
+icm.factory('Utils', ['$rootScope','Core', function ($rootScope,Core) {
+  var cow = Core;
   return {
-   
       nondeleted : function(item) {
         return !item.deleted();
       },      
@@ -154,7 +154,9 @@ icm.factory('Utils', ['$rootScope', function ($rootScope) {
             break;
           }
         }
-        return TextDifference(oldValue, item.data('beeldcontent'));
+        var lastChange =  new Date(item.timestamp());
+        lastChange = lastChange.getDate() + '-' + (lastChange.getMonth()+1) + '-' + lastChange.getFullYear() + ' ' + lastChange.getHours() + ':' + (lastChange.getMinutes() < 10 ? '0' + lastChange.getMinutes() : lastChange.getMinutes()); // dd-MM-yyyy HH:mm
+        return '<h5><small>Laatste wijziging: ' + lastChange + '</small></h5>' + TextDifference(oldValue, item.data('beeldcontent'));
       }
     }; 
 
