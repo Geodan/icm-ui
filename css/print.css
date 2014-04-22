@@ -1,0 +1,12 @@
+
+  .sidebar, .leaflet-control-container {
+  display:none;
+  }
+  #map {
+    height: 800px;
+  }
+  .fill, .main , .alles{
+    height:initial;
+    min-height: initial;
+    position: initial;
+}
