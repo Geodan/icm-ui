@@ -14,7 +14,7 @@
             <div class="list-group-item" ng-repeat="onderdeel in currentBeeld.beeldonderdeel" >
                 <div ng-repeat="item in filteredItems = (data.itemlist | filter:data.nondeleted | beeldfilter:currentBeeld.beeld | onderdeelfilter:onderdeel.id)">
                     <h5 class="list-group-item-heading text-primary"><span  ng-click="editItem(onderdeel.isedit,item,true)">{{onderdeel.title}}</span>
-                        <a class="pull-right glyphicon" ng-click="editItem(onderdeel.isedit,item)" ng-class="{'glyphicon-pencil': !onderdeel.isedit, 'glyphicon-ok': onderdeel.isedit, 'text-success': onderdeel.isedit}"></a>
+                        <a class="pull-right glyphicon hidden-print" ng-click="editItem(onderdeel.isedit,item)" ng-class="{'glyphicon-pencil': !onderdeel.isedit, 'glyphicon-ok': onderdeel.isedit, 'text-success': onderdeel.isedit}"></a>
                         <a class="pull-right glyphicon text-danger" ng-click="cancelEdit(item)" ng-class="{'hidden': !onderdeel.isedit, 'glyphicon-remove': onderdeel.isedit}"></a>
                     </h5>
                     <hr class="small"/>
