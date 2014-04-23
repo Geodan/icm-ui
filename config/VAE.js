@@ -1,25 +1,19 @@
 var icmconfig = {
   "crs": L.CRS.EPSG3857,
-  //"crs": new L.Proj.CRS.TMS(
-  //   'EPSG:28992',
-  //   '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs',
-  //   [-285401.92,22598.08,595401.9199999999,903401.9199999999], {
-  //   resolutions: [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420]
-  //}),
   "center": {
-      lat: 52.752087, //Approx HHNK
-      lng: 4.896941,
+      lat: 24.449696, //Approx Abu Dabi ,
+      lng: 54.428580,
       zoom: 9
   },
   "beelden":[
-        { beeld: 'summary', title: 'Situatiebeeld Water', timestamp: 0, beeldonderdeel: 
-          [ {id:'situatie', title: 'Situatie', isedit: false, zeker: true}
+        { beeld: 'summary', title: 'Actual situation', timestamp: 0, beeldonderdeel: 
+          [ {id:'situatie', title: 'Situation', isedit: false, zeker: true}
           ]}    
-        ,{ beeld: 'meldingen', title: 'Meldingen', timestamp: 0, beeldonderdeel: 
-          [ {title:'Tijdlijn',id:'Tijdlijn', isedit: false, zeker: true},
-            {title:'Meldingen beeld',id:'meldingen' , isedit: false, zeker: true},
-            {title: 'Acute meldingen', id:'acuut', isedit: false, zeker: true},
-            {title: 'Situatie Plaats Incident',id: 'spi', isedit: false, zeker: true} ,
+        ,{ beeld: 'meldingen', title: 'Reports', timestamp: 0, beeldonderdeel: 
+          [ {title:'Timeline',id:'Tijdlijn', isedit: false, zeker: true},
+            {title:'Notifications',id:'meldingen' , isedit: false, zeker: true},
+            {title: 'Urgent', id:'acuut', isedit: false, zeker: true},
+            {title: 'Local situation',id: 'spi', isedit: false, zeker: true} ,
             {title: 'Genomen acties',id:'acties' , isedit: false, zeker: true}
         ]}
         ,{ beeld: 'wat', title: 'Operationeel (WAT)', timestamp: 0, beeldonderdeel: 

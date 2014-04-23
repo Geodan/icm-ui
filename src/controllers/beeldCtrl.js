@@ -12,6 +12,7 @@ icm.controller('BeeldCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'Utils
     $scope.currentBeeld = _(Beelden.beelden).filter(function(d){
         return d.beeld == $scope.beeldType;
     })[0];
+	
 
     $scope.editItem = function(isedit,item,title) {
 

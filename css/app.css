@@ -263,18 +263,8 @@ ins { color: #dd0000; font-weight:bold; text-decoration: none;}
     text-anchor: middle;
     opacity: 1;
 }
+
 div.page  { 
-	page-break-after:always; 
 	overflow: auto;
 	height: 100%;
-}
-
-@media print
-{
-  body, div {
-    position: relative;
-  }
-  a[href]:after {
-    content: none;
-  }
 }
