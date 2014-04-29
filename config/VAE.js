@@ -1,4 +1,4 @@
-var icmconfig = {
+ var icmconfig = {
   //"crs": L.CRS.EPSG3857,
   "crs": L.CRS.EPSG4326,
   "center": {
@@ -212,37 +212,37 @@ var icmconfig = {
       //    name: 'OSM grey',
       //    url: 'http://a.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
       //    type: 'xyz'
-      //}
+      //},
 	  "VAEBG1": {
 		type: "dynamic",
 		name: "Basemap (EN) ",
 		visible: false,
-		url: "http://geoportal.abudhabi.ae/rest/services/BaseMapEnglish/MapServer", 
+		url: "/service/abudhabi/rest/services/BaseMapEnglish/MapServer", 
 		layerOptions: {"layers":"show:0"}
 	  }
   },
   layers:{
     
-    "VAE001": {type: "overlay", category: "CharityAndWorship", layer: {type: "dynamic",visible: true,"name": "Mosques ", "url": "http://geoportal.abudhabi.ae/rest/services/CharityAndWorship/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}}, 
-	"VAE027": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "MSL Pressure ", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:27",position: 'back'}}},
-    "VAE028": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Mean Temperature ", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:28",position: 'back'}}},
-	"VAE029": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Mean Relative Humidity ", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:29",position: 'back'}}},
-	"VAE030": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Mean Minimum Temperature", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:30",position: 'back'}}},
-	"VAE031": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Mean Maximum Temperature ", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:31",position: 'back'}}},
-	"VAE032": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Absolute Minimum Temperature ", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:32",position: 'back'}}},
-	"VAE033": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Absolute Maximum Temperature ", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:33",position: 'back'}}},
-	"VAE035": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Tide Stations", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:35",position: 'back'}}},
-	"VAE036": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Marine Site Data", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:36",position: 'back'}}},
-	"VAE037": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Fishing Landing Sites", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:37",position: 'back'}}},
-	"VAE038": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Dredged Channel", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:38",position: 'back'}}},
-	"VAE039": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Protected Areas", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:39",position: 'back'}}},
-	"VAE040": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Coastal Soils", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:40",position: 'back'}}},
-	"VAE041": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Geology", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:41",position: 'back'}}},
-	"VAE042": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Farms", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:42",position: 'back'}}},
-	"VAE043": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Agriculture", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:43",position: 'back'}}},
-	"VAE044": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Terrestrial Habitat", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:44",position: 'back'}}},
-	"VAE046": {type: "overlay", category: "Planning", layer: {type: "dynamic",visible: true,"name": "Road Schemes", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:46",position: 'back'}}},
-    "VAE047": {type: "overlay", category: "Planning", layer: {type: "dynamic",visible: true,"name": "Precincts", "url": "http://geoportal.abudhabi.ae/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:47",position: 'back'}}},
+    "VAE001": {type: "overlay", category: "CharityAndWorship", layer: {type: "dynamic",visible: true,"name": "Mosques ", "url": "/service/abudhabi/rest/services/CharityAndWorship/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}}, 
+	"VAE027": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "MSL Pressure ", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:27"}}},
+    "VAE028": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Mean Temperature ", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:28",position: 'back'}}},
+	"VAE029": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Mean Relative Humidity ", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:29",position: 'back'}}},
+	"VAE030": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Mean Minimum Temperature", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:30",position: 'back'}}},
+	"VAE031": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Mean Maximum Temperature ", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:31",position: 'back'}}},
+	"VAE032": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Absolute Minimum Temperature ", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:32",position: 'back'}}},
+	"VAE033": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Absolute Maximum Temperature ", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:33",position: 'back'}}},
+	"VAE035": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Tide Stations", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:35",position: 'back'}}},
+	"VAE036": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Marine Site Data", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:36",position: 'back'}}},
+	"VAE037": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Fishing Landing Sites", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:37",position: 'back'}}},
+	"VAE038": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Dredged Channel", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:38",position: 'back'}}},
+	"VAE039": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Protected Areas", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:39",position: 'back'}}},
+	"VAE040": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Coastal Soils", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:40",position: 'back'}}},
+	"VAE041": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Geology", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:41",position: 'back'}}},
+	"VAE042": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Farms", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:42",position: 'back'}}},
+	"VAE043": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Agriculture", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:43",position: 'back'}}},
+	"VAE044": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Terrestrial Habitat", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:44",position: 'back'}}},
+	"VAE046": {type: "overlay", category: "Planning", layer: {type: "dynamic",visible: true,"name": "Road Schemes", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:46",position: 'back'}}},
+    "VAE047": {type: "overlay", category: "Planning", layer: {type: "dynamic",visible: true,"name": "Precincts", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:47",position: 'back'}}},
 	
     //,"nachtkaart": {"type": "baselayer", "category": "Achtergrond", "layer": {
     //      name: 'Grijstinten',
