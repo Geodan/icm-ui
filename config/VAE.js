@@ -1,22 +1,23 @@
-var icmconfig = {
-  "crs": L.CRS.EPSG3857,
+ var icmconfig = {
+  //"crs": L.CRS.EPSG3857,
+  "crs": L.CRS.EPSG4326,
   "center": {
       lat: 24.449696, //Approx Abu Dabi ,
       lng: 54.428580,
       zoom: 9
   },
   "beelden":[
-        { beeld: 'summary', title: 'Actual situation', timestamp: 0, beeldonderdeel: 
-          [ {id:'situatie', title: 'Situation', isedit: false, zeker: true}
+        { beeld: 'summary', title: 'Current situation', timestamp: 0, beeldonderdeel: 
+          [ {id:'situatie', title: 'Summary', isedit: false, zeker: true}
           ]}    
         ,{ beeld: 'meldingen', title: 'Reports', timestamp: 0, beeldonderdeel: 
           [ {title:'Timeline',id:'Tijdlijn', isedit: false, zeker: true},
             {title:'Notifications',id:'meldingen' , isedit: false, zeker: true},
             {title: 'Urgent', id:'acuut', isedit: false, zeker: true},
             {title: 'Local situation',id: 'spi', isedit: false, zeker: true} ,
-            {title: 'Genomen acties',id:'acties' , isedit: false, zeker: true}
+            {title: 'Mitigations',id:'acties' , isedit: false, zeker: true}
         ]}
-        ,{ beeld: 'wat', title: 'Operationeel (WAT)', timestamp: 0, beeldonderdeel: 
+        ,{ beeld: 'wat', title: 'Operational team', timestamp: 0, beeldonderdeel: 
           [ {title:'Tijdlijn',id:'tijdlijn', isedit: false, zeker: true},
             {title:'Beeldvorming',id:'beeldvorming', isedit: false, zeker: true},
             {title:'Oordeelvorming',id:'oordeelsvorming', isedit: false, zeker: true},
@@ -26,7 +27,7 @@ var icmconfig = {
             {title:'Veiligheid medewerkers',id:'veiligheid', isedit: false, zeker: true},
             {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
         ]}
-        ,{ beeld: 'wot', title: 'Tactisch (WOT)', timestamp: 0, beeldonderdeel:
+        ,{ beeld: 'wot', title: 'Tactical Team', timestamp: 0, beeldonderdeel:
           [ {title:'Tijdlijn',id:'tijdlijn', isedit: false, zeker: true},
             {title:'Beeldvorming',id:'beeldvorming', isedit: false, zeker: true},
             {title:'Oordeelvorming',id:'oordeelsvorming', isedit: false, zeker: true},
@@ -35,7 +36,7 @@ var icmconfig = {
             {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},          
             {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
         ]}        
-        ,{ beeld: 'wbt', title: 'Strategisch (WBT)', timestamp: 0, beeldonderdeel: 
+        ,{ beeld: 'wbt', title: 'Strategical team', timestamp: 0, beeldonderdeel: 
           [ {title:'Tijdlijn',id:'tijdlijn', isedit: false, zeker: true},
             {title:'Beeldvorming',id:'beeldvorming', isedit: false, zeker: true},
             {title:'Oordeelvorming',id:'oordeelsvorming', isedit: false, zeker: true},
@@ -44,16 +45,14 @@ var icmconfig = {
             {title:'Acties/maatregelen',id:'maatregelen', isedit: false, zeker: true},          
             {title:'Prognose (verwachting)',id:'prognose', isedit: false, zeker: true}
         ]}
-        ,{ beeld: 'scenarios', title: 'Scenarios\'s\/Maatr.', timestamp: 0, beeldonderdeel: 
-          [ {title:'Meest waarschijnlijk',id:'meest', isedit: false, zeker: true},
-            {title:'Minder waarschijnlijk',id:'minder', isedit: false, zeker: true},
-            {title:'Minst waarschijnlijk',id:'minst', isedit: false, zeker: true}
+        ,{ beeld: 'scenarios', title: 'Scenarios', timestamp: 0, beeldonderdeel: 
+          [ {title:'High probability',id:'meest', isedit: false, zeker: true},
+            {title:'Medium probability',id:'minder', isedit: false, zeker: true},
+            {title:'Low probability',id:'minst', isedit: false, zeker: true}
         ]}
-        ,{ beeld: 'communicatie', title: 'Communicatie', timestamp: 0, beeldonderdeel: 
-          [ {title:'Kernboodschap',id:'kernboodschap', isedit: false, zeker: true},
-            {title:'Omgevingsbeeld',id:'omgevingsbeeld', isedit: false, zeker: true},
-            {title:'Communicatie vanuit het waterschap',id:'extern', isedit: false, zeker: true},
-            {title:'Communicatie intern het waterschap',id:'intern', isedit: false, zeker: true}
+        ,{ beeld: 'communicatie', title: 'Communication', timestamp: 0, beeldonderdeel: 
+          [ {title:'Core message',id:'kernboodschap', isedit: false, zeker: true},
+            {title:'Environment',id:'omgevingsbeeld', isedit: false, zeker: true}
         ]}
    ],
    drawstyles:{
@@ -204,178 +203,47 @@ var icmconfig = {
       //        tms: true
       //    }
       //}
-      osm: {
-            name: "Openstreetmap",
-            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            type: 'xyz'
-        },
-      osm_grey: {
-          name: 'OSM grey',
-          url: 'http://a.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
-          type: 'xyz'
-      }
+      //osm: {
+      //      name: "Openstreetmap",
+      //      url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      //      type: 'xyz'
+      //  },
+      //osm_grey: {
+      //    name: 'OSM grey',
+      //    url: 'http://a.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
+      //    type: 'xyz'
+      //},
+	  "VAEBG1": {
+		type: "dynamic",
+		name: "Basemap (EN) ",
+		visible: false,
+		url: "/service/abudhabi/rest/services/BaseMapEnglish/MapServer", 
+		layerOptions: {"layers":"show:0"}
+	  }
   },
   layers:{
-    //"HHNK001a": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "betterwms",visible: true,"name": "Risicopunten Afvalwaterzuivering ","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer/WmsServer", "layerOptions": {"layers":7, "format": "img/png", "transparent": true}}},
-    //"HHNK001b": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "betterwms",visible: true,"name": "Overnamepunten","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer/WMSServer", "layerOptions": {"layers":6, "format": "img/png", "transparent": true}}},
-    //"HHNK001c": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "betterwms",visible: true,"name": "Rioolgemalen","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer/WMSServer", "layerOptions": {"layers":5, "format": "img/png", "transparent": true}}},
-    //"HHNK001d": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "betterwms",visible: true,"name": "Appendagepunten","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer/WMSServer", "layerOptions": {"layers":4, "format": "img/png", "transparent": true}}},
-    //"HHNK001e": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "betterwms",visible: true,"name": "Lozingspunten","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer/WMSServer", "layerOptions": {"layers":3, "format": "img/png", "transparent": true}}},
-    //"HHNK001f": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "betterwms",visible: true,"name": "Zuiveringen(RWZI)","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer/WMSServer", "layerOptions": {"layers":2, "format": "img/png", "transparent": true}}},
-    //"HHNK001g": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "betterwms",visible: true,"name": "Appendage lijnen","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer/WMSServer", "layerOptions": {"layers":1, "format": "img/png", "transparent": true}}},
-    //"HHNK001h": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "betterwms",visible: true,"name": "Leidingsegmenten","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer/WMSServer", "layerOptions": {"layers":0, "format": "img/png", "transparent": true}}},
-    //"HHNK002" : {type: "overlay", category: "Dijkpalen",     layer: {type: "betterwms",visible: true,"name": "Referentiepunten primaire keringen","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/dijkpalen/MapServer/WMSServer", "layerOptions": {"layers":0, "format": "img/png", "transparent": true}}},
-    //"HHNK003" : {type: "overlay", category: "Dijkringen",    layer: {type: "betterwms",visible: true,"name": "Waterkeringstelsels","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/dijkringen/MapServer/WMSServer", "layerOptions": {"layers":0, "format": "img/png", "transparent": true}}},
-    //"HHNK004a": {type: "overlay", category: "Gebieden",      layer: {type: "betterwms",visible: true,"name": "Boezemgebieden ","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/gebieden/MapServer/WMSServer", "layerOptions": {"layers":6, "format": "img/png", "transparent": true}}},
-    //"HHNK004b": {type: "overlay", category: "Gebieden",      layer: {type: "betterwms",visible: true,"name": "Poldergebieden","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/gebieden/MapServer/WMSServer", "layerOptions": {"layers":5, "format": "img/png", "transparent": true}}},
-    //"HHNK004c": {type: "overlay", category: "Gebieden",      layer: {type: "betterwms",visible: true,"name": "Beheergebied HHNK","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/gebieden/MapServer/WMSServer", "layerOptions": {"layers":4, "format": "img/png", "transparent": true}}},
-    //"HHNK004d": {type: "overlay", category: "Gebieden",      layer: {type: "betterwms",visible: true,"name": "Veiligheidsregio\"s en gebieden","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/gebieden/MapServer/WMSServer", "layerOptions": {"layers":3, "format": "img/png", "transparent": true}}},
-    //"HHNK004e": {type: "overlay", category: "Gebieden",      layer: {type: "betterwms",visible: true,"name": "Gemeenten","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/gebieden/MapServer/WMSServer", "layerOptions": {"layers":2, "format": "img/png", "transparent": true}}},
-    //"HHNK004f": {type: "overlay", category: "Gebieden",      layer: {type: "betterwms",visible: true,"name": "Waterschappen","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/gebieden/MapServer/WMSServer", "layerOptions": {"layers":1, "format": "img/png", "transparent": true}}},
-    //"HHNK004g": {type: "overlay", category: "Gebieden",      layer: {type: "betterwms",visible: true,"name": "Provincies","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/gebieden/MapServer/WMSServer", "layerOptions": {"layers":0, "format": "img/png", "transparent": true}}},
-    //"HHNK005a": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "Gemaal","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":15, "format": "img/png", "transparent": true}}},
-    //"HHNK005b": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "Sluis","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":14, "format": "img/png", "transparent": true}}},
-    //"HHNK005c": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "Aquaduct","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":13, "format": "img/png", "transparent": true}}},
-    //"HHNK005d": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "Regelbare stuw","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":12, "format": "img/png", "transparent": true}}},
-    //"HHNK005e": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "Vaste stuw","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":11, "format": "img/png", "transparent": true}}},
-    //"HHNK005f": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "Duiker","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":10, "format": "img/png", "transparent": true}}},
-    //"HHNK005g": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "Vaste dam","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":9, "format": "img/png", "transparent": true}}},
-    //"HHNK005h": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "Brug","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":8, "format": "img/png", "transparent": true}}},
-    //"HHNK005i": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "Coupure","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":5, "format": "img/png", "transparent": true}}},
-    //"HHNK005j": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "Put","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":4, "format": "img/png", "transparent": true}}},
-    //"HHNK005k": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "Syphon","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":3, "format": "img/png", "transparent": true}}},
-    //"HHNK005l": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "Overig","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":2, "format": "img/png", "transparent": true}}},
-    //"HHNK005m": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "Kunstwerken met inlaatfunctie","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":1, "format": "img/png", "transparent": true}}},
-    //"HHNK005n": {type: "overlay", category: "Kunstwerken",   layer: {type: "betterwms",visible: true,"name": "KWK Leidingen en kabels 2007","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/kunstwerken_en_inrichtingselementen/MapServer/WMSServer", "layerOptions": {"layers":0, "format": "img/png", "transparent": true}}},
-    //"HHNK006a": {type: "overlay", category: "Oppervlaktewateren", layer: {type: "betterwms",visible: true,"name": "Boezem","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/oppervlaktewateren/MapServer/WMSServer", "layerOptions": {"layers":3, "format": "img/png", "transparent": true}}},
-    //"HHNK006b": {type: "overlay", category: "Oppervlaktewateren", layer: {type: "betterwms",visible: true,"name": "Waterlopen, primair","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/oppervlaktewateren/MapServer/WMSServer", "layerOptions": {"layers":2, "format": "img/png", "transparent": true}}},
-    //"HHNK006c": {type: "overlay", category: "Oppervlaktewateren", layer: {type: "betterwms",visible: true,"name": "Waterlopen, secundair, tertiair","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/oppervlaktewateren/MapServer/WMSServer", "layerOptions": {"layers":1, "format": "img/png", "transparent": true}}},
-    //"HHNK006d": {type: "overlay", category: "Oppervlaktewateren", layer: {type: "betterwms",visible: true,"name": "Oppervlaktewater (vlakken)","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/oppervlaktewateren/MapServer/WMSServer", "layerOptions": {"layers":0, "format": "img/png", "transparent": true}}},
-    //"HHNK007a": {type: "overlay", category: "Peilgebieden",  layer: {type: "betterwms",visible: true,"name": "Peilafwijkingen, praktijk","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/peilgebieden/MapServer/WMSServer", "layerOptions": {"layers":1, "format": "img/png", "transparent": true}}},
-    //"HHNK007b": {type: "overlay", category: "Peilgebieden",  layer: {type: "betterwms",visible: true,"name": "Peilgebieden, praktijk","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/peilgebieden/MapServer/WMSServer", "layerOptions": {"layers":0, "format": "img/png", "transparent": true}}},
-    //"HHNK008a": {type: "overlay", category: "Regios",        layer: {type: "betterwms",visible: true,"name": "Gebiedsindeling rayons peilbeheer","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/regios/MapServer/WMSServer", "layerOptions": {"layers":4, "format": "img/png", "transparent": true}}},
-    //"HHNK008b": {type: "overlay", category: "Regios",        layer: {type: "betterwms",visible: true,"name": "Samenwerkingsregio\"s","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/regios/MapServer/WMSServer", "layerOptions": {"layers":3, "format": "img/png", "transparent": true}}},
-    //"HHNK008c": {type: "overlay", category: "Regios",        layer: {type: "betterwms",visible: true,"name": "Zuiveringsregios ","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/regios/MapServer/WMSServer", "layerOptions": {"layers":2, "format": "img/png", "transparent": true}}},
-    //"HHNK008d": {type: "overlay", category: "Regios",        layer: {type: "betterwms",visible: true,"name": "Gebiedsindeling_HHNK_Waterkeringen_en_wegen","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/regios/MapServer/WMSServer", "layerOptions": {"layers":1, "format": "img/png", "transparent": true}}},
-    //"HHNK008e": {type: "overlay", category: "Regios",        layer: {type: "betterwms",visible: true,"name": "Beheergebied HHNK","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/regios/MapServer/WMSServer", "layerOptions": {"layers":0, "format": "img/png", "transparent": true}}},
-    //"HHNK009a": {type: "overlay", category: "Waterkeringen", layer: {type: "betterwms",visible: true,"name": "Waterkeringen, primair ","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/waterkeringen/MapServer/WMSServer", "layerOptions": {"layers":1, "format": "img/png", "transparent": true}}},
-    //"HHNK009b": {type: "overlay", category: "Waterkeringen", layer: {type: "betterwms",visible: true,"name": "Waterkeringen, regionaal (Legger, concept)","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/waterkeringen/MapServer/WMSServer", "layerOptions": {"layers":0, "format": "img/png", "transparent": true}}},
-    //"HHNK010a": {type: "overlay", category: "Waterleidingen",layer: {type: "betterwms",visible: true,"name": "PWN_Waterleidingen","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/waterleidingen/MapServer/WMSServer", "layerOptions": {"layers":5, "format": "img/png", "transparent": true}}},
-    //"HHNK010b": {type: "overlay", category: "Waterleidingen",layer: {type: "betterwms",visible: true,"name": "Waternet waterleidingen","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/waterleidingen/MapServer/WMSServer", "layerOptions": {"layers":1, "format": "img/png", "transparent": true}}},
-    //"HHNK011c": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "betterwms",visible: true,"name": "Wegen, Rijk en Provincie (NWB)","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/wegen_en_vaarwegen/MapServer/WMSServer", "layerOptions": {"layers":8, "format": "img/png", "transparent": true}}},
-    //"HHNK011d": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "betterwms",visible: true,"name": "Wegen, overig (NWB)","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/wegen_en_vaarwegen/MapServer/WMSServer", "layerOptions": {"layers":7, "format": "img/png", "transparent": true}}},
-    //"HHNK011e": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "betterwms",visible: true,"name": "Wegvakonderdelen (DHV) ","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/wegen_en_vaarwegen/MapServer/WMSServer", "layerOptions": {"layers":5, "format": "img/png", "transparent": true}}},
-    //"HHNK011f": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "betterwms",visible: true,"name": "Wegvakken (DHV) ","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/wegen_en_vaarwegen/MapServer/WMSServer", "layerOptions": {"layers":4, "format": "img/png", "transparent": true}}},
-    //"HHNK011g": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "betterwms",visible: true,"name": "Wegen hectometrering (NWB)","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/wegen_en_vaarwegen/MapServer/WMSServer", "layerOptions": {"layers":3, "format": "img/png", "transparent": true}}},
-    //"HHNK011h": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "betterwms",visible: true,"name": "Vaarwegen (NWB)","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/wegen_en_vaarwegen/MapServer/WMSServer", "layerOptions": {"layers":2, "format": "img/png", "transparent": true}}},
-    //"HHNK011i": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "betterwms",visible: true,"name": "Vaarwegen kilometrering (NWB)","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/wegen_en_vaarwegen/MapServer/WMSServer", "layerOptions": {"layers":1, "format": "img/png", "transparent": true}}},
-    //"HHNK012a": {type: "overlay", category: "Zoneringen",   layer: {type: "betterwms",visible: true,"name": "Zoneringen, lijnen","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/zoneringen/MapServer/WMSServer", "layerOptions": {"layers":6, "format": "img/png", "transparent": true}}},
-    //"HHNK012b": {type: "overlay", category: "Zoneringen",   layer: {type: "betterwms",visible: true,"name": "Vakgrenzen ","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/zoneringen/MapServer/WMSServer", "layerOptions": {"layers":5, "format": "img/png", "transparent": true}}},
-    //"HHNK012c": {type: "overlay", category: "Zoneringen",   layer: {type: "betterwms",visible: true,"name": "Zoneringen, Primaire waterkeringen","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/zoneringen/MapServer/WMSServer", "layerOptions": {"layers":4, "format": "img/png", "transparent": true}}},
-    //"HHNK012d": {type: "overlay", category: "Zoneringen",   layer: {type: "betterwms",visible: true,"name": "Zoneringen, Regionale waterkeringen","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/zoneringen/MapServer/WMSServer", "layerOptions": {"layers":3, "format": "img/png", "transparent": true}}},
-    //"HHNK012e": {type: "overlay", category: "Zoneringen",   layer: {type: "betterwms",visible: true,"name": "Profiel van vrije ruimte,Regionale waterkeringen","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/zoneringen/MapServer/WMSServer", "layerOptions": {"layers":2, "format": "img/png", "transparent": true}}},
-    //"HHNK012f": {type: "overlay", category: "Zoneringen",   layer: {type: "betterwms",visible: true,"name": "Zoneringen, Zandige kust","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/zoneringen/MapServer/WMSServer", "layerOptions": {"layers":0, "format": "img/png", "transparent": true}}},
-    //"HHNK013":  {type: "overlay", category: "Gebouwhoogte",   layer: {type: "betterwms",visible: true,"name": "BAG gebouwen hoogte","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/BAG_gebouwen_hoogte/MapServer/WMSServer", "layerOptions": {"layers":"show:0"}}},
-    //"HHNK014a": {type: "overlay", category: "Waterkeringen_regionaal_toetsresultaten",   layer: {type: "betterwms",visible: true,"name": "VO_HR_HHNK_TOTAAL","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/waterkeringen_regionaal_toetsresultaten_2012_2024/MapServer/WMSServer", "layerOptions": {"layers":"show:2"}}},
-    //"HHNK014b": {type: "overlay", category: "Waterkeringen_regionaal_toetsresultaten",   layer: {type: "betterwms",visible: true,"name": "IPO_KLASSEN","url": "http://geoweb.hhnk.nl:6080/arcgis/services/CIS/waterkeringen_regionaal_toetsresultaten_2012_2024/MapServer/WMSServer", "layerOptions": {"layers":"show:43"}}},
-    //"HHNK101a": {type: "baselayer", category: "Achtergrond",layer: {type: "wms",  visible: true, "name": "Luchtfoto 2013", "url": "http://geoweb.hhnk.nl:6080/arcgis/services/tiled/luchtfoto_2013/MapServer/WMSServer", "layerOptions": {"layers": "show:10"}}},
-    //"HHNK102":  {type: "baselayer", category: "Achtergrond", layer: {type: "wms", visible: true, "name": "AHN2 gefilterd", "url": "http://geoweb.hhnk.nl:6080/arcgis/services/extra_tiled/ahn2_gefilterd/MapServer/WMSServer", "layerOptions": {"layers":"show:0"}}},
-    "HHNK001a": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "dynamic",visible: true,"name": "Risicopunten Afvalwaterzuivering ","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}},
-    "HHNK001b": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "dynamic",visible: true,"name": "Overnamepunten","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer", "layerOptions": {"layers":"show:1",position: 'back'}}},
-    "HHNK001c": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "dynamic",visible: true,"name": "Rioolgemalen","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer", "layerOptions": {"layers":"show:2",position: 'back'}}},
-    "HHNK001d": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "dynamic",visible: true,"name": "Appendagepunten","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer", "layerOptions": {"layers":"show:3",position: 'back'}}},
-    "HHNK001e": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "dynamic",visible: true,"name": "Lozingspunten","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer", "layerOptions": {"layers":"show:4",position: 'back'}}},
-    "HHNK001f": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "dynamic",visible: true,"name": "Zuiveringen(RWZI)","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer", "layerOptions": {"layers":"show:5",position: 'back'}}},
-    "HHNK001g": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "dynamic",visible: true,"name": "Appendage lijnen","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer", "layerOptions": {"layers":"show:6",position: 'back'}}},
-    "HHNK001h": {type: "overlay", category: "AWZ-Leidingen", layer: {type: "dynamic",visible: true,"name": "Leidingsegmenten","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/afvalwaterzuivering_leidingenbeheer/MapServer", "layerOptions": {"layers":"show:7",position: 'back'}}},
-    "HHNK002" : {type: "overlay", category: "Dijkpalen",     layer: {type: "dynamic",visible: true,"name": "Referentiepunten primaire keringen","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/dijkpalen/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}},
-    "HHNK003" : {type: "overlay", category: "Dijkringen",    layer: {type: "dynamic",visible: true,"name": "Waterkeringstelsels","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/dijkringen/MapServer", "layerOptions": {"layers":"show:0",position: 'back',opacity: 0.5}}},
-    "HHNK004a": {type: "overlay", category: "Gebieden",      layer: {type: "dynamic",visible: true,"name": "Boezemgebieden ","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/gebieden/MapServer", "layerOptions": {"layers":"show:0",position: 'back',opacity: 0.5}}},
-    "HHNK004b": {type: "overlay", category: "Gebieden",      layer: {type: "dynamic",visible: true,"name": "Poldergebieden","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/gebieden/MapServer", "layerOptions": {"layers":"show:1",position: 'back',opacity: 0.5}}},
-    "HHNK004c": {type: "overlay", category: "Gebieden",      layer: {type: "dynamic",visible: true,"name": "Beheergebied HHNK","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/gebieden/MapServer", "layerOptions": {"layers":"show:2",position: 'back',opacity: 0.5}}},
-    "HHNK004d": {type: "overlay", category: "Gebieden",      layer: {type: "dynamic",visible: true,"name": "Veiligheidsregio\"s en gebieden","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/gebieden/MapServer", "layerOptions": {"layers":"show:3",position: 'back',opacity: 0.5}}},
-    "HHNK004e": {type: "overlay", category: "Gebieden",      layer: {type: "dynamic",visible: true,"name": "Gemeenten","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/gebieden/MapServer", "layerOptions": {"layers":"show:4",position: 'back'}}},
-    "HHNK004f": {type: "overlay", category: "Gebieden",      layer: {type: "dynamic",visible: true,"name": "Waterschappen","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/gebieden/MapServer", "layerOptions": {"layers":"show:5",position: 'back',opacity: 0.5}}},
-    "HHNK004g": {type: "overlay", category: "Gebieden",      layer: {type: "dynamic",visible: true,"name": "Provincies","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/gebieden/MapServer", "layerOptions": {"layers":"show:6",position: 'back',opacity: 0.5}}},
-    "HHNK005a": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "Gemaal","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}},
-    "HHNK005b": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "Sluis","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:1",position: 'back'}}},
-    "HHNK005c": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "Aquaduct","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:2",position: 'back'}}},
-    "HHNK005d": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "Regelbare stuw","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:3",position: 'back'}}},
-    "HHNK005e": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "Vaste stuw","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:4",position: 'back'}}},
-    "HHNK005f": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "Duiker","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:5",position: 'back'}}},
-    "HHNK005g": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "Vaste dam","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:8",position: 'back'}}},
-    "HHNK005h": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "Brug","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:9",position: 'back'}}},
-    "HHNK005i": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "Coupure","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:10",position: 'back'}}},
-    "HHNK005j": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "Put","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:11",position: 'back'}}},
-    "HHNK005k": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "Syphon","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:12",position: 'back'}}},
-    "HHNK005l": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "Overig","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:13",position: 'back'}}},
-    "HHNK005m": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "Kunstwerken met inlaatfunctie","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:14",position: 'back'}}},
-    "HHNK005n": {type: "overlay", category: "Kunstwerken",   layer: {type: "dynamic",visible: true,"name": "KWK Leidingen en kabels 2007","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kunstwerken_en_inrichtingselementen/MapServer", "layerOptions": {"layers":"show:15",position: 'back'}}},
-    "HHNK006a": {type: "overlay", category: "Oppervlaktewateren", layer: {type: "dynamic",visible: true,"name": "Boezem","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/oppervlaktewateren/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}},
-    "HHNK006b": {type: "overlay", category: "Oppervlaktewateren", layer: {type: "dynamic",visible: true,"name": "Waterlopen, primair","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/oppervlaktewateren/MapServer", "layerOptions": {"layers":"show:1",position: 'back'}}},
-    "HHNK006c": {type: "overlay", category: "Oppervlaktewateren", layer: {type: "dynamic",visible: true,"name": "Waterlopen, secundair, tertiair","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/oppervlaktewateren/MapServer", "layerOptions": {"layers":"show:2",position: 'back'}}},
-    "HHNK006d": {type: "overlay", category: "Oppervlaktewateren", layer: {type: "dynamic",visible: true,"name": "Oppervlaktewater (vlakken)","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/oppervlaktewateren/MapServer", "layerOptions": {"layers":"show:3",position: 'back'}}},
-    "HHNK007a": {type: "overlay", category: "Peilgebieden",  layer: {type: "dynamic",visible: true,"name": "Peilafwijkingen, praktijk","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/peilgebieden/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}},
-    "HHNK007b": {type: "overlay", category: "Peilgebieden",  layer: {type: "dynamic",visible: true,"name": "Peilgebieden, praktijk","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/peilgebieden/MapServer", "layerOptions": {"layers":"show:1",position: 'back'}}},
-    "HHNK008a": {type: "overlay", category: "Regios",        layer: {type: "dynamic",visible: true,"name": "Gebiedsindeling rayons peilbeheer","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/regios/MapServer", "layerOptions": {"layers":"show:4",position: 'back',opacity: 0.5}}},
-    "HHNK008b": {type: "overlay", category: "Regios",        layer: {type: "dynamic",visible: true,"name": "Samenwerkingsregio\"s","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/regios/MapServer", "layerOptions": {"layers":"show:0",position: 'back',opacity: 0.5}}},
-    "HHNK008c": {type: "overlay", category: "Regios",        layer: {type: "dynamic",visible: true,"name": "Zuiveringsregios ","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/regios/MapServer", "layerOptions": {"layers":"show:1",position: 'back',opacity: 0.5}}},
-    "HHNK008d": {type: "overlay", category: "Regios",        layer: {type: "dynamic",visible: true,"name": "Gebiedsindeling_HHNK_Waterkeringen_en_wegen","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/regios/MapServer", "layerOptions": {"layers":"show:2",position: 'back',opacity: 0.5}}},
-    "HHNK008e": {type: "overlay", category: "Regios",        layer: {type: "dynamic",visible: true,"name": "Beheergebied HHNK","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/regios/MapServer", "layerOptions": {"layers":"show:3",position: 'back',opacity: 0.5}}},
-    "HHNK009a": {type: "overlay", category: "Waterkeringen", layer: {type: "dynamic",visible: true,"name": "Waterkeringen, primair ","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/waterkeringen/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}},
-    "HHNK009b": {type: "overlay", category: "Waterkeringen", layer: {type: "dynamic",visible: true,"name": "Waterkeringen, regionaal (Legger, concept)","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/waterkeringen/MapServer", "layerOptions": {"layers":"show:1",position: 'back'}}},
-    "HHNK010a": {type: "overlay", category: "Waterleidingen",layer: {type: "dynamic",visible: true,"name": "PWN_Waterleidingen","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/waterleidingen/MapServer", "layerOptions": {"layers":"show:1",position: 'back'}}},
-    "HHNK010b": {type: "overlay", category: "Waterleidingen",layer: {type: "dynamic",visible: true,"name": "Waternet waterleidingen","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/waterleidingen/MapServer", "layerOptions": {"layers":"show:5",position: 'back'}}},
-    "HHNK011c": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "dynamic",visible: true,"name": "Wegen, Rijk en Provincie (NWB)","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/wegen_en_vaarwegen/MapServer", "layerOptions": {"layers":"show:1",position: 'back'}}},
-    "HHNK011d": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "dynamic",visible: true,"name": "Wegen, overig (NWB)","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/wegen_en_vaarwegen/MapServer", "layerOptions": {"layers":"show:2",position: 'back'}}},
-    "HHNK011e": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "dynamic",visible: true,"name": "Wegvakonderdelen (DHV) ","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/wegen_en_vaarwegen/MapServer", "layerOptions": {"layers":"show:3",position: 'back'}}},
-    "HHNK011f": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "dynamic",visible: true,"name": "Wegvakken (DHV) ","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/wegen_en_vaarwegen/MapServer", "layerOptions": {"layers":"show:4",position: 'back'}}},
-    "HHNK011g": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "dynamic",visible: true,"name": "Wegen hectometrering (NWB)","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/wegen_en_vaarwegen/MapServer", "layerOptions": {"layers":"show:5",position: 'back'}}},
-    "HHNK011h": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "dynamic",visible: true,"name": "Vaarwegen (NWB)","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/wegen_en_vaarwegen/MapServer", "layerOptions": {"layers":"show:7",position: 'back'}}},
-    "HHNK011i": {type: "overlay", category: "Wegen_en_vaarwegen", layer: {type: "dynamic",visible: true,"name": "Vaarwegen kilometrering (NWB)","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/wegen_en_vaarwegen/MapServer", "layerOptions": {"layers":"show:8",position: 'back'}}},
-    "HHNK012a": {type: "overlay", category: "Zoneringen",   layer: {type: "dynamic",visible: true,"name": "Zoneringen, lijnen","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/zoneringen/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}},
-    "HHNK012b": {type: "overlay", category: "Zoneringen",   layer: {type: "dynamic",visible: true,"name": "Vakgrenzen ","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/zoneringen/MapServer", "layerOptions": {"layers":"show:1",position: 'back'}}},
-    "HHNK012c": {type: "overlay", category: "Zoneringen",   layer: {type: "dynamic",visible: true,"name": "Zoneringen, Primaire waterkeringen","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/zoneringen/MapServer", "layerOptions": {"layers":"show:2",position: 'back'}}},
-    "HHNK012d": {type: "overlay", category: "Zoneringen",   layer: {type: "dynamic",visible: true,"name": "Zoneringen, Regionale waterkeringen","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/zoneringen/MapServer", "layerOptions": {"layers":"show:4",position: 'back'}}},
-    "HHNK012e": {type: "overlay", category: "Zoneringen",   layer: {type: "dynamic",visible: true,"name": "Profiel van vrije ruimte,Regionale waterkeringen","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/zoneringen/MapServer", "layerOptions": {"layers":"show:5",position: 'back'}}},
-    "HHNK012f": {type: "overlay", category: "Zoneringen",   layer: {type: "dynamic",visible: true,"name": "Zoneringen, Zandige kust","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/zoneringen/MapServer", "layerOptions": {"layers":"show:6",position: 'back'}}},
-    "HHNK013":  {type: "overlay", category: "Gebouwhoogte",   layer: {type: "dynamic",visible: true,"name": "BAG gebouwen hoogte","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/BAG_gebouwen_hoogte/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}},
-    "HHNK014a": {type: "overlay", category: "Waterkeringen_regionaal_toetsresultaten",   layer: {type: "dynamic",visible: true,"name": "VO_HR_HHNK_TOTAAL","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/waterkeringen_regionaal_toetsresultaten_2012_2024/MapServer", "layerOptions": {"layers":"show:2",position: 'back'}}},
-    "HHNK014b": {type: "overlay", category: "Waterkeringen_regionaal_toetsresultaten",   layer: {type: "dynamic",visible: true,"name": "IPO_KLASSEN","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/waterkeringen_regionaal_toetsresultaten_2012_2024/MapServer", "layerOptions": {"layers":"show:43",position: 'back'}}},
-    "HHNK015a": {type: "overlay", category: "Hoogspanningsobjecten",   layer: {type: "dynamic",visible: true,"name": "Hoogspanningskabels","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/hoogspannings_objecten/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}},
-    "HHNK015b": {type: "overlay", category: "Hoogspanningsobjecten",   layer: {type: "dynamic",visible: true,"name": "Hoogspannings onderstations","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/hoogspannings_objecten/MapServer", "layerOptions": {"layers":"show:1",position: 'back'}}},
-    "HHNK016a": {type: "overlay", category: "Kwetsbare objecten",   layer: {type: "dynamic",visible: true,"name": "Kwetsbare objecten","url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/CIS/kwetsbare_objecten/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}},
-    "HHNK101a": {type: "baselayer", category: "Achtergrond",layer: {type: "dynamic",  visible: true, "name": "Luchtfoto 2013", "url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/tiled/luchtfoto_2013_512c/MapServer", "layerOptions": {"layers": "show:10",position: "back"}}},
-    "HHNK102":  {type: "baselayer", category: "Achtergrond", layer: {type: "dynamic", visible: true, "name": "AHN2 gefilterd", "url": "http://geoweb.hhnk.nl:6080/arcgis/rest/services/extra_tiled/ahn2_gefilterd/MapServer", "layerOptions": {"layers":"show:0",position: "back"}}},
-    "HHNK103":  {type: "baselayer", category: "Achtergrond", layer: {type: 'dynamic', visible: true, name:  'Top10NL',url: 'http://geoweb.hhnk.nl:6080/arcgis/rest/services/tiled/topo_vlak_256_exploded/MapServer',layerOptions:{"layers":"show:0",position: "back"}}},
-    //EIND VAN HHNK LAGEN      
-    "brp":     {"type": "overlay", "category": "Extern", "layer": {"type": "betterwms","visible": true, "name": "Gewaspercelen","url": "http://research.geodan.nl/service/ngr/brpgewaspercelen/wms","layerOptions": {"layers": "brpgewaspercelen","format": "image/png","transparent": true}}},
-    zwemwater:{type: 'overlay', category: 'Extern', layer: {type: 'betterwms',visible: true, name: "Zwemwater locatie",url: 'http://www.zwemwater.nl/zwr-ogc/services/zwr-wms',layerOptions: {layers: 'zwemwaterlocatie',format: 'image/png',transparent: true}}},
-    zw_gebied:{type: 'overlay', category: 'Extern', layer: {type: 'betterwms',visible: true, name: "Zwemwater gebied",url: 'http://www.zwemwater.nl/zwr-ogc/services/zwr-wms',layerOptions: {layers: 'gebied',format: 'image/png',transparent: true}}},
-    golffront: {type: 'overlay', category: '3Di', layer:{ 
-            name: "Golffront",
-            type:  'betterwms',
-			url: "http://result.3di.lizard.net/3di/wms",
-            visible: true,
-            layerOptions: {
-				layers: '61f5a464c35044c19bc7d4b42d7f58cb:arrival',
-                format: 'image/png',
-                transparent: true
-            }
-        }
-    },
-    waterdepth: {type: 'overlay', category: '3Di', layer:{ 
-            name: "Waterdiepte",
-            type:  'betterwms',
-			url: "http://result.3di.lizard.net/3di/wms",
-            visible: true,
-            layerOptions: {
-				layers: '61f5a464c35044c19bc7d4b42d7f58cb:maxdepth',
-                format: 'image/png',
-                transparent: true
-            }
-        }
-    }
+    
+    "VAE001": {type: "overlay", category: "CharityAndWorship", layer: {type: "dynamic",visible: true,"name": "Mosques ", "url": "/service/abudhabi/rest/services/CharityAndWorship/MapServer", "layerOptions": {"layers":"show:0",position: 'back'}}}, 
+	"VAE027": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "MSL Pressure ", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:27"}}},
+    "VAE028": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Mean Temperature ", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:28",position: 'back'}}},
+	"VAE029": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Mean Relative Humidity ", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:29",position: 'back'}}},
+	"VAE030": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Mean Minimum Temperature", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:30",position: 'back'}}},
+	"VAE031": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Mean Maximum Temperature ", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:31",position: 'back'}}},
+	"VAE032": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Absolute Minimum Temperature ", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:32",position: 'back'}}},
+	"VAE033": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Absolute Maximum Temperature ", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:33",position: 'back'}}},
+	"VAE035": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Tide Stations", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:35",position: 'back'}}},
+	"VAE036": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Marine Site Data", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:36",position: 'back'}}},
+	"VAE037": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Fishing Landing Sites", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:37",position: 'back'}}},
+	"VAE038": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Dredged Channel", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:38",position: 'back'}}},
+	"VAE039": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Protected Areas", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:39",position: 'back'}}},
+	"VAE040": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Coastal Soils", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:40",position: 'back'}}},
+	"VAE041": {type: "overlay", category: "Environment", layer: {type: "dynamic",visible: true,"name": "Geology", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:41",position: 'back'}}},
+	"VAE042": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Farms", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:42",position: 'back'}}},
+	"VAE043": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Agriculture", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:43",position: 'back'}}},
+	"VAE044": {type: "overlay", category: "Weather", layer: {type: "dynamic",visible: true,"name": "Terrestrial Habitat", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:44",position: 'back'}}},
+	"VAE046": {type: "overlay", category: "Planning", layer: {type: "dynamic",visible: true,"name": "Road Schemes", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:46",position: 'back'}}},
+    "VAE047": {type: "overlay", category: "Planning", layer: {type: "dynamic",visible: true,"name": "Precincts", "url": "/service/abudhabi/rest/services/PublicData/MapServer", "layerOptions": {"layers":"show:47",position: 'back'}}},
+	
     //,"nachtkaart": {"type": "baselayer", "category": "Achtergrond", "layer": {
     //      name: 'Grijstinten',
     //      url: 'http://services.geodan.nl/tms/1.0.0/nachtkaart_EPSG28992/{z}/{x}/{y}.png',
