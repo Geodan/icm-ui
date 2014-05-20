@@ -1,5 +1,5 @@
 var tmp; //DEBUG
-
+var leafletmap; //TT: temp workaround to get map to smoke plugin
 
 icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils', "leafletData",'leafletEvents','LeafletService',function($scope, $http, $timeout, Core, Utils,  leafletData, leafletEvents, LeafletService) {
     if(!Core.project()) {
@@ -150,8 +150,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     var feat = d.layer;
                     var fid = d.fid;
                     var item = $scope.core.project().items(fid);
-                    var entity = d.obj;
-                    var bbox = entity.getBBox();
+                    //var entity = d.obj;
+                    //var bbox = entity.getBBox();
                     var fe = d3
                         //.select('.leaflet-popup-pane')
                         .select('#map')
@@ -608,6 +608,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var initmap = function(){
       leafletData.getMap('mainmap').then(function(map) {
         $scope.map = map;
+		leafletmap = map;
         //Disable CORS support (due to issue with IE on an intranet)
         L.esri.get = L.esri.RequestHandlers.JSONP;
         //Add geosearch plugin
