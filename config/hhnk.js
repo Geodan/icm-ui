@@ -78,6 +78,49 @@ var icmconfig = {
         {stroke: '#5c3566',fill: '#5c3566'},
         {stroke: '#4e9a06',fill: '#4e9a06'}],
       icontypes:[
+		{"cat":"","url":"wcms/Aanvaringslocatie16x16.png","text":"Aanvaringslocatie"},
+		{"cat":"","url":"wcms/Afdamming16x16.png","text":"Afdamming"},
+		{"cat":"","url":"wcms/Appendage16x16.png","text":"Appendage"},
+		{"cat":"","url":"wcms/AWZI16x16.png","text":"AWZI"},
+		{"cat":"","url":"wcms/Bassin16x16.png","text":"Bassin"},
+		{"cat":"","url":"wcms/Big bag16x16.png","text":"Big bag"},
+		{"cat":"","url":"wcms/bluswater16x16.png","text":"bluswater"},
+		{"cat":"","url":"wcms/Brandlocatie16x16.png","text":"Brandlocatie"},
+		{"cat":"","url":"wcms/Bres16x16.png","text":"Bres"},
+		{"cat":"","url":"wcms/Brug16x16.png","text":"Brug"},
+		{"cat":"","url":"wcms/Coordinatie plaats incident16x16.png","text":"Cooâ Ãªrdinatie plaats incident"},
+		{"cat":"","url":"wcms/Dam16x16.png","text":"Dam"},
+		{"cat":"","url":"wcms/Duiker16x16.png","text":"Duiker"},
+		{"cat":"","url":"wcms/Gemaal16x16.png","text":"Gemaal"},
+		{"cat":"","url":"wcms/Gezonken schip16x16.png","text":"Gezonken schip"},
+		{"cat":"","url":"wcms/Hevel16x16.png","text":"Hevel"},
+		{"cat":"","url":"wcms/Hoge waterstand16x16.png","text":"Hoge waterstand"},
+		{"cat":"","url":"wcms/Illegale lozing16x16.png","text":"Illegale lozing"},
+		{"cat":"","url":"wcms/Instabiele waterkeing16x16.png","text":"Instabiele waterkeing"},
+		{"cat":"","url":"wcms/Installatie defect16x16.png","text":"Installatie defect"},
+		{"cat":"","url":"wcms/installatie defect elektrisch16x16.png","text":"installatie defect elektrisch"},
+		{"cat":"","url":"wcms/Inundatie16x16.png","text":"Inundatie"},
+		{"cat":"","url":"wcms/Kadebreuk16x16.png","text":"Kadebreuk"},
+		{"cat":"","url":"wcms/Lage waterstand16x16.png","text":"Lage waterstand"},
+		{"cat":"","url":"wcms/Locatie borden16x16.png","text":"Locatie borden"},
+		{"cat":"","url":"wcms/Noodwaterkeringen16x16.png","text":"Noodwaterkeringen"},
+		{"cat":"","url":"wcms/olie verontreiniging16x16.png","text":"olie verontreiniging"},
+		{"cat":"","url":"wcms/Opstelplaats noodpomp16x16.png","text":"Opstelplaats noodpomp"},
+		{"cat":"","url":"wcms/Overslag locatie16x16.png","text":"Overslag locatie "},
+		{"cat":"","url":"wcms/Peilscheiding verwijderd16x16.png","text":"Peilscheiding verwijderd"},
+		{"cat":"","url":"wcms/Persleiding16x16.png","text":"Persleiding"},
+		{"cat":"","url":"wcms/Persleidingbreuk16x16.png","text":"Persleidingbreuk"},
+		{"cat":"","url":"wcms/Piping locatie16x16.png","text":"Piping locatie"},
+		{"cat":"","url":"wcms/Rioolgemaal16x16.png","text":"Rioolgemaal"},
+		{"cat":"","url":"wcms/Sluis16x16.png","text":"Sluis"},
+		{"cat":"","url":"wcms/stuw16x16.png ","text":"stuw"},
+		{"cat":"","url":"wcms/Tijdelijke waterkeringen16x16.png","text":"Tijdelijke waterkeringen"},
+		{"cat":"","url":"wcms/Verontreiniging16x16.png","text":"Verontreiniging"},
+		{"cat":"","url":"wcms/vis16x16.png","text":"vis"},
+		{"cat":"","url":"wcms/Voertuig te water16x16.png","text":"Voertuig te water"},
+		{"cat":"","url":"wcms/Zandzakken16x16.png","text":"Zandzakken"}
+/*
+
          {"cat":"REALITEIT -- RAMPEN / ONGEVALLENRAMPTYPE, INCIDENTLOCATIE","url":"imoov/s0010_R01---g.png","text":"Verkeer en vervoer: lucht, water, land"}
         ,{"cat":"REALITEIT -- RAMPEN / ONGEVALLENRAMPTYPE, INCIDENTLOCATIE","url":"imoov/s0020_R02---g.png","text":"Gevaarlijke stoffen: brandbaar, explosief, gif, nuceair"}
         ,{"cat":"REALITEIT -- RAMPEN / ONGEVALLENRAMPTYPE, INCIDENTLOCATIE","url":"imoov/s0030_R03---g.png","text":"Volksgezondheid: gezondheidsdreiging, ziektegolf"}
@@ -199,7 +242,7 @@ var icmconfig = {
         //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1190---g.png","text":"Dijkring"}
         //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1200---g.png","text":"Winterbedding (gewoon hoogwater tot aan de winterdijken)"}
         //,{"cat":"REALITEIT -- CONTEXT STATISCHKAARTONDERGROND “GEWONE SITUATIE”","url":"imoov/s1210---g.png","text":"Topografische kaart [ geen symbool maar een kopie van een kaartondergrond ]"}
-        ]
+*/        ]
    },
   definedlayers:{
       //brt: {
