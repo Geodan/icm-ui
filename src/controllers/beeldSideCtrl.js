@@ -3,7 +3,7 @@ icm.controller('BeeldSideCtrl', ['$scope', '$stateParams', 'Beelden', 'Core', 'U
     $scope.beelden = Beelden.beelden;
     $scope.data = Utils;
     $scope.discussie = '';
-
+	
     //if only text is shown (no map), then show only text when you click on another Beeld
     var source = $scope.$state.$current.url.source;
     $scope.fullText = source.substring (source.lastIndexOf('/'), source.length) == '/text';

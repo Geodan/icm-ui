@@ -263,3 +263,8 @@ ins { color: #dd0000; font-weight:bold; text-decoration: none;}
     text-anchor: middle;
     opacity: 1;
 }
+
+div.page  { 
+	overflow: auto;
+	height: 100%;
+}

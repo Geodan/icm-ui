@@ -1,4 +1,4 @@
-
+cow
 // De definities van de verschillende beelden inclusief hun onderdelen
 icm.factory('Beelden', ['$rootScope', function( $rootScope ) {
     return {
@@ -17,7 +17,10 @@ icm.factory('Beelden', ['$rootScope', function( $rootScope ) {
 
 /*TT: Cow temporarily moved to a global because signalR breaks from within a factory */
 var cow = new Cow.core({
-      wsUrl: '/Cow/signalr'
+      //wsUrl: '/Cow/signalr'
+	  wsUrl: '/Cow2/hhnk/signalr'   //# hhnk
+	  //wsUrl: '/Cow2/geofort/signalr' //# geofort
+      //wsUrl: 'wss://websocket.geodan.nl/icms'
     });   
     cow.userStore().loaded.then(function(){
     //if (!cow.users('1')){

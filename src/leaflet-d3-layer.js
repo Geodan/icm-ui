@@ -273,7 +273,8 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
 		if (this.data.type === "Topology") {
 		    this.data = root.topojson.feature(this.geojson, this.geojson.objects.features);
 		}
-		var entities = g.selectAll(".entity")
+		//var entities = g.selectAll(".entity")
+		var entities = d3.select('#'+this.options.layerId).selectAll(".entity")
             .data(this.geojson.features, function(d) {
                 return d.id;
             });
@@ -394,7 +395,9 @@ Based on: https://github.com/rclark/leaflet-d3-layer/blob/master/dist/scripts/le
                     });
           });
       };
-      map.on("viewreset", function(){
+      //map.on("viewreset", function(){
+	  //TT: hack to get global map
+	  leafletmap.on("viewreset", function(){
           if (self.geojson.features && self.geojson.features.length > 0){
               reset(self);
           }

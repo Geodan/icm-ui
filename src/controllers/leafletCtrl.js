@@ -1,5 +1,5 @@
 var tmp; //DEBUG
-
+var leafletmap; //TT: temp workaround to get map to smoke plugin
 
 icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils', "leafletData",'leafletEvents','LeafletService',function($scope, $http, $timeout, Core, Utils,  leafletData, leafletEvents, LeafletService) {
     if(!Core.project()) {
@@ -150,11 +150,11 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     var feat = d.layer;
                     var fid = d.fid;
                     var item = $scope.core.project().items(fid);
-                    var entity = d.obj;
-                    var bbox = entity.getBBox();
+                    //var entity = d.obj;
+                    //var bbox = entity.getBBox();
                     var fe = d3
                         //.select('.leaflet-popup-pane')
-                        .select('body')
+                        .select('#map')
                         .append('div')
                         .classed('popup panel panel-primary',true)
                         .style('position', 'absolute')
@@ -236,10 +236,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 //var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=jstinr&sActivityList=asielz&sActivityList=uitvrt&sActivityList=zorgin&sActivityList=zieken&sActivityList=dagrec&sActivityList=zalena&sActivityList=beurze&sActivityList=evenem&sActivityList=prkcmp&sActivityList=sporta&sActivityList=hotels&sActivityList=nieuwb&sActivityList=totaal&sActivityList=totstr&sActivityList=tottyd';
                 var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=zorgin&sActivityList=zieken&sActivityList=hotels&sActivityList=totaal';
                 $scope.map.spin(true);
-                //FIXME: this should be done via JSONP
-                //var bridgisroot = "http://services.bridgis.nl";
-                var bridgisroot = "/service/bridgis";
-                d3.xml(bridgisroot + '/geowebservice/populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
+                //var bridgisroot = "/service/bridgis/geowebservice/";
+                var bridgisroot = "http://research.geodan.nl/sites/bridgis/populator/"; //CORS link
+                d3.xml(bridgisroot + 'populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
             });
             menu.on('edit.text', function(d){
                 var feat = d.layer;
@@ -371,7 +370,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         labelconfig: {
             field: "name",
             style: {
-                'stroke-width': 0.2,
+                'stroke-width': 1,
                 stroke: "#000033"
             }
         },
@@ -402,7 +401,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                   }
                   if(data.results.length > 0) {
                     //Popup text should be in html format.  Showing all the attributes
-                    popupText = '';
+                    popupText = '<b>' + dynLayer.name + '</b><br>';
                     _.each(data.results[0].attributes, function(val,key){
                             popupText =  popupText + "<b>" + key + "</b>:&nbsp;" + val + "<br>";
                     });
@@ -465,7 +464,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     };
     //Toggle icm layers
     $scope.toggleIcmLayer = function(val) {
-        console.log(val); //TODO
         if ($scope.map.hasLayer(val)){
             $scope.map.removeLayer(val);
             val.buttonclass = false;
@@ -520,7 +518,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
 			}
 		}
 		if (featureLayer){
-		    console.log('Redrawing features');
 			featureLayer.data(editCollection);
 		    featureLayer.updateData($scope.map);
 		}
@@ -611,9 +608,15 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     var initmap = function(){
       leafletData.getMap('mainmap').then(function(map) {
         $scope.map = map;
+		leafletmap = map;
         //Disable CORS support (due to issue with IE on an intranet)
         L.esri.get = L.esri.RequestHandlers.JSONP;
-        
+        //Add geosearch plugin
+        new L.Control.GeoSearch({
+            provider: new L.GeoSearch.Provider.Esri(),
+            position: 'topright',
+            showMarker: true
+        }).addTo(map);
         //Set correct projection for map
         map.options.crs = LeafletService.projection();
         
@@ -621,6 +624,9 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         map.addLayer(extentLayer);
         map.addLayer(featureLayer);
 
+        /** Add geofort layers **/
+        //addGeofortLayers(LeafletService,map); //FIXME
+        
         /** SETUP DRAWING FUNCTIONALITY **/
         // Use a geoJson object for the drawnItems instead of featureGroup
         var drawnItems = new L.geoJson();
@@ -678,7 +684,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 feature.properties.stroke = $scope.currentstyle.line.stroke;
             }
             feature.properties.fill = $scope.currentstyle.polygon.fill;
-            feature.properties['stroke-width'] = 3;
+            feature.properties['stroke-width'] = 6;
             
             var id = core.peerid() + "_" + timestamp;
             var mygroups = core.project().myGroups();
