@@ -463,6 +463,18 @@ var icmconfig = {
                 transparent: true
             }
         }
+    },
+	golffront_oudeschild: {type: 'overlay', category: '3Di', layer:{ 
+            name: "Golffront Oudeschild",
+            type:  'betterwms',
+			url: "http://research.geodan.nl/service/geoserver/icm_water/wms",
+            visible: true,
+            layerOptions: {
+				layers: 'icm_water:GolffrontOudeschild',
+                format: 'image/png',
+                transparent: true
+            }
+        }
     }
     //,"nachtkaart": {"type": "baselayer", "category": "Achtergrond", "layer": {
     //      name: 'Grijstinten',
