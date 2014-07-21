@@ -230,8 +230,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     return proj4(toproj,coordinate);
                 });
                 var geom = Terraformer.WKT.convert(geojson.geometry);
-                var user = 'kylbv.test_1';
-                var pass = 'leclesuros';
+                var user = 'hhnk.risico_1'; //'kylbv.test_1';
+                var pass = 'spuchachil'; //'leclesuros';
                 var analysetypes = '&eAnalyzeTypes=MAXIMUM';
                 //var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=jstinr&sActivityList=asielz&sActivityList=uitvrt&sActivityList=zorgin&sActivityList=zieken&sActivityList=dagrec&sActivityList=zalena&sActivityList=beurze&sActivityList=evenem&sActivityList=prkcmp&sActivityList=sporta&sActivityList=hotels&sActivityList=nieuwb&sActivityList=totaal&sActivityList=totstr&sActivityList=tottyd';
                 var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=zorgin&sActivityList=zieken&sActivityList=hotels&sActivityList=totaal';
@@ -624,8 +624,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         map.addLayer(extentLayer);
         map.addLayer(featureLayer);
 
-        /** Add geofort layers **/
-        //addGeofortLayers(LeafletService,map); //FIXME
+        /** Add unigis layers **/
+        addUnigisLayers(LeafletService,map); //FIXME
         
         /** SETUP DRAWING FUNCTIONALITY **/
         // Use a geoJson object for the drawnItems instead of featureGroup
