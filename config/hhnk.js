@@ -1,3 +1,42 @@
+
+//Q&D workaround to get a legend for 3di
+var depthLegend = function(elem){
+	if (d3.select(elem).classed('active')){
+		d3.select(elem).classed('active', false);
+		d3.select('#depthLegend').remove();
+	}
+	else{
+		d3.select(elem).classed('active', true);
+		var legendbox = d3.select('#map').append('div').attr('id','depthLegend').classed('panel panel-default',true).style('position', 'absolute').style('left', '100px').style('bottom', '100px')
+			.on('click', function(d){this.remove()});
+		legendbox.append('div').classed('panel-heading', true).html('Waterdiepte');
+		var listgroup = legendbox.append('div').classed('panel-content', true).append('ul').classed('list-group',true);
+		listgroup.append('li').style('color', 'white').style('background', 'rgb(170, 200, 255)').html('0 meter');
+		listgroup.append('li').style('color', 'white').style('background', 'rgb(65, 120, 221)').html('1 meter');
+		listgroup.append('li').style('color', 'white').style('background', 'rgb(4, 65, 146)').html('2 meter');	
+	}
+}
+
+var waveLegend = function(elem){
+	if (d3.select(elem).classed('active')){
+		d3.select(elem).classed('active', false);
+		d3.select('#waveLegend').remove();
+	}
+	else{
+		d3.select(elem).classed('active', true);
+		var legendbox = d3.select('#map').append('div').attr('id', 'waveLegend').classed('panel panel-default',true).style('position', 'absolute').style('left', '200px').style('bottom', '100px')
+			.on('click', function(d){this.remove()});
+		legendbox.append('div').classed('panel-heading', true).html('Aankomsttijd');
+		var listgroup = legendbox.append('div').classed('panel-content', true).append('ul').classed('list-group',true);
+		listgroup.append('li').style('color', 'steelBlue').style('background', 'rgb(255, 36, 0)').html('tot 1 uur');
+		listgroup.append('li').style('color', 'steelBlue').style('background', 'rgb(255, 72, 0)').html('tot 2 uur');
+		listgroup.append('li').style('color', 'steelBlue').style('background', 'rgb(255, 109, 0)').html('tot 3 uur');	
+		listgroup.append('li').style('color', 'steelBlue').style('background', 'rgb(255, 145, 0)').html('tot 5 uur');	
+		listgroup.append('li').style('color', 'steelBlue').style('background', 'rgb(255, 218, 0)').html('tot 10 uur');	
+		listgroup.append('li').style('color', 'steelBlue').style('background', 'rgb(255, 255, 0)').html('>= 10 uur');
+	}
+}
+
 var icmconfig = {
   "crs": L.CRS.EPSG3857,
   //"crs": new L.Proj.CRS.TMS(
@@ -420,6 +459,18 @@ var icmconfig = {
             visible: true,
             layerOptions: {
 				layers: '61f5a464c35044c19bc7d4b42d7f58cb:maxdepth',
+                format: 'image/png',
+                transparent: true
+            }
+        }
+    },
+	golffront_oudeschild: {type: 'overlay', category: '3Di', layer:{ 
+            name: "Golffront Oudeschild",
+            type:  'betterwms',
+			url: "http://research.geodan.nl/service/geoserver/icm_water/wms",
+            visible: true,
+            layerOptions: {
+				layers: 'icm_water:GolffrontOudeschild',
                 format: 'image/png',
                 transparent: true
             }

@@ -1,4 +1,4 @@
-cow
+var cow;
 // De definities van de verschillende beelden inclusief hun onderdelen
 icm.factory('Beelden', ['$rootScope', function( $rootScope ) {
     return {
@@ -15,7 +15,7 @@ icm.factory('Beelden', ['$rootScope', function( $rootScope ) {
     };
 }]);
 
-/*TT: Cow temporarily moved to a global because signalR breaks from within a factory */
+/*
 var cow = new Cow.core({
       //wsUrl: '/Cow/signalr'
 	  wsUrl: '/Cow2/hhnk/signalr'   //# hhnk
@@ -28,21 +28,38 @@ var cow = new Cow.core({
     //}
     //cow.user('1'); //set current user
 });
+*/
+var cow = new Cow.core();
+//add a default socketserver
+cow.socketservers({
+ _id: 'default', 
+ data: {protocol:'ws',ip:'127.0.0.1', port:8081}
+});
+var connection = cow.connect('default');
+cow.userStore().loaded.then(function(){
+    if (!cow.users('1')){
+        cow.users({_id:'1'}).data('name','Anonymous').sync();
+    }
+    cow.user('1'); //set current user
+});
+   
 icm.factory('Core', ['$rootScope', function($rootScope) {
    /*
-   var cow = new Cow.core({
-          wsUrl: '/Cow/signalr'
-        });   
-    cow.userStore().loaded.then(function(){
+   var cow = new Cow.core();
+   //add a default socketserver
+   cow.socketservers({
+     _id: 'default', 
+     data: {protocol:'wss',ip:'websocket.geodan.nl', port:443}
+   });
+   var connection = cow.connect('default');
+   cow.userStore().loaded.then(function(){
         if (!cow.users('1')){
             cow.users({_id:'1'}).data('name','Anonymous').sync();
         }
         cow.user('1'); //set current user
-    });
-    tmp = cow;
-    */
+   });*/
    return cow;
-
+   
 }]);
 
 icm.filter('beeldfilter', function() {
