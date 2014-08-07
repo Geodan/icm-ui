@@ -617,6 +617,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             position: 'topright',
             showMarker: true
         }).addTo(map);
+
+        //Add Mouseposition plugin
+        L.Control.mousePosition().addTo(map);
+
         //Set correct projection for map
         map.options.crs = LeafletService.projection();
         
@@ -640,7 +644,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             }
         });
         map.addControl(drawControl);
-       
+
         controls.pointcontrol = new L.Draw.Marker(map,  drawControl.options.Marker);
         controls.linecontrol = new L.Draw.Polyline(map, drawControl.options.polyline);  
         controls.polycontrol =  new L.Draw.Polygon(map, drawControl.options.polygon);
