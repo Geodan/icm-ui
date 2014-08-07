@@ -10,6 +10,7 @@
     
      <div class="col-sm-9  col-md-9 col-lg-9 fill">
      <!--- MAP EDIT MENU -->
+	 <span id="mapbuttons">
       <div class="btn-group">
         <button ng-model="radioModel" type="button" class="btn btn-default btn-lg" title="Beweeg de kaart" btn-radio="'pan'">
           <Span class="glyphicon glyphicon-hand-up"></span>
@@ -84,6 +85,7 @@
             </div>
           </li>
         </ul>
+		
         <!--
          <button type="button" class="btn btn-primary" ng-model="chronos" ng-change="toggleChronos()" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
           Chronologie
@@ -94,6 +96,11 @@
         <button class="btn btn-default" ng-click="setNow()" ng-show="chronos">Huidig</button>
       -->
       </div>
+	  <!-- TT: Temp hack to get the 3Di legend in -->
+	  <button type="button" class="btn btn-primary" onClick="depthLegend(this)">Waterdiepte</button>
+	  <button type="button" class="btn btn-primary" onClick="waveLegend(this)">Golffront</button>
+	  </span>
+	  
      <!--- MAP -->
      <div id="map" class='fill'><!-- extra map container for overlaying divs -->
       <leaflet id="mainmap" center="initcenter" defaults="defaults" markers="markers" paths='paths' layers="layers" events="events"></leaflet>
