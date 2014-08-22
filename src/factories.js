@@ -33,7 +33,7 @@ var cow = new Cow.core();
 //add a default socketserver
 cow.socketservers({
  _id: 'default', 
- data: {protocol:'ws',ip:'127.0.0.1', port:8081}
+ data: {protocol:'wss',ip:'websocket.geodan.nl', port:443,dir: 'icms'}
 });
 var connection = cow.connect('default');
 cow.userStore().loaded.then(function(){

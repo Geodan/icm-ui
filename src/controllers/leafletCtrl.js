@@ -9,7 +9,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.radioModel = 'pan';
     var core = Core;
     $scope.core = core;
-    /** Some time functionality **/
+    
+    /** Some time control functionality, this is disabled in the current version **/
     $scope.chronos = false;
     $scope.timeDisplay = 'none';
     $scope.mytime = new Date();
@@ -30,15 +31,13 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     $scope.toggleChronos = function(){
         populateFeatures();
     };
-    /** end of time **/
+    /** end of time functionality **/
     
     
-    //tmp = $scope; //DEBUG
     var controls= {};
     var drawControl;
     $scope.icontypes = {};
     $scope.leafletService = LeafletService;
-    //$scope.leafletData = leafletData;
     
     $scope.icmlayers = [];
     
@@ -47,7 +46,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         lng: icmconfig.center.lng,  //4.896941,
         zoom: 9
     };
+    //Start location comes from project or from template settings
     var incidentlocation = Core.project().data('incidentlocation') || initcenter;
+    
+    //Layers and extent are stored in the LeafletService, in order to be consistent when reloading the controller
     angular.extend($scope, {
         markers: {},
         extralayers: LeafletService.layers,
@@ -66,6 +68,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     
     
     //FIXME: d3 layer still expects initial feature collection with at least 1 feature
+    //Thats why we populate it with 1 dummyfeature
     var dummyfeature = { 
             "id": 0,
             "type": "Feature",
@@ -82,6 +85,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         }
     };
     var dummyCollection = {"type":"FeatureCollection","features":[dummyfeature]};
+    //extentLayer is not used at the moment (shows map extents from every peer) 
     var extentLayer = new L.GeoJSON.d3(dummyCollection, {
         labels: true,
         labelconfig: {
@@ -97,6 +101,8 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 textlocation: "ul"
         }
     });
+    
+    //locationLayer is not used at the moment (shows location of every peer)
     var locationLayer = new L.GeoJSON.d3(dummyCollection, {
         labels: true,
         labelconfig: {
@@ -114,6 +120,14 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     });
     //LeafletService.layers.icmlayers.locationLayer = locationLayer;
     
+    
+    /**
+        editmenu is created upon map-click.
+        
+        The functions that are coupled to the listeners (currently: 'delete', 'edit.geom', 'model.populator' and 'edit.text')
+        do not really belong to the leafletCtrl and should be in a separate file/controller
+        
+    **/
     var editmenu = function(feat,container, element, event){
         if ($scope.chronos){
             return null;
@@ -123,6 +137,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 menuconfig: Cow_utils.menuconfig
             });
             /* Menu listeners */
+            //Flag the feature deleted
             menu.on('delete', function(d){
                 if (confirm('Verwijderen?')) {
                     var key = d.fid;
@@ -131,12 +146,13 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     // Do nothing!
                 }
             });
+            //Start editing the geom of the feature
             menu.on('edit.geom', function(d){
                 drawControl.options.edit.featureGroup.addData(d.layer);
                 controls.editcontrol.enable();
              });
             
-            
+            //Do a populator request to bridgis, on the basis of the selected polygon
             menu.on('model.populator', function(d){
                 var populator_callback = function(xml){
                     $scope.map.spin(false);
@@ -150,16 +166,11 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     var feat = d.layer;
                     var fid = d.fid;
                     var item = $scope.core.project().items(fid);
-                    //var entity = d.obj;
-                    //var bbox = entity.getBBox();
                     var fe = d3
-                        //.select('.leaflet-popup-pane')
                         .select('#map')
                         .append('div')
                         .classed('popup panel panel-primary',true)
                         .style('position', 'absolute')
-                        //.style('left', function(){return bbox.x + 35 + 'px';})
-                        //.style('top', function(){return bbox.y + 35 + 'px';})
                         .style('right', '20px')
                         .style('bottom','20px')
                         .style("width", '400px')
@@ -178,7 +189,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     name = '(Populatie) ' + name;
                     var sheader = fe.append('div')
                         .classed('panel-heading', true)
-                        //.attr('contenteditable','true')
                         .on('click', function(){
                             this.contentEditable=true;
                             this.focus();
@@ -233,13 +243,12 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 var user = 'hhnk.risico_1'; //'kylbv.test_1';
                 var pass = 'spuchachil'; //'leclesuros';
                 var analysetypes = '&eAnalyzeTypes=MAXIMUM';
-                //var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=jstinr&sActivityList=asielz&sActivityList=uitvrt&sActivityList=zorgin&sActivityList=zieken&sActivityList=dagrec&sActivityList=zalena&sActivityList=beurze&sActivityList=evenem&sActivityList=prkcmp&sActivityList=sporta&sActivityList=hotels&sActivityList=nieuwb&sActivityList=totaal&sActivityList=totstr&sActivityList=tottyd';
                 var activities = '&sActivityList=wonena&sActivityList=werken&sActivityList=onderw&sActivityList=kinder&sActivityList=zorgin&sActivityList=zieken&sActivityList=hotels&sActivityList=totaal';
                 $scope.map.spin(true);
-                //var bridgisroot = "/service/bridgis/geowebservice/";
                 var bridgisroot = "http://research.geodan.nl/sites/bridgis/populator/"; //CORS link
                 d3.xml(bridgisroot + 'populatoranalyze.asmx/RetrieveWKT?sUser='+user+'&sPassword='+pass+'&sWKTArea=' + geom + '' + analysetypes + ''+ activities + '',populator_callback);
             });
+            //Edit the text (properties.title and properties.desc) in the feature
             menu.on('edit.text', function(d){
                 var feat = d.layer;
                 var fid = d.fid;
@@ -247,13 +256,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 var entity = d.obj;
                 var bbox = entity.getBBox();
                 var fe = d3
-                    //.select('.leaflet-popup-pane')
                     .select('#map')
                     .append('div')
                     .classed('popup panel panel-primary',true)
                     .style('position', 'absolute')
-                    //.style('left', function(){return bbox.x + 35 + 'px';})
-                    //.style('top', function(){return bbox.y + 35 + 'px';})
                     .style('right', '20px')
                     .style('bottom','20px')
                     .style("width", '400px')
@@ -272,7 +278,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                 
                 var sheader = fe.append('div')
                     .classed('panel-heading', true)
-                    //.attr('contenteditable','true')
                     .on('click', function(){
                         this.contentEditable=true;
                         this.focus();
@@ -284,12 +289,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     
                 var scontent = fe.append('div')
                     .classed('panel-body', true);
-                /*
-                var editdiv = scontent.append('textarea')
-                    .attr('cols',10)
-                    .attr('rows',10)
-                    .val(desc);
-                  */  
                 var editdiv = scontent.append('div')
                     .attr('id','descfield')
                     .style('overflow','scroll')
@@ -300,9 +299,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                             this.contentEditable=true;
                             this.focus();
                         }
-                    })
-                    .on('blur', function(){
-                        //this.contentEditable=false;
                     })
                     .html(desc);
                     
@@ -326,6 +322,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
             });
         }
     };
+    /**
+        textbox is used for the mouseover
+    
+    **/
     var textbox = function(feat,container, element, event){
         var self = this;
         var fid = feat.id;
@@ -356,14 +356,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
        fe.style('left', function(){return loc[0] + 10 + 'px';})
             .style('top', function(){return loc[1] + 10 + 'px';})
             .style("width", '400px');
-
-       //d3.select(element).on('mouseout', function(d){
-       //     fe.remove();
-       //});
         
     };
+    //featureLayer is the layer where the cow items are displayed 
     var featureLayer = new L.GeoJSON.d3(dummyCollection, {
-        //core: Core,
         onClick: editmenu,
         onMouseover: textbox,
         labels: true,
@@ -382,14 +378,17 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         }
     });
     $scope.featureLayer = featureLayer;
-    //LeafletService.layers.icmlayers.featureLayer = featureLayer;
     
     $scope.icontypes = LeafletService.icontypes;
     $scope.linestyles = LeafletService.linestyles;
     $scope.polygonstyles = LeafletService.polygonstyles;
     $scope.currentstyle = LeafletService.currentstyle;
     
-    //Identify ESRI features
+    /**
+        Identify ESRI features
+        this is likely to be removed when we move to WMS and stop supporting ESRI layers
+        
+    **/
     var identify = function(event){
         var e = event.leafletEvent;
         leafletData.getLayers('mainmap').then(function(lllayers){
@@ -434,7 +433,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
     
     
   
-    
+    /** Some functionality to turn layers on/off **/
     
     //Toggle baselayers
     $scope.toggleLayer = function(val) {
@@ -474,7 +473,7 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         }
     };
     
-    /** END OF SECTION EXTRA LAYERS **/
+    /**  **/
     
     
     /** draw cow features on map **/
