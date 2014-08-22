@@ -473,10 +473,11 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         }
     };
     
-    /**  **/
-    
-    
-    /** draw cow features on map **/
+    /** 
+        populateFeatures
+        Prepare cow features for map and update featurelayer
+        
+    **/
     var populateFeatures = function(){
       var items = _(core.project().items()).filter(function(d){
             return (!d.deleted() && d.data('type')=='feature');
@@ -492,7 +493,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
 		    else {
 		        t = Date.now();
 		    }
-			//var feature = item.data('feature');
             if(item.data_on(t) && item.data_on(t).feature) {
                 var feature = item.data_on(t).feature;
                 //Add feature
@@ -521,7 +521,11 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
 		    featureLayer.updateData($scope.map);
 		}
     };
-    //Anything changed in the peers store results in redraw of peer items (extents & points)
+    
+    /** 
+        populatePeers
+        Anything changed in the peers store results in redraw of peer items (extents & points)
+    **/
     var populatePeers = function(){
         var self = this;
         var extentCollection = {"type":"FeatureCollection","features":[]};
@@ -553,8 +557,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         */
         //Update layer with locations
         if (locationLayer){
-            //self.locationLayer.clearLayers();
-            //self.locationLayer.addData(locationCollection);
             locationLayer.data(locationCollection);
             locationLayer.updateData($scope.map);
         }
@@ -596,8 +598,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         }
         */
     };
-
-
     
     /** 
         initmap() - called after first mapload
@@ -623,9 +623,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         map.addLayer(extentLayer);
         map.addLayer(featureLayer);
 
-        /** Add unigis layers **/
-        addUnigisLayers(LeafletService,map); //FIXME
-        
         /** SETUP DRAWING FUNCTIONALITY **/
         // Use a geoJson object for the drawnItems instead of featureGroup
         var drawnItems = new L.geoJson();
@@ -661,7 +658,6 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
                     .sync();
             });
             drawControl.options.edit.featureGroup.clearLayers();
-            //populateFeatures();
         }); 
 
         map.on('draw:created', function (e) {
@@ -706,14 +702,10 @@ icm.controller('LeafletController', [ '$scope','$http','$timeout','Core', 'Utils
         
         //Initialize first time features
         populateFeatures();
-        
       });
     };  
  
-    //leafletData.getLayers().then(function(layers){
-    //        $scope.leafletLayers = layers;
-    //});
-   
+    /** Attach draw controls to interface **/  
     $scope.drawPoint = function(style){
         $scope.currentstyle.icon = style;
         controls.pointcontrol.enable();
