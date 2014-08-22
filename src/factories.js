@@ -1,4 +1,4 @@
-var cow;
+
 // De definities van de verschillende beelden inclusief hun onderdelen
 icm.factory('Beelden', ['$rootScope', function( $rootScope ) {
     return {
@@ -35,7 +35,9 @@ cow.socketservers({
  _id: 'default', 
  data: {protocol:'wss',ip:'websocket.geodan.nl', port:443,dir: 'icms'}
 });
-var connection = cow.connect('default');
+cow.socketserver('default');
+var connection = cow.connect();
+
 cow.userStore().loaded.then(function(){
     if (!cow.users('1')){
         cow.users({_id:'1'}).data('name','Anonymous').sync();
